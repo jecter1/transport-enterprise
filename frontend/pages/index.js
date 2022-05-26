@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import PageTemplate from '../components/PageTemplate';
+import PageTemplate from '../templates/PageTemplate';
 import { Typography } from '@mui/material';
 
 function mainContent() {

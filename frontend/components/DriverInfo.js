@@ -1,7 +1,7 @@
 import React from "react";
 import getData from "../util/getData";
 import { useEffect } from "react";
-import { Divider, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useRouter } from 'next/router';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 
 export default function DriverInfo() {
-  const [data, setData] = React.useState({});
+  const [driverInfo, setDriverInfo] = React.useState({});
   
   const router = useRouter();
   
@@ -17,7 +17,7 @@ export default function DriverInfo() {
     const fetchData = async () => {
       if (router.isReady) {
         const { id } = router.query;
-        await getData(('employee/driver/' + id), setData);
+        await getData(('employee/driver/' + id), setDriverInfo);
       }
     }
     fetchData();
@@ -33,25 +33,25 @@ export default function DriverInfo() {
       </Grid>
       <Grid container style={{height: '0.5%'}} />
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '50%', height: '25%', backgroundColor: "#222533"}}>
-        {data 
+        {driverInfo 
         ? 
         <>
           <Typography color="#ffffff" fontSize={16}>
-            Тип: {data["type"]}
+            Тип: {driverInfo["type"]}
           </Typography>
           <Typography color="#ffffff" fontSize={16}>
-            Номер: {data["number"]}
+            Номер: {driverInfo["number"]}
           </Typography>
           <Typography color="#ffffff" fontSize={16}>
-            Марка: {data["brand"]}
+            Марка: {driverInfo["brand"]}
           </Typography>
           <Typography color="#ffffff" fontSize={16}>
-            Модель: {data["model"]}
+            Модель: {driverInfo["model"]}
           </Typography>
           <Typography color="#ffffff" fontSize={16}>
-            Цвет: {data["color"]}
+            Цвет: {driverInfo["color"]}
           </Typography>
-          <Link passHref href={"/transport/" + data["id"]}>
+          <Link passHref href={"/transport/" + driverInfo["id"]}>
             <Button variant="text"
                     style={{textTransform: 'none', 
                             color: '#ffffff', 

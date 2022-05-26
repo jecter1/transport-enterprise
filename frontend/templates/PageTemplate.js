@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import Header from "./Header";
+import Header from "../components/Header";
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/material";
 
@@ -9,7 +9,7 @@ const PANEL_TITLES_FONT_SIZE = 16;
 
 /*
  * props.title
- * props.content
+ * props.panel
 */
 function SidePanel(props) {
   var contentBoxStyle = props.title ? {
@@ -31,8 +31,8 @@ function SidePanel(props) {
         :
         <></>
       }
-      <Box container direction="row" justifyContent="center" alignItems="center" style={contentBoxStyle}>
-        {props.content ? props.content : <></>}
+      <Box container direction="column" justifyContent="center" alignItems="center" style={contentBoxStyle}>
+        {props.panel ? props.panel : <></>}
       </Box>
     </Grid>
   );
@@ -42,14 +42,14 @@ function SidePanel(props) {
  * props.pageTitle (default: "Автопредприятие")
  * props.hasSidePanels (default: true)
  * props.leftPanelTitle
- * props.leftPanelContent
+ * props.leftPanel
  * props.rightPanelTitle
- * props.rightPanelContent
+ * props.rightPanel
  * props.mainPanel
 */
 export default function PageTemplate(props) {
   var mainGridStyle = props.hasSidePanels ? {
-    width: '60%', height: '100%', backgroundColor: "#1a1c26"
+    width: '66%', height: '100%', backgroundColor: "#1a1c26"
   } : {
     width: '100%', height: '100%', backgroundColor: "#1a1c26"
   }
@@ -69,7 +69,7 @@ export default function PageTemplate(props) {
           {
             props.hasSidePanels 
             ?
-            <SidePanel title={props.leftPanelTitle} content={props.leftPanelContent}/>
+            <SidePanel title={props.leftPanelTitle} panel={props.leftPanel}/>
             :
             <></>
           }
@@ -82,7 +82,7 @@ export default function PageTemplate(props) {
           </Grid>
           {
             props.hasSidePanels ?
-            <SidePanel title={props.rightPanelTitle} content={props.rightPanelContent}/>
+            <SidePanel title={props.rightPanelTitle} panel={props.rightPanel}/>
             :
             <></>
           }
