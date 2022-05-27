@@ -4,20 +4,24 @@ import Toolbar from '@mui/material/Toolbar';
 import Grid from '@mui/material/Grid';
 import AppBar from '@mui/material/AppBar';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import { Button, ButtonGroup, Divider, IconButton } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { Menu, MenuItem } from '@mui/material';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 
 export default function Header() {
   const [anchorEmployeeEl, setAnchorEmployeeEl] = React.useState(null);
   const [anchorTransportEl, setAnchorTransportEl] = React.useState(null);
   const [anchorRepairEl, setAnchorRepairEl] = React.useState(null);
   const [anchorGarageEl, setAnchorGarageEl] = React.useState(null);
+  const [anchorRouteEl, setAnchorRouteEl] = React.useState(null);
 
   const openEmployee = Boolean(anchorEmployeeEl);
   const openTransport = Boolean(anchorTransportEl);
   const openRepair = Boolean(anchorRepairEl);
   const openGarage = Boolean(anchorGarageEl);
+  const openRoute = Boolean(anchorRouteEl);
 
   const handleClickEmployee = (event) => {
     setAnchorEmployeeEl(event.currentTarget);
@@ -51,6 +55,14 @@ export default function Header() {
     setAnchorGarageEl(null);
   };
 
+  const handleClickRoute = (event) => {
+    setAnchorRouteEl(event.currentTarget);
+  };
+
+  const handleCloseRoute = () => {
+    setAnchorRouteEl(null);
+  };
+
   return (
     <AppBar position='static' sx={{ background: "#2b2f40", height: "100%", width: "100%", boxShadow: "0 0 0em black" }}>
       <Toolbar>
@@ -72,18 +84,17 @@ export default function Header() {
               onClose={handleCloseTransport}
             >
               <Link href="/transport/" passHref>
-                <MenuItem onClick={handleCloseTransport}>Список</MenuItem>
+                <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Список</MenuItem>
               </Link>
               <Link href="/transport/drivers" passHref>
-                <MenuItem onClick={handleCloseTransport}>Распределение по водителям</MenuItem>
+                <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Распределение по водителям</MenuItem>
               </Link>
               <Link href="/transport/routes" passHref>
-                <MenuItem onClick={handleCloseTransport}>Распределение по маршрутам</MenuItem>
+                <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Распределение по маршрутам</MenuItem>
               </Link>
-              <MenuItem onClick={handleCloseTransport}>TODO: Пробег</MenuItem>
-              <MenuItem onClick={handleCloseTransport}>TODO: Полученный и списанный</MenuItem>
-              <MenuItem onClick={handleCloseTransport}>TODO: Добавить транспорт</MenuItem>
-              <MenuItem onClick={handleCloseTransport}>TODO: Добавить маршрут</MenuItem>
+              <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>TODO: Пробег</MenuItem>
+              <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>TODO: Полученный и списанный</MenuItem>
+              <MenuItem onClick={handleCloseTransport}><AddOutlinedIcon/>TODO: Добавить транспорт</MenuItem>
             </Menu>
             <Button style={{fontSize: 18}} onClick={handleClickEmployee}>
               Сотрудники
@@ -94,16 +105,16 @@ export default function Header() {
               onClose={handleCloseEmployee}
             >
               <Link href="/employee/" passHref>
-                <MenuItem onClick={handleCloseEmployee}>Список</MenuItem>
+                <MenuItem onClick={handleCloseEmployee}><SearchOutlinedIcon/>Список</MenuItem>
               </Link>
               <Link href="/employee/drivers/" passHref>
-                <MenuItem onClick={handleCloseEmployee}>Распределение водителей</MenuItem>
+                <MenuItem onClick={handleCloseEmployee}><SearchOutlinedIcon/>Распределение водителей</MenuItem>
               </Link>
               <Link href="/employee/hierarchy" passHref>
-                <MenuItem onClick={handleCloseEmployee}>Подчиненность</MenuItem>
+                <MenuItem onClick={handleCloseEmployee}><SearchOutlinedIcon/>Подчиненность</MenuItem>
               </Link>
               <Link href="/employee/add" passHref>
-                <MenuItem onClick={handleCloseEmployee}>TODO: Добавить сотрудника</MenuItem>
+                <MenuItem onClick={handleCloseEmployee}><AddOutlinedIcon/>TODO: Добавить сотрудника</MenuItem>
               </Link>
             </Menu>
             <Button style={{fontSize: 18}} onClick={handleClickRepair}>
@@ -114,10 +125,10 @@ export default function Header() {
               open={openRepair}
               onClose={handleCloseRepair}
             >
-              <MenuItem onClick={handleCloseRepair}>TODO: Список</MenuItem>
-              <MenuItem onClick={handleCloseRepair}>TODO: Число и стоимость</MenuItem>
-              <MenuItem onClick={handleCloseRepair}>TODO: Число использованных узлов</MenuItem>
-              <MenuItem onClick={handleCloseRepair}>TODO: Добавить запись о ремонте</MenuItem>
+              <MenuItem onClick={handleCloseRepair}><SearchOutlinedIcon/>TODO: Список</MenuItem>
+              <MenuItem onClick={handleCloseRepair}><SearchOutlinedIcon/>TODO: Число и стоимость</MenuItem>
+              <MenuItem onClick={handleCloseRepair}><SearchOutlinedIcon/>TODO: Число использованных узлов</MenuItem>
+              <MenuItem onClick={handleCloseRepair}><AddOutlinedIcon/>TODO: Добавить запись о ремонте</MenuItem>
             </Menu> 
             <Button style={{fontSize: 18}} onClick={handleClickGarage}>
               Гаражи
@@ -127,9 +138,20 @@ export default function Header() {
               open={openGarage}
               onClose={handleCloseGarage}
             >
-              <MenuItem onClick={handleCloseGarage}>TODO: Список</MenuItem>
-              <MenuItem onClick={handleCloseGarage}>TODO: Распределение транспорта</MenuItem>
-              <MenuItem onClick={handleCloseGarage}>TODO: Добавить гараж</MenuItem>
+              <MenuItem onClick={handleCloseGarage}><SearchOutlinedIcon/>TODO: Список</MenuItem>
+              <MenuItem onClick={handleCloseGarage}><SearchOutlinedIcon/>TODO: Распределение транспорта</MenuItem>
+              <MenuItem onClick={handleCloseGarage}><AddOutlinedIcon/>TODO: Добавить гараж</MenuItem>
+            </Menu>
+            <Button style={{fontSize: 18}} onClick={handleClickRoute}>
+              Маршруты
+            </Button>
+            <Menu
+              anchorEl={anchorRouteEl}
+              open={openRoute}
+              onClose={handleCloseRoute}
+            >
+              <MenuItem onClick={handleCloseRoute}><SearchOutlinedIcon/>TODO: Список</MenuItem>
+              <MenuItem onClick={handleCloseRoute}><AddOutlinedIcon/>TODO: Добавить маршрут</MenuItem>
             </Menu>
           </Grid>
           <Grid item sm={2} style={{ textAlign: 'center' }}>
