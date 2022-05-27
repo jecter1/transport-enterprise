@@ -4,9 +4,11 @@ import React from "react";
 import getData from "../../util/getData";
 import { useEffect } from "react";
 import PageTemplate from "../../templates/PageTemplate";
+import { Button } from "@mui/material";
 
 export default function TransportProfile() {
-  const [data, setData] = React.useState({});
+  const [transport, setTransport] = React.useState({});
+  const [drivers, setDrivers] = React.useState([]);
 
   const router = useRouter();
 
@@ -14,54 +16,76 @@ export default function TransportProfile() {
     const fetchData = async () => {
       if (router.isReady) {
         const { id } = router.query;
-        await getData(('transport/' + id), setData);
+        await getData(('transport/' + id), setTransport);
+        await getData(('transport/' + id + '/drivers'), setDrivers);
       }
     }
     fetchData();
   }, [router.isReady]);
+
+  const LeftPanel = () => {
+    return (
+      <>
+        { 
+          drivers.map((driver) => {
+            const driver_id = driver["id"];
+            return (
+              <Grid item sx={{paddingX: '5%', paddingY: '2%'}}>
+              <a href={"/employee/"+driver_id} style={{textDecoration: "none"}}>
+                <Button style={{fontSize: 14, width: '100%', height: '100%'}}>
+                  {driver["name"]}
+                </Button>
+              </a>
+              </Grid>
+            );
+          })
+        }
+      </>
+    );
+  }
 
   const MainPanel = () => {
     return (
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '50%', height: '100%'}}>
         <Grid container justifyContent="center" alignItems="center" style={{width: '100%', height: '5%', backgroundColor: "#222533"}}>
           <Typography fontSize={18}>
-            {data["brand"] + " " + data["model"] + " " + data["number"]}
+            {transport["brand"] + " " + transport["model"] + " " + transport["number"]}
           </Typography>
         </Grid>
         <Grid container style={{height: '0.5%'}}>
         </Grid>
         <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '100%', height: '25%', backgroundColor: "#222533"}}>
-          { data["type"] ?
+          { transport["type"] ?
           <Typography fontSize={16}>
-            Тип: {data["type"]}
+            Тип: {transport["type"]}
           </Typography>
             :
             <></>
           }
-          { data["color"] ?
+          { transport["color"] ?
           <Typography fontSize={16}>
-            Цвет: {data["color"]}
+            Цвет: {transport["color"]}
           </Typography>
             :
             <></>
           }
-          { data["receiveDate"] ?
+          { transport["receiveDate"] ?
           <Typography fontSize={16}>
-            Дата получения: {data["receiveDate"]}
+            Дата получения: {transport["receiveDate"]}
           </Typography>
             :
             <></>
           }
-          { data["decommissioningDate"] ?
+          { transport["decommissioningDate"] ?
           <Typography fontSize={16}>
-            Дата списания: {data["decommissioningDate"]}
+            Дата списания: {transport["decommissioningDate"]}
           </Typography>
             :
             <></>
           }
-          { data["garageLocation"] ?
+          { transport["garageLocation"] ?
           <Typography fontSize={16}>
-            Гараж: {data["garageLocation"]}
+            Гараж: {transport["garageLocation"]}
           </Typography>
             :
             <></>
@@ -72,8 +96,13 @@ export default function TransportProfile() {
   }
 
   return (
-    <PageTemplate pageTitle={data["brand"] + " " + data["model"] + " " + data["number"]}
+    transport
+    ?
+    <PageTemplate pageTitle={transport["brand"] + " " + transport["model"] + " " + transport["number"]}
                   mainPanel={MainPanel()}
-                  leftPanelTitle={"Водители (N)"}/>
+                  leftPanelTitle={"Водители (" + drivers.length + ")"}
+                  leftPanel={LeftPanel()}/>
+    :
+    <PageTemplate pageTitle={"Транспорт не найден"} hasSidePanels={false} mainPanel={<Typography fontSize={20}>Транспорт не найден</Typography>}/>
   );
 }
