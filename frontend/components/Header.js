@@ -140,7 +140,9 @@ export default function Header() {
               open={openGarage}
               onClose={handleCloseGarage}
             >
-              <MenuItem onClick={handleCloseGarage}><SearchOutlinedIcon/>TODO: Список</MenuItem>
+              <Link href="/garage" passHref>
+                <MenuItem onClick={handleCloseGarage}><SearchOutlinedIcon/>Список</MenuItem>
+              </Link>
               <MenuItem onClick={handleCloseGarage}><SearchOutlinedIcon/>TODO: Распределение транспорта</MenuItem>
               <MenuItem onClick={handleCloseGarage}><AddOutlinedIcon/>TODO: Добавить гараж</MenuItem>
             </Menu>
