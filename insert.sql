@@ -45,12 +45,12 @@ INSERT INTO Taxi (id) VALUES
 INSERT INTO Car (id) VALUES
 (4);
 
-INSERT INTO Route (id, start_point, finish_point) VALUES
-(1, "ул. Первомайская", "ул. Восточная"),
-(2, "ул. Чапаева", "Вокзал"),
-(3, "ул. Дачная", "Площадь Ленина"),
-(4, "ул. Дорожная", "ул. Степная"),
-(5, "ул. Молодежная", "ул. Школьная");
+INSERT INTO Route (id, number, start_point, finish_point) VALUES
+(1, 11, "ул. Первомайская", "ул. Восточная"),
+(2, 25, "ул. Чапаева", "Вокзал"),
+(3, 8, "ул. Дачная", "Площадь Ленина"),
+(4, 1, "ул. Дорожная", "ул. Степная"),
+(5, 34, "ул. Молодежная", "ул. Школьная");
 
 INSERT INTO Route_transport (id, route_id, fare) VALUES
 (8, 1, 20),

@@ -77,7 +77,9 @@ export default function Header() {
               <Link href="/transport/drivers" passHref>
                 <MenuItem onClick={handleCloseTransport}>Распределение по водителям</MenuItem>
               </Link>
-              <MenuItem onClick={handleCloseTransport}>TODO: Распределение по маршрутам</MenuItem>
+              <Link href="/transport/routes" passHref>
+                <MenuItem onClick={handleCloseTransport}>Распределение по маршрутам</MenuItem>
+              </Link>
               <MenuItem onClick={handleCloseTransport}>TODO: Пробег</MenuItem>
               <MenuItem onClick={handleCloseTransport}>TODO: Полученный и списанный</MenuItem>
               <MenuItem onClick={handleCloseTransport}>TODO: Добавить транспорт</MenuItem>

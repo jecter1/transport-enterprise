@@ -104,7 +104,7 @@ SELECT
     t.decommissioning_date,
     t.transport_type,
     pt.passenger_capacity,
-    r.id AS route_id,
+    r.number AS route_number,
     r.start_point AS route_start,
     r.finish_point AS route_finish,
     rt.fare AS fare

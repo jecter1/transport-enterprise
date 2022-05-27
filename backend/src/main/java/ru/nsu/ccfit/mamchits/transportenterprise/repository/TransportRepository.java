@@ -98,4 +98,25 @@ public interface TransportRepository extends JpaRepository<Transport, Integer> {
             "WHERE\n" +
             "   t.id = :id ;")
     List<EmployeeNameDto> findTransportDrivers(@Param("id") int id);
+
+    @Query(nativeQuery = true, value =
+            "SELECT\n" +
+            "   t.id,\n" +
+            "   t.number,\n" +
+            "   t.brand,\n" +
+            "   t.model,\n" +
+            "   t.color,\n" +
+            "   t.transport_type AS type,\n" +
+            "   r.id AS routeId,\n" +
+            "   r.number AS routeNumber,\n" +
+            "   r.start_point AS routeStart,\n" +
+            "   r.finish_point AS routeFinish,\n" +
+            "   pt.passenger_capacity AS capacity,\n" +
+            "   rt.fare\n" +
+            "FROM\n" +
+            "   Route_transport rt\n" +
+            "   JOIN Passenger_transport pt ON rt.id = pt.id\n" +
+            "   JOIN Transport t ON rt.id = t.id\n" +
+            "   LEFT JOIN Route r ON rt.route_id = r.id ;")
+    List<TransportRouteDto> findTransportWithRoutes();
 }

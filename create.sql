@@ -16,7 +16,7 @@ CREATE TABLE Transport (
 	brand VARCHAR(30) NOT NULL,
 	model VARCHAR(30) NOT NULL,
 	color VARCHAR(20),
-	number VARCHAR(6),
+	`number` VARCHAR(6),
 	receive_date DATE NOT NULL,
 	decommissioning_date DATE,
 	transport_type VARCHAR(30) NOT NULL,
@@ -58,6 +58,7 @@ CREATE TABLE Car (
 
 CREATE TABLE Route (
 	id INT NOT NULL,
+	`number` INT NOT NULL,
 	start_point VARCHAR(50) NOT NULL,
 	finish_point VARCHAR(50) NOT NULL,
 	PRIMARY KEY (id)
