@@ -11,23 +11,44 @@ import { Menu, MenuItem } from '@mui/material';
 export default function Header() {
   const [anchorEmployeeEl, setAnchorEmployeeEl] = React.useState(null);
   const [anchorTransportEl, setAnchorTransportEl] = React.useState(null);
+  const [anchorRepairEl, setAnchorRepairEl] = React.useState(null);
+  const [anchorGarageEl, setAnchorGarageEl] = React.useState(null);
+
   const openEmployee = Boolean(anchorEmployeeEl);
   const openTransport = Boolean(anchorTransportEl);
+  const openRepair = Boolean(anchorRepairEl);
+  const openGarage = Boolean(anchorGarageEl);
 
   const handleClickEmployee = (event) => {
     setAnchorEmployeeEl(event.currentTarget);
-  };
-
-  const handleClickTransport = (event) => {
-    setAnchorTransportEl(event.currentTarget);
   };
 
   const handleCloseEmployee = () => {
     setAnchorEmployeeEl(null);
   };
 
+  const handleClickTransport = (event) => {
+    setAnchorTransportEl(event.currentTarget);
+  };
+
   const handleCloseTransport = () => {
     setAnchorTransportEl(null);
+  };
+
+  const handleClickRepair = (event) => {
+    setAnchorRepairEl(event.currentTarget);
+  };
+
+  const handleCloseRepair = () => {
+    setAnchorRepairEl(null);
+  };
+
+  const handleClickGarage = (event) => {
+    setAnchorGarageEl(event.currentTarget);
+  };
+
+  const handleCloseGarage = () => {
+    setAnchorGarageEl(null);
   };
 
   return (
@@ -41,7 +62,7 @@ export default function Header() {
               </IconButton>
             </Link>
           </Grid>
-          <Grid item sm={8} style={{ textAlign: 'center' }}>       
+          <Grid item sm={8} style={{ textAlign: 'center' }}>
             <Button style={{fontSize: 18}} onClick={handleClickTransport}>
               Транспорт
             </Button>
@@ -53,6 +74,12 @@ export default function Header() {
               <Link href="/transport/" passHref>
                 <MenuItem onClick={handleCloseTransport}>Список</MenuItem>
               </Link>
+              <MenuItem onClick={handleCloseTransport}>TODO: Распределение по водителям</MenuItem>
+              <MenuItem onClick={handleCloseTransport}>TODO: Распределение по маршрутам</MenuItem>
+              <MenuItem onClick={handleCloseTransport}>TODO: Пробег</MenuItem>
+              <MenuItem onClick={handleCloseTransport}>TODO: Полученный и списанный</MenuItem>
+              <MenuItem onClick={handleCloseTransport}>TODO: Добавить транспорт</MenuItem>
+              <MenuItem onClick={handleCloseTransport}>TODO: Добавить маршрут</MenuItem>
             </Menu>
             <Button style={{fontSize: 18}} onClick={handleClickEmployee}>
               Сотрудники
@@ -72,8 +99,33 @@ export default function Header() {
                 <MenuItem onClick={handleCloseEmployee}>Подчиненность</MenuItem>
               </Link>
               <Link href="/employee/add" passHref>
-                <MenuItem onClick={handleCloseEmployee}>Добавление</MenuItem>
+                <MenuItem onClick={handleCloseEmployee}>TODO: Добавить сотрудника</MenuItem>
               </Link>
+            </Menu>
+            <Button style={{fontSize: 18}} onClick={handleClickRepair}>
+              Ремонты
+            </Button>
+            <Menu
+              anchorEl={anchorRepairEl}
+              open={openRepair}
+              onClose={handleCloseRepair}
+            >
+              <MenuItem onClick={handleCloseRepair}>TODO: Список</MenuItem>
+              <MenuItem onClick={handleCloseRepair}>TODO: Число и стоимость</MenuItem>
+              <MenuItem onClick={handleCloseRepair}>TODO: Число использованных узлов</MenuItem>
+              <MenuItem onClick={handleCloseRepair}>TODO: Добавить запись о ремонте</MenuItem>
+            </Menu> 
+            <Button style={{fontSize: 18}} onClick={handleClickGarage}>
+              Гаражи
+            </Button>
+            <Menu
+              anchorEl={anchorGarageEl}
+              open={openGarage}
+              onClose={handleCloseGarage}
+            >
+              <MenuItem onClick={handleCloseGarage}>TODO: Список</MenuItem>
+              <MenuItem onClick={handleCloseGarage}>TODO: Распределение транспорта</MenuItem>
+              <MenuItem onClick={handleCloseGarage}>TODO: Добавить гараж</MenuItem>
             </Menu>
           </Grid>
           <Grid item sm={2} style={{ textAlign: 'center' }}>
