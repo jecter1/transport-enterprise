@@ -150,7 +150,9 @@ export default function Header() {
               open={openRoute}
               onClose={handleCloseRoute}
             >
-              <MenuItem onClick={handleCloseRoute}><SearchOutlinedIcon/>TODO: Список</MenuItem>
+              <Link href="/route/" passHref>
+                <MenuItem onClick={handleCloseRoute}><SearchOutlinedIcon/>Список</MenuItem>
+              </Link>
               <MenuItem onClick={handleCloseRoute}><AddOutlinedIcon/>TODO: Добавить маршрут</MenuItem>
             </Menu>
           </Grid>
