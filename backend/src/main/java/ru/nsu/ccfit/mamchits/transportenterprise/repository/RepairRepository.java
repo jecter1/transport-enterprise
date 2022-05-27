@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.EmployeeRepairDto;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.Repair.RepairFullInfoDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.Repair;
 
 import java.util.List;
@@ -40,4 +41,25 @@ public interface RepairRepository extends JpaRepository<Repair, Integer> {
                                                 @Param("from") String fromDatetime,
                                                 @Param("to") String toDatetime,
                                                 @Param("transport_id") String transportId);
+
+    @Query(nativeQuery = true, value =
+            "SELECT \n" +
+            "    r.id,\n" +
+            "    r.garage_id AS garageId,\n" +
+            "    g.location AS garageLocation,\n" +
+            "    r.assembly,\n" +
+            "    r.cost,\n" +
+            "    r.start_datetime AS startDatetime,\n" +
+            "    r.end_datetime AS endDatetime,\n" +
+            "    r.transport_id AS transportId,\n" +
+            "    t.number AS transportNumber,\n" +
+            "    t.brand AS transportBrand,\n" +
+            "    t.model AS transportModel,\n" +
+            "    t.color AS transportColor,\n" +
+            "    t.transport_type AS transportType\n" +
+            "FROM \n" +
+            "    Repair r \n" +
+            "    LEFT JOIN Garage_facility g ON r.garage_id = g.id\n" +
+            "    JOIN Transport t ON r.transport_id = t.id ;")
+    List<RepairFullInfoDto> findAllFullInfo();
 }

@@ -125,7 +125,9 @@ export default function Header() {
               open={openRepair}
               onClose={handleCloseRepair}
             >
-              <MenuItem onClick={handleCloseRepair}><SearchOutlinedIcon/>TODO: Список</MenuItem>
+              <Link href="/repair" passHref>
+                <MenuItem onClick={handleCloseRepair}><SearchOutlinedIcon/>Список</MenuItem>
+              </Link>
               <MenuItem onClick={handleCloseRepair}><SearchOutlinedIcon/>TODO: Число и стоимость</MenuItem>
               <MenuItem onClick={handleCloseRepair}><SearchOutlinedIcon/>TODO: Число использованных узлов</MenuItem>
               <MenuItem onClick={handleCloseRepair}><AddOutlinedIcon/>TODO: Добавить запись о ремонте</MenuItem>
