@@ -42,10 +42,12 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
             "    e1.name AS workerName\n" +
             "FROM\n" +
             "    Employee e1\n" +
-            "    JOIN Employee e2 ON e1.chief_id = e2.id\n" +
-            "    JOIN Employee e3 ON e2.chief_id = e3.id\n" +
-            "    JOIN Employee e4 ON e3.chief_id = e4.id\n" +
-            "    JOIN Employee e5 ON e4.chief_id = e5.id")
+            "    LEFT JOIN Employee e2 ON e1.chief_id = e2.id\n" +
+            "    LEFT JOIN Employee e3 ON e2.chief_id = e3.id\n" +
+            "    LEFT JOIN Employee e4 ON e3.chief_id = e4.id\n" +
+            "    LEFT JOIN Employee e5 ON e4.chief_id = e5.id\n" +
+            "WHERE\n" +
+            "    e1.employee_position LIKE \"Рабочий\" ;")
     List<EmployeeHierarchyDto> findHierarchy();
 
     @Query(nativeQuery = true, value =

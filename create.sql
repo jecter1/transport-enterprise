@@ -145,45 +145,45 @@ CREATE TABLE Employee (
 	chief_id INT,
 	employee_type VARCHAR(30),
 	PRIMARY KEY (id),
-	FOREIGN KEY (chief_id) REFERENCES Employee (id)
+	FOREIGN KEY (chief_id) REFERENCES Employee (id) ON DELETE SET NULL
 );
 
 CREATE TABLE Driver (
 	id INT NOT NULL,
 	transport_id INT,
 	PRIMARY KEY (id),
-	FOREIGN KEY (id) REFERENCES Employee (id),
+	FOREIGN KEY (id) REFERENCES Employee (id) ON DELETE CASCADE,
 	FOREIGN KEY (transport_id) REFERENCES Transport (id)
 );
 
 CREATE TABLE Service_staff (
 	id INT NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (id) REFERENCES Employee (id)
+	FOREIGN KEY (id) REFERENCES Employee (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Technician (
 	id INT NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (id) REFERENCES Service_staff (id)
+	FOREIGN KEY (id) REFERENCES Service_staff (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Welder (
 	id INT NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (id) REFERENCES Service_staff (id)
+	FOREIGN KEY (id) REFERENCES Service_staff (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Locksmith (
 	id INT NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (id) REFERENCES Service_staff (id)
+	FOREIGN KEY (id) REFERENCES Service_staff (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Assembler (
 	id INT NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (id) REFERENCES Service_staff (id)
+	FOREIGN KEY (id) REFERENCES Service_staff (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Repair_staff (
@@ -191,5 +191,5 @@ CREATE TABLE Repair_staff (
 	staff_id INT NOT NULL,
 	PRIMARY KEY (repair_id, staff_id),
 	FOREIGN KEY (repair_id) REFERENCES Repair (id),
-	FOREIGN KEY	(staff_id) REFERENCES Service_staff (id)
+	FOREIGN KEY	(staff_id) REFERENCES Service_staff (id) ON DELETE CASCADE
 );

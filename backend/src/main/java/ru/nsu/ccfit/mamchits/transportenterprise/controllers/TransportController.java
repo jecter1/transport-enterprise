@@ -26,9 +26,14 @@ public class TransportController {
         return transportRepository.findTransportNumbers();
     }
 
-    @GetMapping(path="/all")
+    @GetMapping(path="/short-all")
     public @ResponseBody Iterable<Transport> findAllTransport() {
         return transportRepository.findAll();
+    }
+
+    @GetMapping(path="/all")
+    public @ResponseBody Iterable<TransportInfoDto> findAllTransportInfo() {
+        return transportRepository.findAllInfo();
     }
 
     @GetMapping(path="/{id}")

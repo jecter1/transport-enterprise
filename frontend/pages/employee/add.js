@@ -28,7 +28,6 @@ export default function AddEmployee() {
 
   return (
     <PageTemplate pageTitle={"Добавление сотрудника | Выбор специализации"}
-                  mainPanel={MainPanel()}
-                  leftPanelTitle={"Водители (N)"}/>
+                  mainPanel={MainPanel()}/>
   );
 }

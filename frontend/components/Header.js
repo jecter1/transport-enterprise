@@ -4,21 +4,30 @@ import Toolbar from '@mui/material/Toolbar';
 import Grid from '@mui/material/Grid';
 import AppBar from '@mui/material/AppBar';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import { Button, ButtonGroup, IconButton } from '@mui/material';
+import { Button, ButtonGroup, Divider, IconButton } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { Menu, MenuItem } from '@mui/material';
 
 export default function Header() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEmployeeEl, setAnchorEmployeeEl] = React.useState(null);
+  const [anchorTransportEl, setAnchorTransportEl] = React.useState(null);
+  const openEmployee = Boolean(anchorEmployeeEl);
+  const openTransport = Boolean(anchorTransportEl);
 
-  const open = Boolean(anchorEl);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleClickEmployee = (event) => {
+    setAnchorEmployeeEl(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleClickTransport = (event) => {
+    setAnchorTransportEl(event.currentTarget);
+  };
+
+  const handleCloseEmployee = () => {
+    setAnchorEmployeeEl(null);
+  };
+
+  const handleCloseTransport = () => {
+    setAnchorTransportEl(null);
   };
 
   return (
@@ -32,26 +41,38 @@ export default function Header() {
               </IconButton>
             </Link>
           </Grid>
-          <Grid item sm={8} style={{ textAlign: 'center' }}>
-            <Button style={{fontSize: 18}} onClick={handleClick}>
+          <Grid item sm={8} style={{ textAlign: 'center' }}>       
+            <Button style={{fontSize: 18}} onClick={handleClickTransport}>
+              Транспорт
+            </Button>
+            <Menu
+              anchorEl={anchorTransportEl}
+              open={openTransport}
+              onClose={handleCloseTransport}
+            >
+              <Link href="/transport/" passHref>
+                <MenuItem onClick={handleCloseTransport}>Список</MenuItem>
+              </Link>
+            </Menu>
+            <Button style={{fontSize: 18}} onClick={handleClickEmployee}>
               Сотрудники
             </Button>
             <Menu
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
+              anchorEl={anchorEmployeeEl}
+              open={openEmployee}
+              onClose={handleCloseEmployee}
             >
               <Link href="/employee/" passHref>
-                <MenuItem onClick={handleClose}>Список</MenuItem>
+                <MenuItem onClick={handleCloseEmployee}>Список</MenuItem>
               </Link>
               <Link href="/employee/drivers/" passHref>
-                <MenuItem onClick={handleClose}>Распределение водителей</MenuItem>
+                <MenuItem onClick={handleCloseEmployee}>Распределение водителей</MenuItem>
               </Link>
               <Link href="/employee/hierarchy" passHref>
-                <MenuItem onClick={handleClose}>Подчиненность</MenuItem>
+                <MenuItem onClick={handleCloseEmployee}>Подчиненность</MenuItem>
               </Link>
               <Link href="/employee/add" passHref>
-                <MenuItem onClick={handleClose}>Добавление</MenuItem>
+                <MenuItem onClick={handleCloseEmployee}>Добавление</MenuItem>
               </Link>
             </Menu>
           </Grid>

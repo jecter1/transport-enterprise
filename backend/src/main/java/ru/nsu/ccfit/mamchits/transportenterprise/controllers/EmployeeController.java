@@ -69,4 +69,9 @@ public class EmployeeController {
     public @ResponseBody Iterable<DriverDto> findAllDrivers(@RequestParam(required = false, defaultValue = "0") String transportId) {
         return driverRepository.findAllDrivers(Integer.parseInt(transportId));
     }
+
+    @RequestMapping(path="/{id}")
+    public @ResponseBody void deleteEmployee(@PathVariable Integer id) {
+        employeeRepository.deleteById(id);
+    }
 }

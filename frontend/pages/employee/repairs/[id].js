@@ -28,7 +28,7 @@ export default function EmployeeRepair() {
         const { id } = router.query;
         await getData(('employee/' + id), setEmployee);
         await getData(('employee/repairs'), setRows, {id: id});
-        await getData(('transport/all'), setTransports);
+        await getData(('transport/short-all'), setTransports);
       }
     }
     fetchData();

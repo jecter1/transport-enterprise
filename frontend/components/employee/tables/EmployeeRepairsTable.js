@@ -88,7 +88,7 @@ function rowToCells(columns, row) {
                 column.id == 'transportNumber' && transport_id 
                 ?
                 <Link href={"/transport/" + transport_id} passHref>
-                  <Button style={{fontSize: 14, height: '100%', width: '100%'}}>
+                  <Button style={{fontSize: 14, height: '8vh', width: '10vw'}}>
                     {repair_col_data}
                   </Button>
                 </Link> 

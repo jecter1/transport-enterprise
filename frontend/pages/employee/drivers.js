@@ -19,7 +19,7 @@ export default function Drivers() {
   
   useEffect(() => {
     getData('employee/drivers', setRows);
-    getData('transport/all', setTransports);
+    getData('transport/short-all', setTransports);
   }, []);
 
   const handleClick = () => {

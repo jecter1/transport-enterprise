@@ -2,7 +2,7 @@ import * as React from 'react';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Link from 'next/link';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import TableTemplate from '../../../templates/TableTemplate';
 
 const columns = [
@@ -47,11 +47,17 @@ function rowToCells(columns, row) {
           const employee_id = row[column.id.substring(0, column.id.length - 4) + "Id"];
           return (
             <TableCell key={column.id} align={column.align}>
-              <Link href={"/employee/"+employee_id} passHref>
-                <Button style={{fontSize: 14, height: '8vh', width: '10vw'}}>
-                  {employee}
-                </Button>
-              </Link>
+              {
+                employee 
+                ?
+                <Link href={"/employee/"+employee_id} passHref>
+                  <Button style={{fontSize: 14, height: '8vh', width: '10vw'}}>
+                    {employee}
+                  </Button>
+                </Link>
+                :
+                <Typography>-</Typography>
+              }
             </TableCell>
           );
         })
