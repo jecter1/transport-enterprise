@@ -8,6 +8,26 @@ const theme = createTheme({
       main: '#ffffff',
     },
   },
+  components: {
+    MuiButton: {
+      defaultProps: {
+        variant: "text",
+        sx: {
+          backgroundColor: "#2b2f40", 
+          color: '#ffffff',
+          textTransform: 'none'
+        },
+        disableElevation: true,
+        disableRipple: true
+      },
+    },
+    MuiTypography: {
+      defaultProps: {
+        color: '#ffffff',
+        fontSize: 14
+      }
+    }
+  },
 });
 
 axios.defaults.baseURL = "http://localhost:8443"

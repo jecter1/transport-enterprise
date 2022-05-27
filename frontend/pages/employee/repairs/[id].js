@@ -104,16 +104,7 @@ export default function EmployeeRepair() {
             }
           </Select>
         </FormControl>
-        <Button variant="text"
-                style={{textTransform: 'none', 
-                        color: '#ffffff', 
-                        backgroundColor: "#2b2f40", 
-                        fontSize: 16}} 
-                disableRipple
-                disableElevation
-                sx={{textTransform: 'none', 
-                    textColor: 'white'}}
-                    onClick={handleClick}>
+        <Button fontSize={16} onClick={handleClick}>
           Применить
         </Button>
       </Grid>
@@ -124,13 +115,7 @@ export default function EmployeeRepair() {
     return (
       <Grid container justifyContent="center" alignItems="center" style={{width: '100%', height: '100%', backgroundColor: "#222533"}}>
         <Link href={"/employee/" + employee["id"]} passHref>
-          <Button variant="text"
-                  style={{textTransform: 'none', 
-                          color: '#ffffff', 
-                          backgroundColor: "#2b2f40", 
-                          fontSize: 16}} 
-                  disableRipple
-                  disableElevation>
+          <Button fontSize={16}>
             Страница сотрудника
           </Button>
         </Link>

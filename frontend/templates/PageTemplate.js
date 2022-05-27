@@ -4,9 +4,6 @@ import Header from "../components/Header";
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/material";
 
-const TEXT_COLOR = "#ffffff";
-const PANEL_TITLES_FONT_SIZE = 16;
-
 /*
  * props.title
  * props.panel
@@ -24,7 +21,7 @@ function SidePanel(props) {
         props.title 
         ? 
         <Grid container justifyContent="center" alignItems="center" style={{width: '100%', height: '5%'}}>
-          <Typography color={TEXT_COLOR} fontSize={PANEL_TITLES_FONT_SIZE}>
+          <Typography fontSize={16}>
             {props.title}
           </Typography>
         </Grid>

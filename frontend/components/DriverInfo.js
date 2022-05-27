@@ -27,7 +27,7 @@ export default function DriverInfo() {
     <>
       <Grid container style={{height: '3%'}} />
       <Grid container justifyContent="center" alignItems="center" style={{width: '50%', height: '5%', backgroundColor: "#222533"}}>
-        <Typography color="#ffffff" fontSize={18}>
+        <Typography fontSize={18}>
           Привязанный транспорт
         </Typography>
       </Grid>
@@ -36,39 +36,29 @@ export default function DriverInfo() {
         {driverInfo 
         ? 
         <>
-          <Typography color="#ffffff" fontSize={16}>
+          <Typography fontSize={16}>
             Тип: {driverInfo["type"]}
           </Typography>
-          <Typography color="#ffffff" fontSize={16}>
+          <Typography fontSize={16}>
             Номер: {driverInfo["number"]}
           </Typography>
-          <Typography color="#ffffff" fontSize={16}>
+          <Typography fontSize={16}>
             Марка: {driverInfo["brand"]}
           </Typography>
-          <Typography color="#ffffff" fontSize={16}>
+          <Typography fontSize={16}>
             Модель: {driverInfo["model"]}
           </Typography>
-          <Typography color="#ffffff" fontSize={16}>
+          <Typography fontSize={16}>
             Цвет: {driverInfo["color"]}
           </Typography>
           <Link passHref href={"/transport/" + driverInfo["id"]}>
-            <Button variant="text"
-                    style={{textTransform: 'none', 
-                            color: '#ffffff', 
-                            backgroundColor: "#2b2f40", 
-                            fontSize: 14,
-                            marginTop: 10}} 
-                    disableRipple
-                    sx={{
-                        textTransform: 'none', 
-                        textColor: 'white'
-                      }}>
+            <Button style={{fontSize: 14, marginTop: '2%'}}>
               Подробнее
             </Button>
           </Link>
         </>
         :
-        <Typography color="#ffffff" fontSize={16}>
+        <Typography fontSize={16}>
           Не привязан к транспорту
         </Typography>
         }

@@ -63,17 +63,7 @@ export default function Drivers() {
             }
           </Select>
         </FormControl>
-        <Button variant="text"
-                style={{textTransform: 'none', 
-                        color: '#ffffff', 
-                        backgroundColor: "#2b2f40", 
-                        fontSize: 16,}} 
-                disableRipple
-                disableElevation
-                sx={{textTransform: 'none', 
-                    textColor: 'white'}}
-                    onClick={handleClick}
-        >
+        <Button fontSize={16} onClick={handleClick}>
           Применить
         </Button>
       </Grid>

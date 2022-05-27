@@ -8,8 +8,6 @@ import { Button, ButtonGroup, IconButton } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { Menu, MenuItem } from '@mui/material';
 
-const text_color = "#ffffff";
-
 export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -35,35 +33,27 @@ export default function Header() {
             </Link>
           </Grid>
           <Grid item sm={8} style={{ textAlign: 'center' }}>
-              <Button variant="text"
-                      style={{textTransform: 'none', 
-                              color: text_color, 
-                              backgroundColor: "#2b2f40", 
-                              fontSize: 18}} 
-                      disableRipple
-                      disableElevation
-                      onClick={handleClick}>
-                Сотрудники
-              </Button>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-              >
-                <Link href="/employee/" passHref>
-                  <MenuItem onClick={handleClose}>Список</MenuItem>
-                </Link>
-                <Link href="/employee/drivers/" passHref>
-                  <MenuItem onClick={handleClose}>Распределение водителей</MenuItem>
-                </Link>
-                <Link href="/employee/hierarchy" passHref>
-                  <MenuItem onClick={handleClose}>Подчиненность</MenuItem>
-                </Link>
-                <Link href="/employee/add" passHref>
-                  <MenuItem onClick={handleClose}>Добавление</MenuItem>
-                </Link>
-              </Menu>
+            <Button style={{fontSize: 18}} onClick={handleClick}>
+              Сотрудники
+            </Button>
+            <Menu
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+            >
+              <Link href="/employee/" passHref>
+                <MenuItem onClick={handleClose}>Список</MenuItem>
+              </Link>
+              <Link href="/employee/drivers/" passHref>
+                <MenuItem onClick={handleClose}>Распределение водителей</MenuItem>
+              </Link>
+              <Link href="/employee/hierarchy" passHref>
+                <MenuItem onClick={handleClose}>Подчиненность</MenuItem>
+              </Link>
+              <Link href="/employee/add" passHref>
+                <MenuItem onClick={handleClose}>Добавление</MenuItem>
+              </Link>
+            </Menu>
           </Grid>
           <Grid item sm={2} style={{ textAlign: 'center' }}>
             <Link href="https://github.com/jecter1/transport-enterprise" passHref>

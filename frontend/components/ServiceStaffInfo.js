@@ -10,17 +10,7 @@ export default function ServiceStaffInfo() {
 
   return (
     <Link passHref href={"repairs/" + id}>
-      <Button variant="text"
-              style={{textTransform: 'none', 
-                      color: '#ffffff', 
-                      backgroundColor: "#2b2f40", 
-                      fontSize: 14}} 
-              disableRipple
-              sx={{
-                  textTransform: 'none', 
-                  textColor: 'white',
-                  marginTop: 3
-                }}>
+      <Button style={{marginTop: '2%'}}>
         Ремонтные работы {}
       </Button>
     </Link>

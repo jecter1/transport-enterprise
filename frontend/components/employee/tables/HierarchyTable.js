@@ -48,17 +48,7 @@ function rowToCells(columns, row) {
           return (
             <TableCell key={column.id} align={column.align}>
               <Link href={"/employee/"+employee_id} passHref>
-                <Button variant="text"
-                        style={{textTransform: 'none', 
-                                color: '#ffffff', 
-                                backgroundColor: "#2b2f40", 
-                                fontSize: 14}} 
-                        disableRipple
-                        disableElevation
-                        sx={{textTransform: 'none', 
-                              textColor: 'white',
-                              height: '100%',
-                              width: '100%'}}>
+                <Button style={{fontSize: 14, height: '8vh', width: '10vw'}}>
                   {employee}
                 </Button>
               </Link>

@@ -1,12 +1,8 @@
-import Head from "next/head";
-import Header from "../../components/Header";
 import { Grid, Typography } from "@mui/material";
 import { useRouter } from 'next/router';
 import React from "react";
 import getData from "../../util/getData";
 import { useEffect } from "react";
-import { Button } from "@mui/material";
-import { Box } from "@mui/material";
 import PageTemplate from "../../templates/PageTemplate";
 
 export default function TransportProfile() {
@@ -28,7 +24,7 @@ export default function TransportProfile() {
     return (
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '50%', height: '100%'}}>
         <Grid container justifyContent="center" alignItems="center" style={{width: '100%', height: '5%', backgroundColor: "#222533"}}>
-          <Typography color="#ffffff" fontSize={18}>
+          <Typography fontSize={18}>
             {data["brand"] + " " + data["model"] + " " + data["number"]}
           </Typography>
         </Grid>
@@ -36,35 +32,35 @@ export default function TransportProfile() {
         </Grid>
         <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '100%', height: '25%', backgroundColor: "#222533"}}>
           { data["type"] ?
-          <Typography color="#ffffff" fontSize={16}>
+          <Typography fontSize={16}>
             Тип: {data["type"]}
           </Typography>
             :
             <></>
           }
           { data["color"] ?
-          <Typography color="#ffffff" fontSize={16}>
+          <Typography fontSize={16}>
             Цвет: {data["color"]}
           </Typography>
             :
             <></>
           }
           { data["receiveDate"] ?
-          <Typography color="#ffffff" fontSize={16}>
+          <Typography fontSize={16}>
             Дата получения: {data["receiveDate"]}
           </Typography>
             :
             <></>
           }
           { data["decommissioningDate"] ?
-          <Typography color="#ffffff" fontSize={16}>
+          <Typography fontSize={16}>
             Дата списания: {data["decommissioningDate"]}
           </Typography>
             :
             <></>
           }
           { data["garageLocation"] ?
-          <Typography color="#ffffff" fontSize={16}>
+          <Typography fontSize={16}>
             Гараж: {data["garageLocation"]}
           </Typography>
             :

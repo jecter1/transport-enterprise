@@ -36,18 +36,7 @@ export default function EmployeeProfile() {
             return (
               <Grid item sx={{paddingX: '5%', paddingY: '2%'}}>
               <a href={"/employee/"+superior_id} style={{textDecoration: "none"}}>
-                <Button variant="text"
-                        style={{textTransform: 'none', 
-                                color: '#ffffff', 
-                                backgroundColor: superior["position"] ? "#2b2f40" : "#222533", 
-                                fontSize: 14}} 
-                        disableRipple
-                        sx={{
-                            textTransform: 'none', 
-                            textColor: 'white',
-                            width: '100%',
-                            height: '100%'
-                          }}>
+                <Button style={{fontSize: 14, width: '100%', height: '100%'}}>
                   {superior["name"]}
                     <br/>
                   {superior["position"] ? "<" + superior["position"] + ">" : ""}
@@ -70,18 +59,7 @@ export default function EmployeeProfile() {
             return (
               <Grid item sx={{paddingX: '5%', paddingY: '2%'}}>
                 <a href={"/employee/"+subordinate_id} style={{textDecoration: "none"}}>
-                  <Button variant="text"
-                          style={{textTransform: 'none', 
-                                  color: '#ffffff', 
-                                  backgroundColor: subordinate["position"] ? "#2b2f40" : "#222533", 
-                                  fontSize: 14}} 
-                          disableRipple
-                          sx={{
-                              textTransform: 'none', 
-                              textColor: 'white',
-                              width: '100%',
-                              height: '100%'
-                            }}>
+                  <Button style={{fontSize: 14, width: '100%', height: '100%'}}>
                     {subordinate["name"]}
                       <br/>
                     {subordinate["position"] ? "<" + subordinate["position"] + ">" : ""}
@@ -99,7 +77,7 @@ export default function EmployeeProfile() {
     return (
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '50%', height: '100%'}}>
         <Grid container justifyContent="center" alignItems="center" style={{width: '100%', height: '5%', backgroundColor: "#222533"}}>
-          <Typography color="#ffffff" fontSize={18}>
+          <Typography fontSize={18}>
             {data["name"]}
           </Typography>
         </Grid>
@@ -107,21 +85,21 @@ export default function EmployeeProfile() {
         </Grid>
         <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '100%', height: '25%', backgroundColor: "#222533"}}>
           { data["type"] ?
-          <Typography color="#ffffff" fontSize={16}>
+          <Typography fontSize={16}>
             Специализация: {data["type"]}
           </Typography>
             :
             <></>
           }
           { data["position"] ?
-          <Typography color="#ffffff" fontSize={16}>
+          <Typography fontSize={16}>
             Должность: {data["position"]}
           </Typography>
             :
             <></>
           }
           { data["birthDate"] ?
-          <Typography color="#ffffff" fontSize={16}>
+          <Typography fontSize={16}>
             Дата рождения: {data["birthDate"]}
           </Typography>
             :

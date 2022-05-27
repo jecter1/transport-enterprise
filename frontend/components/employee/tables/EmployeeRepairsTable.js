@@ -88,24 +88,12 @@ function rowToCells(columns, row) {
                 column.id == 'transportNumber' && transport_id 
                 ?
                 <Link href={"/transport/" + transport_id} passHref>
-                  <Button variant="text"
-                          style={{textTransform: 'none', 
-                                  color: '#ffffff', 
-                                  backgroundColor: "#2b2f40", 
-                                  fontSize: 14}} 
-                          disableRipple
-                          disableElevation
-                          sx={{textTransform: 'none', 
-                              textColor: 'white',
-                              height: '100%',
-                              width: '100%'}}>
+                  <Button style={{fontSize: 14, height: '100%', width: '100%'}}>
                     {repair_col_data}
                   </Button>
                 </Link> 
                 :
-                <Typography style={{color: '#ffffff', 
-                                    backgroundColor: "#222533", 
-                                    fontSize: 14}}>
+                <Typography>
                   {repair_col_data ? repair_col_data : "-"}
                 </Typography>
               }
