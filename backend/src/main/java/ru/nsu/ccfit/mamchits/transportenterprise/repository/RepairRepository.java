@@ -14,6 +14,7 @@ import java.util.List;
 public interface RepairRepository extends JpaRepository<Repair, Integer> {
     @Query(nativeQuery = true, value =
             "SELECT \n" +
+            "    r.id,\n" +
             "    t.id AS transportId,\n" +
             "    t.brand AS transportBrand,\n" +
             "    t.model AS transportModel,\n" +

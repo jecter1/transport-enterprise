@@ -1,7 +1,8 @@
 package ru.nsu.ccfit.mamchits.transportenterprise.dto;
 
 public interface EmployeeRepairDto {
-    String getTransportId();
+    Integer getId();
+    Integer getTransportId();
     String getTransportBrand();
     String getTransportModel();
     String getTransportColor();
