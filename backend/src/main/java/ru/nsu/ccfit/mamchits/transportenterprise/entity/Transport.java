@@ -18,13 +18,13 @@ public class Transport {
     @Column(name = "garage_id")
     private Integer garageId;
 
-    @Column(name = "brand")
+    @Column(name = "brand", nullable = false)
     private String brand;
 
-    @Column(name = "transport_type")
+    @Column(name = "transport_type", nullable = false)
     private String type;
 
-    @Column(name = "model")
+    @Column(name = "model", nullable = false)
     private String model;
 
     @Column(name = "color")
@@ -33,7 +33,7 @@ public class Transport {
     @Column(name = "number")
     private String number;
 
-    @Column(name = "receive_date")
+    @Column(name = "receive_date", nullable = false)
     private String receiveDate;
 
     @Column(name = "decommissioning_date")

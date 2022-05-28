@@ -181,6 +181,12 @@ export default function RepairProfile() {
               </Button>
             </Link>
             :
+            repair["startDatetime"]
+            ?
+            <Typography fontSize={16}>
+              [ДАННЫЕ УДАЛЕНЫ]
+            </Typography>
+            :
             <Typography fontSize={16}>
               Не назначено
             </Typography>

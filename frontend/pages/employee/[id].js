@@ -122,7 +122,7 @@ export default function EmployeeProfile() {
         </Grid>
         <Grid container style={{height: '0.5%'}}>
         </Grid>
-        <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '100%', height: '25%', backgroundColor: "#222533"}}>
+        <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '100%', height: '20%', backgroundColor: "#222533"}}>
           { data["type"] ?
           <Typography fontSize={16}>
             Специализация: {data["type"]}

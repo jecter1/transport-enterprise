@@ -15,16 +15,16 @@ public class Repair {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "garage_id", nullable = false)
+    @Column(name = "garage_id")
     private Integer garageId;
 
     @Column(name = "transport_id", nullable = false)
     private Integer transportId;
 
-    @Column(name = "assembly", nullable = false)
+    @Column(name = "assembly")
     private String assembly;
 
-    @Column(name = "cost", nullable = false)
+    @Column(name = "cost")
     private Float cost;
 
     @Column(name = "start_datetime")

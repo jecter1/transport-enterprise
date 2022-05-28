@@ -21,7 +21,7 @@ CREATE TABLE Transport (
 	decommissioning_date DATE,
 	transport_type VARCHAR(30) NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (garage_id) REFERENCES Garage_facility (id)
+	FOREIGN KEY (garage_id) REFERENCES Garage_facility (id) ON DELETE SET NULL
 );
 
 CREATE TABLE Passenger_transport (
@@ -135,7 +135,7 @@ CREATE TABLE Repair (
 	description VARCHAR(200),
 	PRIMARY KEY (id),
 	FOREIGN KEY (transport_id) REFERENCES Transport (id),
-	FOREIGN KEY (garage_id) REFERENCES Garage_facility (id)
+	FOREIGN KEY (garage_id) REFERENCES Garage_facility (id) ON DELETE SET NULL
 );
 
 CREATE TABLE Employee (

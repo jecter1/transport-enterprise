@@ -5,6 +5,7 @@ import getData from "../../util/getData";
 import { useEffect } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import { Button } from "@mui/material";
+import Link from 'next/link';
 
 export default function TransportProfile() {
   const [transport, setTransport] = React.useState();
@@ -54,7 +55,7 @@ export default function TransportProfile() {
         </Grid>
         <Grid container style={{height: '0.5%'}}>
         </Grid>
-        <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '100%', height: '25%', backgroundColor: "#222533"}}>
+        <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '100%', height: '15%', backgroundColor: "#222533"}}>
           { transport["type"] ?
           <Typography fontSize={16}>
             Тип: {transport["type"]}
@@ -83,12 +84,29 @@ export default function TransportProfile() {
             :
             <></>
           }
-          { transport["garageLocation"] ?
-          <Typography fontSize={16}>
-            Гараж: {transport["garageLocation"]}
+        </Grid>
+        <Grid container style={{height: '3%'}}>
+        </Grid>
+        <Grid container justifyContent="center" alignItems="center" style={{width: '100%', height: '5%', backgroundColor: "#222533"}}>
+          <Typography fontSize={18}>
+            Гараж
           </Typography>
+        </Grid>
+        <Grid container style={{height: '0.5%'}}>
+        </Grid>
+        <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '100%', height: '10%', backgroundColor: "#222533"}}>
+          { 
+            transport["garageLocation"]
+            ?
+            <Link passHref href={"/garage/" + transport["garageId"]}>
+              <Button style={{fontSize: 16}}>
+                {transport["garageLocation"]}
+              </Button>
+            </Link>
             :
-            <></>
+            <Typography fontSize={16}>
+              Не привязан к гаражу
+            </Typography>
           }
         </Grid>
       </Grid>
