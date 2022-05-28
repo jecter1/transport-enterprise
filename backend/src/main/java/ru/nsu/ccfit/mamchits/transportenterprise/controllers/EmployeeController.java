@@ -52,9 +52,8 @@ public class EmployeeController {
     }
 
     @GetMapping(path="/driver/{id}")
-    public @ResponseBody Optional<DriverTransportDto> findDriverTransportById(@PathVariable String id) {
-        Optional<Driver> driver = driverRepository.findById(Integer.parseInt(id));
-        return driver.map(value -> transportRepository.findDriverTransportByTransportId((value.getTransportId()))).orElse(null);
+    public @ResponseBody Optional<DriverTransportDto> findTransportByDriverId(@PathVariable String id) {
+        return transportRepository.findTransportByDriverId(Integer.parseInt(id));
     }
 
     @GetMapping(path="/repairs")

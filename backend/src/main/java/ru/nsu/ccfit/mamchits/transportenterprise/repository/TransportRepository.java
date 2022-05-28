@@ -16,17 +16,18 @@ public interface TransportRepository extends JpaRepository<Transport, Integer> {
 
     @Query(nativeQuery = true, value =
             "SELECT\n" +
-            "   id,\n" +
-            "   brand,\n" +
-            "   model,\n" +
-            "   color,\n" +
-            "   number,\n" +
-            "   transport_type AS type\n" +
+            "   t.id,\n" +
+            "   t.brand,\n" +
+            "   t.model,\n" +
+            "   t.color,\n" +
+            "   t.number,\n" +
+            "   t.transport_type AS type\n" +
             "FROM\n" +
-            "   Transport\n" +
+            "   Driver d\n" +
+            "   JOIN Transport t ON d.transport_id = t.id\n" +
             "WHERE\n" +
-            "   id = :id ;")
-    Optional<DriverTransportDto> findDriverTransportByTransportId(@Param("id") int id);
+            "   d.id = :id ;")
+    Optional<DriverTransportDto> findTransportByDriverId(@Param("id") int id);
 
     @Query(nativeQuery = true, value =
             "SELECT\n" +
