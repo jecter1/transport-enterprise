@@ -15,6 +15,10 @@ import { Dialog } from "@mui/material";
 import { DialogActions } from "@mui/material";
 import { DialogContent } from "@mui/material";
 import { DialogContentText } from "@mui/material";
+import FreightInfo from "../../components/transport/FreightInfo";
+import PassengerInfo from "../../components/transport/PassengerInfo";
+import RouteInfo from "../../components/transport/RouteInfo";
+
 
 export default function TransportProfile() {
   const [transport, setTransport] = React.useState();
@@ -125,11 +129,21 @@ export default function TransportProfile() {
       </Grid>
         <Grid container style={{height: '0.5%'}}>
         </Grid>
-        <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '100%', height: '15%', backgroundColor: "#222533"}}>
+        <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '100%', height: '20%', backgroundColor: "#222533"}}>
           { transport["type"] ?
           <Typography fontSize={16}>
             Тип: {transport["type"]}
           </Typography>
+            :
+            <></>
+          }
+          { transport["type"] == "Грузовой" ?
+            <FreightInfo/>
+            :
+            <></>
+          }
+          { transport["type"] == "Автобус" || transport["type"] == "Маршрутное такси" || transport["type"] == "Такси" || transport["type"] == "Легковой" ?
+            <PassengerInfo/>
             :
             <></>
           }
@@ -155,6 +169,13 @@ export default function TransportProfile() {
             <></>
           }
         </Grid>
+        { 
+          transport["type"] == "Автобус" || transport["type"] == "Маршрутное такси" 
+          ?
+          <RouteInfo/>
+          :
+          <></>
+        }
         <Grid container style={{height: '3%'}}>
         </Grid>
         <Grid container justifyContent="center" alignItems="center" style={{width: '100%', height: '5%', backgroundColor: "#222533"}}>
@@ -169,7 +190,7 @@ export default function TransportProfile() {
             transport["garageLocation"]
             ?
             <Link passHref href={"/garage/" + transport["garageId"]}>
-              <Button style={{fontSize: 16}}>
+              <Button style={{fontSize: 14}}>
                 {transport["garageLocation"]}
               </Button>
             </Link>

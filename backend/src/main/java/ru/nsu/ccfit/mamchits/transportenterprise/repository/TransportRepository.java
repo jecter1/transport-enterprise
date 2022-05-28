@@ -6,7 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.*;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.Transport.FreightInfoDto;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.Transport.PassengerInfoDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.Transport.RepairShortDto;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.Transport.RouteInfoDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.Transport;
 
 import java.util.List;
@@ -132,6 +135,36 @@ public interface TransportRepository extends JpaRepository<Transport, Integer> {
             "WHERE\n" +
             "   transport_id = :id ;")
     List<RepairShortDto> findRepairsById(@Param("id") int id);
+
+    @Query(nativeQuery = true, value =
+            "SELECT\n" +
+            "   load_capacity AS capacity\n" +
+            "FROM\n" +
+            "   Freight_transport\n" +
+            "WHERE\n" +
+            "   id = :id ;")
+    Optional<FreightInfoDto> findFreightInfoById(@Param("id") int id);
+
+    @Query(nativeQuery = true, value =
+            "SELECT\n" +
+            "   passenger_capacity AS capacity\n" +
+            "FROM\n" +
+            "   Passenger_transport\n" +
+            "WHERE\n" +
+            "   id = :id ;")
+    Optional<PassengerInfoDto> findPassengerInfoById(@Param("id") int id);
+
+    @Query(nativeQuery = true, value =
+            "SELECT\n" +
+            "   r.id,\n" +
+            "   rt.fare,\n" +
+            "   r.number\n" +
+            "FROM\n" +
+            "   Route_transport rt\n" +
+            "   JOIN Route r ON rt.route_id = r.id\n" +
+            "WHERE\n" +
+            "   rt.id = :id ;")
+    Optional<RouteInfoDto> findRouteInfoById(@Param("id") int id);
 
     @Modifying
     @Query(nativeQuery = true, value =

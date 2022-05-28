@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.*;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.Transport.FreightInfoDto;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.Transport.PassengerInfoDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.Transport.RepairShortDto;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.Transport.RouteInfoDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.Transport;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.TransportRepository;
 
@@ -55,6 +58,21 @@ public class TransportController {
     @GetMapping(path="/{id}/repairs")
     public @ResponseBody Iterable<RepairShortDto> findRepairsById(@PathVariable String id) {
         return transportRepository.findRepairsById(Integer.parseInt(id));
+    }
+
+    @GetMapping(path="/{id}/freight-info")
+    public @ResponseBody Optional<FreightInfoDto> findFreightInfoById(@PathVariable String id) {
+        return transportRepository.findFreightInfoById(Integer.parseInt(id));
+    }
+
+    @GetMapping(path="/{id}/passenger-info")
+    public @ResponseBody Optional<PassengerInfoDto> findPassengerInfoById(@PathVariable String id) {
+        return transportRepository.findPassengerInfoById(Integer.parseInt(id));
+    }
+
+    @GetMapping(path="/{id}/route-info")
+    public @ResponseBody Optional<RouteInfoDto> findRouteInfoById(@PathVariable String id) {
+        return transportRepository.findRouteInfoById(Integer.parseInt(id));
     }
 
     @DeleteMapping(path="/{id}")

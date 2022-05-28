@@ -1,5 +1,5 @@
 import React from "react";
-import getData from "../util/getData";
+import getData from "../../util/getData";
 import { useEffect } from "react";
 import { Typography } from "@mui/material";
 import { useRouter } from 'next/router';
