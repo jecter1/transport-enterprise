@@ -143,7 +143,9 @@ export default function Header() {
               <Link href="/garage" passHref>
                 <MenuItem onClick={handleCloseGarage}><SearchOutlinedIcon/>Список</MenuItem>
               </Link>
-              <MenuItem onClick={handleCloseGarage}><SearchOutlinedIcon/>TODO: Распределение транспорта</MenuItem>
+              <Link href="/garage/transport" passHref>
+                <MenuItem onClick={handleCloseGarage}><SearchOutlinedIcon/>Распределение транспорта</MenuItem>
+              </Link>
               <MenuItem onClick={handleCloseGarage}><AddOutlinedIcon/>TODO: Добавить гараж</MenuItem>
             </Menu>
             <Button style={{fontSize: 18}} onClick={handleClickRoute}>

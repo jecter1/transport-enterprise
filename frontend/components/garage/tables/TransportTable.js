@@ -13,12 +13,6 @@ const columns = [
     minWidth: 160 
   },
   { 
-    id: 'type', 
-    label: 'Тип', 
-    align: 'center',
-    minWidth: 160 
-  },
-  { 
     id: 'brand', 
     label: 'Марка', 
     align: 'center',
@@ -31,20 +25,14 @@ const columns = [
     minWidth: 160 
   },
   { 
-    id: 'color', 
-    label: 'Цвет', 
+    id: 'type', 
+    label: 'Тип', 
     align: 'center',
     minWidth: 160 
   },
   { 
-    id: 'receiveDate', 
-    label: 'Дата получения', 
-    align: 'center',
-    minWidth: 160 
-  },
-  { 
-    id: 'decommissioningDate', 
-    label: 'Дата списания', 
+    id: 'garageLocation', 
+    label: 'Гараж', 
     align: 'center',
     minWidth: 160 
   },
@@ -52,6 +40,7 @@ const columns = [
 
 function rowToCells(columns, row) {
   const transport_id = row["id"];
+  const garage_id = row["garageId"]
 
   return (
     <TableRow hover role="checkbox" tabIndex={-1} key={row["id"]}>
@@ -65,6 +54,14 @@ function rowToCells(columns, row) {
                 ?
                 <Link href={"/transport/" + transport_id} passHref>
                   <Button style={{fontSize: 14, height: '6vh', width: '6vw'}}>
+                    {cell_data ? cell_data : '-'}
+                  </Button>
+                </Link> 
+                :
+                column.id == "garageLocation" && garage_id
+                ?
+                <Link href={"/garage/" + garage_id} passHref>
+                  <Button style={{fontSize: 14, height: '8vh', width: '10vw'}}>
                     {cell_data ? cell_data : '-'}
                   </Button>
                 </Link> 
