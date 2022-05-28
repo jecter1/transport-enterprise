@@ -83,7 +83,7 @@ function rowToCells(columns, row) {
                 column.id == 'number' && transport_id 
                 ?
                 <Link href={"/transport/" + transport_id} passHref>
-                  <Button style={{fontSize: 14, height: '8vh', width: '10vw'}}>
+                  <Button style={{fontSize: 14, height: '6vh', width: '6vw'}}>
                     {cell_data ? cell_data : "-"}
                   </Button>
                 </Link> 
@@ -91,7 +91,7 @@ function rowToCells(columns, row) {
                 column.id == 'routeNumber' && route_id 
                 ?
                 <Link href={"/route/" + route_id} passHref>
-                  <Button style={{fontSize: 14, height: '8vh', width: '10vw'}}>
+                  <Button style={{fontSize: 14, height: '4vh', width: '4vw'}}>
                     {cell_data ? cell_data : "-"}
                   </Button>
                 </Link> 

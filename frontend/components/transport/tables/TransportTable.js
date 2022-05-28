@@ -58,25 +58,34 @@ const columns = [
 
 function rowToCells(columns, row) {
   const transport_id = row["id"];
+  const garage_id = row["garageId"];
 
   return (
     <TableRow hover role="checkbox" tabIndex={-1} key={row["id"]}>
       { 
         columns.map((column) => {
-          const transport_col_data = row[column.id];
+          const cell_data = row[column.id];
           return (
             <TableCell key={column.id} align={column.align}>
               {
                 column.id == 'number' && transport_id 
                 ?
-                <Link href={"/transport/"+transport_id} passHref>
+                <Link href={"/transport/" + transport_id} passHref>
+                  <Button style={{fontSize: 14, height: '6vh', width: '6vw'}}>
+                    {cell_data ? cell_data : '-'}
+                  </Button>
+                </Link> 
+                :
+                column.id == 'garageLocation' && garage_id 
+                ?
+                <Link href={"/garage/" + garage_id} passHref>
                   <Button style={{fontSize: 14, height: '8vh', width: '10vw'}}>
-                    {transport_col_data ? transport_col_data : '-'}
+                    {cell_data ? cell_data : '-'}
                   </Button>
                 </Link> 
                 :
                 <Typography>
-                  {transport_col_data ? transport_col_data : "-"}
+                  {cell_data ? cell_data : "-"}
                 </Typography>
               }
             </TableCell>
