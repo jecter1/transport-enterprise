@@ -70,7 +70,7 @@ CREATE TABLE Route_transport (
 	fare INT,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES Passenger_transport (id),
-	FOREIGN KEY (route_id) REFERENCES Route (id)
+	FOREIGN KEY (route_id) REFERENCES Route (id) ON DELETE SET NULL
 );
 
 CREATE TABLE Bus (

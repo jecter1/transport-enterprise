@@ -70,7 +70,7 @@ public class EmployeeController {
         return driverRepository.findAllDrivers(Integer.parseInt(transportId));
     }
 
-    @RequestMapping(path="/{id}")
+    @DeleteMapping(path="/{id}")
     public @ResponseBody void deleteEmployee(@PathVariable Integer id) {
         employeeRepository.deleteById(id);
     }

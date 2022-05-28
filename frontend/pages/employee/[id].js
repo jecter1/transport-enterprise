@@ -13,11 +13,9 @@ import { IconButton } from "@mui/material";
 import deleteRequest from "../../util/deleteRequest";
 import { Tooltip } from "@mui/material";
 import { Dialog } from "@mui/material";
-import { DialogTitle } from "@mui/material";
 import { DialogActions } from "@mui/material";
 import { DialogContent } from "@mui/material";
 import { DialogContentText } from "@mui/material";
-import { de } from "date-fns/locale";
 
 export default function EmployeeProfile() {
   const [data, setData] = React.useState();

@@ -1,6 +1,7 @@
 package ru.nsu.ccfit.mamchits.transportenterprise.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -119,4 +120,11 @@ public interface TransportRepository extends JpaRepository<Transport, Integer> {
             "   JOIN Transport t ON rt.id = t.id\n" +
             "   LEFT JOIN Route r ON rt.route_id = r.id ;")
     List<TransportRouteDto> findTransportWithRoutes();
+
+    @Modifying
+    @Query(nativeQuery = true, value =
+            "UPDATE Route_transport\n" +
+            "SET fare = 0\n" +
+            "WHERE route_id = :id ;")
+    void deleteRouteTransportFareByRouteId(@Param("id") int id);
 }
