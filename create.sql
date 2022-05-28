@@ -128,7 +128,7 @@ CREATE TABLE Repair (
 	id INT NOT NULL,
   	transport_id INT NOT NULL,
 	garage_id INT,
-	assembly VARCHAR(50),
+	assembly VARCHAR(50) NOT NULL,
 	cost DECIMAL(12, 2),
 	start_datetime DATETIME,
 	end_datetime DATETIME,

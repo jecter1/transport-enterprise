@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.*;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.Transport.RepairShortDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.Transport;
 
 import java.util.List;
@@ -31,29 +32,29 @@ public interface TransportRepository extends JpaRepository<Transport, Integer> {
 
     @Query(nativeQuery = true, value =
             "SELECT\n" +
-                    "   id,\n" +
-                    "   number\n" +
-                    "FROM\n" +
-                    "   Transport ;")
+            "   id,\n" +
+            "   number\n" +
+            "FROM\n" +
+            "   Transport ;")
     List<TransportNumberDto> findTransportNumbers();
 
     @Query(nativeQuery = true, value =
             "SELECT\n" +
-                    "   t.id,\n" +
-                    "   t.garage_id AS garageId,\n" +
-                    "   g.location AS garageLocation,\n" +
-                    "   t.brand,\n" +
-                    "   t.model,\n" +
-                    "   t.color,\n" +
-                    "   t.number,\n" +
-                    "   t.transport_type AS type,\n" +
-                    "   t.receive_date AS receiveDate,\n" +
-                    "   t.decommissioning_date AS decommissioningDate\n" +
-                    "FROM\n" +
-                    "   Transport t \n" +
-                    "   LEFT JOIN Garage_facility g ON t.garage_id = g.id \n" +
-                    "WHERE\n" +
-                    "   t.id = :id ;")
+            "   t.id,\n" +
+            "   t.garage_id AS garageId,\n" +
+            "   g.location AS garageLocation,\n" +
+            "   t.brand,\n" +
+            "   t.model,\n" +
+            "   t.color,\n" +
+            "   t.number,\n" +
+            "   t.transport_type AS type,\n" +
+            "   t.receive_date AS receiveDate,\n" +
+            "   t.decommissioning_date AS decommissioningDate\n" +
+            "FROM\n" +
+            "   Transport t \n" +
+            "   LEFT JOIN Garage_facility g ON t.garage_id = g.id \n" +
+            "WHERE\n" +
+            "   t.id = :id ;")
     Optional<TransportInfoDto> findTransportInfoById(@Param("id") int id);
 
     @Query(nativeQuery = true, value =
@@ -121,6 +122,16 @@ public interface TransportRepository extends JpaRepository<Transport, Integer> {
             "   JOIN Transport t ON rt.id = t.id\n" +
             "   LEFT JOIN Route r ON rt.route_id = r.id ;")
     List<TransportRouteDto> findTransportWithRoutes();
+
+    @Query(nativeQuery = true, value =
+            "SELECT\n" +
+            "   id,\n" +
+            "   assembly\n" +
+            "FROM\n" +
+            "   Repair\n" +
+            "WHERE\n" +
+            "   transport_id = :id ;")
+    List<RepairShortDto> findRepairsById(@Param("id") int id);
 
     @Modifying
     @Query(nativeQuery = true, value =

@@ -19,6 +19,7 @@ import { DialogContentText } from "@mui/material";
 export default function TransportProfile() {
   const [transport, setTransport] = React.useState();
   const [drivers, setDrivers] = React.useState([]);
+  const [repairs, setRepairs] = React.useState([]);
   const [openDelete, setOpenDelete] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
 
@@ -30,6 +31,7 @@ export default function TransportProfile() {
         const { id } = router.query;
         await getData(('/transport/' + id), setTransport);
         await getData(('/transport/' + id + '/drivers'), setDrivers);
+        await getData(('/transport/' + id + '/repairs'), setRepairs);
       }
     }
     fetchData();
@@ -52,6 +54,27 @@ export default function TransportProfile() {
               <a href={"/employee/" + driver_id} style={{textDecoration: "none"}}>
                 <Button style={{fontSize: 14, width: '100%', height: '100%'}}>
                   {driver["name"]}
+                </Button>
+              </a>
+              </Grid>
+            );
+          })
+        }
+      </>
+    );
+  }
+
+  const RightPanel = () => {
+    return (
+      <>
+        { 
+          repairs.map((repair) => {
+            const repair_id = repair["id"];
+            return (
+              <Grid item sx={{paddingX: '5%', paddingY: '2%'}}>
+              <a href={"/repair/" + repair_id} style={{textDecoration: "none"}}>
+                <Button style={{fontSize: 14, width: '100%', height: '100%'}}>
+                  {(repair["assembly"] ? repair["assembly"] : "Узел не выяснен") + " (ID: " + repair["id"] + ")"}
                 </Button>
               </a>
               </Grid>
@@ -170,7 +193,9 @@ export default function TransportProfile() {
     <PageTemplate pageTitle={transport["brand"] + " " + transport["model"] + " " + (transport["number"] ? transport["number"] : "(без номера)")}
                   mainPanel={MainPanel()}
                   leftPanelTitle={"Водители (" + drivers.length + ")"}
-                  leftPanel={LeftPanel()}/>
+                  leftPanel={LeftPanel()}
+                  rightPanelTitle={"Ремонты (" + repairs.length + ")"}
+                  rightPanel={RightPanel()}/>
     :
     <PageTemplate pageTitle={"Транспорт не найден"} hasSidePanels={false} mainPanel={<Typography fontSize={20}>Транспорт не найден</Typography>}/>
   );
