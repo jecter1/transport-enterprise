@@ -48,6 +48,7 @@ export default function All() {
         <Typography fontSize={16} margin="5%">Получен</Typography>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>
           <DatePicker label="с"
+                      inputProps={{autoComplete: "off"}}
                       value={receiveFromValue}
                       onChange={(newValue) => {
                         setReceiveFromValue(newValue);
@@ -58,6 +59,7 @@ export default function All() {
         </LocalizationProvider>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>
           <DatePicker label="по"
+                      inputProps={{autoComplete: "off"}}
                       value={receiveToValue}
                       onChange={(newValue) => {
                         setReceiveToValue(newValue);
@@ -76,6 +78,7 @@ export default function All() {
         <Grid container direction="row" justifyContent="center" alignItems="center">
           <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>
             <DatePicker label="с"
+                        inputProps={{autoComplete: "off"}}
                         disabled={!decommissioned}
                         value={decommissioningFromValue}
                         onChange={(newValue) => {
@@ -88,6 +91,7 @@ export default function All() {
         </Grid>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>
           <DatePicker label="по"
+                      inputProps={{autoComplete: "off"}}
                       disabled={!decommissioned}
                       value={decommissioningToValue}
                       onChange={(newValue) => {

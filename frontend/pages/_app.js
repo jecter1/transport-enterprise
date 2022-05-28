@@ -1,6 +1,7 @@
 import '../styles/global.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
+import parseISO from 'date-fns/parseISO';
 
 const theme = createTheme({
   palette: {
@@ -25,6 +26,12 @@ const theme = createTheme({
       defaultProps: {
         color: '#ffffff',
         fontSize: 14
+      }
+    },
+    DatePicker: {
+      defaultProps: {
+        minDate: parseISO("00010101"),
+        maxDate: parseISO("99991231")
       }
     }
   },

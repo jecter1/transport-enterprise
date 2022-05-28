@@ -54,6 +54,7 @@ export default function EmployeeRepair() {
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '100%', height: '100%'}}>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>
           <DatePicker label="с"
+                      inputProps={{autoComplete: "off"}}
                       value={fromValue}
                       onChange={(newValue) => {
                         setFromValue(newValue);
@@ -64,6 +65,7 @@ export default function EmployeeRepair() {
         </LocalizationProvider>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>
           <DatePicker label="по"
+                      inputProps={{autoComplete: "off"}}
                       value={toValue}
                       onChange={(newValue) => {
                         setToValue(newValue);
