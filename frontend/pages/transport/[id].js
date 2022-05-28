@@ -7,7 +7,7 @@ import PageTemplate from "../../templates/PageTemplate";
 import { Button } from "@mui/material";
 
 export default function TransportProfile() {
-  const [transport, setTransport] = React.useState({});
+  const [transport, setTransport] = React.useState();
   const [drivers, setDrivers] = React.useState([]);
 
   const router = useRouter();
