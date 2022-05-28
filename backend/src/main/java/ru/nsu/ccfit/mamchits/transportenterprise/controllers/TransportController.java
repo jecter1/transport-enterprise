@@ -2,10 +2,7 @@ package ru.nsu.ccfit.mamchits.transportenterprise.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.*;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.Transport;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.TransportRepository;
@@ -52,5 +49,10 @@ public class TransportController {
     @GetMapping(path="/routes")
     public @ResponseBody Iterable<TransportRouteDto> findTransportWithRoutes() {
         return transportRepository.findTransportWithRoutes();
+    }
+
+    @DeleteMapping(path="/{id}")
+    public @ResponseBody void deleteById(@PathVariable String id) {
+        transportRepository.deleteById(Integer.parseInt(id));
     }
 }

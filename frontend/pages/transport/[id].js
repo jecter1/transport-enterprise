@@ -6,10 +6,20 @@ import { useEffect } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import { Button } from "@mui/material";
 import Link from 'next/link';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import { IconButton } from "@mui/material";
+import deleteRequest from "../../util/deleteRequest";
+import { Tooltip } from "@mui/material";
+import { Dialog } from "@mui/material";
+import { DialogActions } from "@mui/material";
+import { DialogContent } from "@mui/material";
+import { DialogContentText } from "@mui/material";
 
 export default function TransportProfile() {
   const [transport, setTransport] = React.useState();
   const [drivers, setDrivers] = React.useState([]);
+  const [openDelete, setOpenDelete] = React.useState(false);
 
   const router = useRouter();
 
@@ -23,6 +33,11 @@ export default function TransportProfile() {
     }
     fetchData();
   }, [router.isReady]);
+
+  const onDeleteClick = () => {
+    deleteRequest("/transport/" + transport["id"]);
+    location.href = "/transport/";
+  }
 
   const LeftPanel = () => {
     return (
@@ -48,11 +63,41 @@ export default function TransportProfile() {
   const MainPanel = () => {
     return (
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '50%', height: '100%'}}>
-        <Grid container justifyContent="center" alignItems="center" style={{width: '100%', height: '5%', backgroundColor: "#222533"}}>
-          <Typography fontSize={18}>
-            {transport["brand"] + " " + transport["model"] + " " + (transport["number"] ? transport["number"] : "(без номера)")}
-          </Typography>
-        </Grid>
+      <Grid container justifyContent="space-around" alignItems="center" style={{width: '100%', height: '5%', backgroundColor: "#222533"}}>
+        <Tooltip title="Редактировать">
+          <IconButton color="white" disableRipple>
+            <EditOutlinedIcon/>
+          </IconButton>
+        </Tooltip>
+        <Typography fontSize={18}>
+          {transport["brand"] + " " + transport["model"] + " " + (transport["number"] ? transport["number"] : "(без номера)")}
+        </Typography>
+        <Tooltip title="Удалить">
+          <IconButton color="white" disableRipple onClick={(e) => {setOpenDelete(true)}}>
+            <DeleteOutlinedIcon/>
+          </IconButton>
+        </Tooltip>
+        <Dialog
+          open={openDelete}
+          onClose={(e) => {setOpenDelete(false)}}
+        >
+          <DialogContent style={{background: '#222533'}}>
+            <DialogContentText style={{fontSize: 16, color: '#ffffff'}}>
+              Вы уверены что хотите удалить данные о транспорте?  
+            </DialogContentText>
+            <DialogContentText style={{fontSize: 16, color: '#ffffff'}}>
+              ВНИМАНИЕ!
+            </DialogContentText>
+            <DialogContentText style={{fontSize: 16, color: '#ffffff'}}>
+              Данная функция не является списанием транспорта и удаляет также данные о всех ремонтах для данного транспорта и всех его использованиях
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions style={{background: '#222533'}}>
+            <Button onClick={(e) => {setOpenDelete(false)}}>Нет</Button>
+            <Button onClick={(e) => {onDeleteClick()}}>Да</Button>
+          </DialogActions>
+        </Dialog>
+      </Grid>
         <Grid container style={{height: '0.5%'}}>
         </Grid>
         <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '100%', height: '15%', backgroundColor: "#222533"}}>
@@ -116,7 +161,7 @@ export default function TransportProfile() {
   return (
     transport
     ?
-    <PageTemplate pageTitle={transport["brand"] + " " + transport["model"] + " " + transport["number"]}
+    <PageTemplate pageTitle={transport["brand"] + " " + transport["model"] + " " + (transport["number"] ? transport["number"] : "(без номера)")}
                   mainPanel={MainPanel()}
                   leftPanelTitle={"Водители (" + drivers.length + ")"}
                   leftPanel={LeftPanel()}/>

@@ -28,32 +28,32 @@ CREATE TABLE Passenger_transport (
 	id INT NOT NULL,
 	passenger_capacity INT,
 	PRIMARY KEY (id),
-	FOREIGN KEY (id) REFERENCES Transport (id)
+	FOREIGN KEY (id) REFERENCES Transport (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Freight_transport (
 	id INT NOT NULL,
-	load_capacity INT,
+	load_capacity INT, 
 	PRIMARY KEY (id),
-	FOREIGN KEY (id) REFERENCES Transport (id)
+	FOREIGN KEY (id) REFERENCES Transport (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Auxiliary_transport (
 	id INT NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (id) REFERENCES Transport (id)
+	FOREIGN KEY (id) REFERENCES Transport (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Taxi (
 	id INT NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (id) REFERENCES Passenger_transport (id)
+	FOREIGN KEY (id) REFERENCES Passenger_transport (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Car (
 	id INT NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (id) REFERENCES Passenger_transport (id)
+	FOREIGN KEY (id) REFERENCES Passenger_transport (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Route (
@@ -69,20 +69,20 @@ CREATE TABLE Route_transport (
 	route_id INT,
 	fare INT,
 	PRIMARY KEY (id),
-	FOREIGN KEY (id) REFERENCES Passenger_transport (id),
+	FOREIGN KEY (id) REFERENCES Passenger_transport (id) ON DELETE CASCADE,
 	FOREIGN KEY (route_id) REFERENCES Route (id) ON DELETE SET NULL
 );
 
 CREATE TABLE Bus (
 	id INT NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (id) REFERENCES Route_transport (id)
+	FOREIGN KEY (id) REFERENCES Route_transport (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Minibus (
 	id INT NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (id) REFERENCES Route_transport (id)
+	FOREIGN KEY (id) REFERENCES Route_transport (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Transport_usage (
@@ -92,7 +92,7 @@ CREATE TABLE Transport_usage (
 	end_datetime DATETIME,
 	mileage DECIMAL(8, 2),
 	PRIMARY KEY (id),
-	FOREIGN KEY (transport_id) REFERENCES Transport (id)
+	FOREIGN KEY (transport_id) REFERENCES Transport (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Passenger_transport_usage (
@@ -100,9 +100,9 @@ CREATE TABLE Passenger_transport_usage (
 	transport_id INT NOT NULL,
 	passengers INT,
 	PRIMARY KEY (id),
-	FOREIGN KEY (id) REFERENCES Transport_usage (id),
-	FOREIGN KEY (transport_id) REFERENCES Passenger_transport (id),
-	FOREIGN KEY (transport_id) REFERENCES Transport_usage (transport_id)
+	FOREIGN KEY (id) REFERENCES Transport_usage (id) ON DELETE CASCADE,
+	FOREIGN KEY (transport_id) REFERENCES Passenger_transport (id) ON DELETE CASCADE,
+	FOREIGN KEY (transport_id) REFERENCES Transport_usage (transport_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Freight_transport_usage (
@@ -110,18 +110,18 @@ CREATE TABLE Freight_transport_usage (
 	transport_id INT NOT NULL,
 	freight_volume INT,
 	PRIMARY KEY (id),
-	FOREIGN KEY (id) REFERENCES Transport_usage (id),
-	FOREIGN KEY (transport_id) REFERENCES Freight_transport (id),
-	FOREIGN KEY (transport_id) REFERENCES Transport_usage (transport_id)
+	FOREIGN KEY (id) REFERENCES Transport_usage (id) ON DELETE CASCADE,
+	FOREIGN KEY (transport_id) REFERENCES Freight_transport (id) ON DELETE CASCADE,
+	FOREIGN KEY (transport_id) REFERENCES Transport_usage (transport_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Auxiliary_transport_usage (
 	id INT NOT NULL,
 	transport_id INT NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (id) REFERENCES Transport_usage (id),
-	FOREIGN KEY (transport_id) REFERENCES Auxiliary_transport (id),
-	FOREIGN KEY (transport_id) REFERENCES Transport_usage (transport_id)
+	FOREIGN KEY (id) REFERENCES Transport_usage (id) ON DELETE CASCADE,
+	FOREIGN KEY (transport_id) REFERENCES Auxiliary_transport (id) ON DELETE CASCADE,
+	FOREIGN KEY (transport_id) REFERENCES Transport_usage (transport_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Repair (
@@ -134,7 +134,7 @@ CREATE TABLE Repair (
 	end_datetime DATETIME,
 	description VARCHAR(200),
 	PRIMARY KEY (id),
-	FOREIGN KEY (transport_id) REFERENCES Transport (id),
+	FOREIGN KEY (transport_id) REFERENCES Transport (id) ON DELETE CASCADE,
 	FOREIGN KEY (garage_id) REFERENCES Garage_facility (id) ON DELETE SET NULL
 );
 
@@ -154,7 +154,7 @@ CREATE TABLE Driver (
 	transport_id INT,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES Employee (id) ON DELETE CASCADE,
-	FOREIGN KEY (transport_id) REFERENCES Transport (id)
+	FOREIGN KEY (transport_id) REFERENCES Transport (id) ON DELETE SET NULL
 );
 
 CREATE TABLE Service_staff (

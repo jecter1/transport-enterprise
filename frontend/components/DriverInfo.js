@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 
 export default function DriverInfo() {
-  const [driverInfo, setDriverInfo] = React.useState({});
+  const [driverInfo, setDriverInfo] = React.useState();
   
   const router = useRouter();
   
