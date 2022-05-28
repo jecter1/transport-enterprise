@@ -93,8 +93,8 @@ public interface TransportRepository extends JpaRepository<Transport, Integer> {
             "   e.name\n" +
             "FROM\n" +
             "   Transport t\n" +
-            "   LEFT JOIN Driver d ON t.id = d.transport_id\n" +
-            "   LEFT JOIN Employee e ON d.id = e.id\n" +
+            "   JOIN Driver d ON t.id = d.transport_id\n" +
+            "   JOIN Employee e ON d.id = e.id\n" +
             "WHERE\n" +
             "   t.id = :id ;")
     List<EmployeeNameDto> findTransportDrivers(@Param("id") int id);

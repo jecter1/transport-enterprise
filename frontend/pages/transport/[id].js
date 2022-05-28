@@ -16,8 +16,8 @@ export default function TransportProfile() {
     const fetchData = async () => {
       if (router.isReady) {
         const { id } = router.query;
-        await getData(('transport/' + id), setTransport);
-        await getData(('transport/' + id + '/drivers'), setDrivers);
+        await getData(('/transport/' + id), setTransport);
+        await getData(('/transport/' + id + '/drivers'), setDrivers);
       }
     }
     fetchData();
@@ -31,7 +31,7 @@ export default function TransportProfile() {
             const driver_id = driver["id"];
             return (
               <Grid item sx={{paddingX: '5%', paddingY: '2%'}}>
-              <a href={"/employee/"+driver_id} style={{textDecoration: "none"}}>
+              <a href={"/employee/" + driver_id} style={{textDecoration: "none"}}>
                 <Button style={{fontSize: 14, width: '100%', height: '100%'}}>
                   {driver["name"]}
                 </Button>
@@ -49,7 +49,7 @@ export default function TransportProfile() {
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '50%', height: '100%'}}>
         <Grid container justifyContent="center" alignItems="center" style={{width: '100%', height: '5%', backgroundColor: "#222533"}}>
           <Typography fontSize={18}>
-            {transport["brand"] + " " + transport["model"] + " " + transport["number"]}
+            {transport["brand"] + " " + transport["model"] + " " + (transport["number"] ? transport["number"] : "(без номера)")}
           </Typography>
         </Grid>
         <Grid container style={{height: '0.5%'}}>

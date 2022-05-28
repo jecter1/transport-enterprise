@@ -6,8 +6,8 @@ import { useEffect } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import { Button } from "@mui/material";
 
-export default function RouteProfile() {
-  const [route, setRoute] = React.useState();
+export default function GarageProfile() {
+  const [garage, setGarage] = React.useState();
   const [transportList, setTransportList] = React.useState([]);
 
   const router = useRouter();
@@ -16,8 +16,8 @@ export default function RouteProfile() {
     const fetchData = async () => {
       if (router.isReady) {
         const { id } = router.query;
-        await getData(('/route/' + id), setRoute);
-        await getData(('/route/' + id + "/transport"), setTransportList);
+        await getData(('/garage/' + id), setGarage);
+        await getData(('/garage/' + id + "/transport"), setTransportList);
       }
     }
     fetchData();
@@ -53,17 +53,17 @@ export default function RouteProfile() {
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '50%', height: '100%'}}>
         <Grid container justifyContent="center" alignItems="center" style={{width: '100%', height: '5%', backgroundColor: "#222533"}}>
           <Typography fontSize={18}>
-            {"Маршрут №" + route["number"]}
+            {"Гараж (" + garage["location"] + ")"}
           </Typography>
         </Grid>
         <Grid container style={{height: '0.5%'}}>
         </Grid>
         <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '100%', height: '15%', backgroundColor: "#222533"}}>
           { 
-            route
+            garage
             ?
             <Typography fontSize={16}>
-              {route["startPoint"] + " → " + route["finishPoint"]}
+              {garage["description"] ? garage["description"] : "Описание отсутствует"}
             </Typography>
               :
             <></>
@@ -74,13 +74,13 @@ export default function RouteProfile() {
   }
 
   return (
-    route
+    garage
     ?
-    <PageTemplate pageTitle={"Маршрут №" + route["number"]}
+    <PageTemplate pageTitle={"Гараж (" + garage["location"] + ")"}
                   mainPanel={MainPanel()}
                   leftPanelTitle={"Привязанный транспорт (" + transportList.length + ")"}
                   leftPanel={LeftPanel()}/>
     :
-    <PageTemplate pageTitle={"Маршрут не найден"} hasSidePanels={false} mainPanel={<Typography fontSize={20}>Маршрут не найден</Typography>}/>
+    <PageTemplate pageTitle={"Гараж не найден"} hasSidePanels={false} mainPanel={<Typography fontSize={20}>Гараж не найден</Typography>}/>
   );
 }
