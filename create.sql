@@ -191,6 +191,6 @@ CREATE TABLE Repair_staff (
 	repair_id INT NOT NULL,
 	staff_id INT NOT NULL,
 	PRIMARY KEY (repair_id, staff_id),
-	FOREIGN KEY (repair_id) REFERENCES Repair (id),
+	FOREIGN KEY (repair_id) REFERENCES Repair (id) ON DELETE CASCADE,
 	FOREIGN KEY	(staff_id) REFERENCES Service_staff (id) ON DELETE CASCADE
 );

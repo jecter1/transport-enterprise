@@ -2,10 +2,7 @@ package ru.nsu.ccfit.mamchits.transportenterprise.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.Repair.RepairFullInfoDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.Repair.RepairProfileDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.Repair.RepairStaffDto;
@@ -32,5 +29,10 @@ public class RepairController {
     @GetMapping(path="/{id}/staff")
     public @ResponseBody Iterable<RepairStaffDto> findStaffById(@PathVariable String id) {
         return repairRepository.findStaffById(Integer.parseInt(id));
+    }
+
+    @DeleteMapping(path="/{id}")
+    public @ResponseBody void deleteById(@PathVariable String id) {
+        repairRepository.deleteById(Integer.parseInt(id));
     }
 }

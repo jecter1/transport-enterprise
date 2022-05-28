@@ -38,7 +38,7 @@ export default function EmployeeProfile() {
   }, [router.isReady]);
 
   const onDeleteClick = () => {
-    deleteRequest("employee/" + data["id"]);
+    deleteRequest("/employee/" + data["id"]);
     location.href = "/employee/";
   }
 
