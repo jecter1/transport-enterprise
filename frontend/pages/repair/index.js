@@ -8,7 +8,7 @@ import TableMainPanel from "../../templates/TableMainPanel";
 export default function All() {
   const pageTitle = "Список ремонтов";
   
-  const [rows, setRows] = React.useState([{}]);
+  const [rows, setRows] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   
   useEffect(() => {
