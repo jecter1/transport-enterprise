@@ -1,13 +1,11 @@
 package ru.nsu.ccfit.mamchits.transportenterprise.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.*;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.Transport.FreightInfoDto;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.Transport.PassengerInfoDto;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.Transport.RepairShortDto;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.Transport.RouteInfoDto;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.Transport.*;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.Transport;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.TransportRepository;
 
@@ -30,13 +28,19 @@ public class TransportController {
     }
 
     @GetMapping(path="/all")
-    public @ResponseBody Iterable<TransportInfoDto> findAllTransportInfo() {
-        return transportRepository.findAllInfo();
+    public @ResponseBody Iterable<TransportInfoDto> findAllTransportInfo(
+            @RequestParam(required = false, defaultValue = "19000101") String receiveFrom,
+            @RequestParam(required = false, defaultValue = "19000101") String receiveTo,
+            @RequestParam(required = false, defaultValue = "19000101") String decommissioningFrom,
+            @RequestParam(required = false, defaultValue = "19000101") String decommissioningTo) {
+        return transportRepository.findAllInfo(receiveFrom,
+                receiveTo,
+                decommissioningFrom,
+                decommissioningTo);
     }
 
     @GetMapping(path="/{id}")
-    public @ResponseBody
-    Optional<TransportInfoDto> findTransportInfoById(@PathVariable String id) {
+    public @ResponseBody Optional<TransportInfoDto> findTransportInfoById(@PathVariable String id) {
         return transportRepository.findTransportInfoById(Integer.parseInt(id));
     }
 

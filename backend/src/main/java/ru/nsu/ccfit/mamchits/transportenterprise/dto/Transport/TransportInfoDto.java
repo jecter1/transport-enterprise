@@ -1,4 +1,4 @@
-package ru.nsu.ccfit.mamchits.transportenterprise.dto;
+package ru.nsu.ccfit.mamchits.transportenterprise.dto.Transport;
 
 public interface TransportInfoDto {
     Integer getId();

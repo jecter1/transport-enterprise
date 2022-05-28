@@ -6,10 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.*;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.Transport.FreightInfoDto;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.Transport.PassengerInfoDto;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.Transport.RepairShortDto;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.Transport.RouteInfoDto;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.Transport.*;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.Transport;
 
 import java.util.List;
@@ -71,8 +68,17 @@ public interface TransportRepository extends JpaRepository<Transport, Integer> {
             "   t.decommissioning_date AS decommissioningDate\n" +
             "FROM\n" +
             "   Transport t \n" +
-            "   LEFT JOIN Garage_facility g ON t.garage_id = g.id ;")
-    List<TransportInfoDto> findAllInfo();
+            "   LEFT JOIN Garage_facility g ON t.garage_id = g.id \n" +
+            "WHERE\n" +
+            "   ( :receiveFrom LIKE '19000101' OR t.receive_date >= :receiveFrom ) AND\n" +
+            "   ( :receiveTo LIKE '19000101' OR t.receive_date <= :receiveTo ) AND\n" +
+            "   ( :decommissioningFrom LIKE '19000101' OR t.decommissioning_date >= :decommissioningFrom ) AND\n" +
+            "   ( :decommissioningTo LIKE '19000101' OR t.decommissioning_date <= :decommissioningTo ) ;")
+    List<TransportInfoDto> findAllInfo(
+            @Param("receiveFrom") String receiveFrom,
+            @Param("receiveTo") String receiveTo,
+            @Param("decommissioningFrom") String decommissioningFrom,
+            @Param("decommissioningTo") String decommissioningTo);
 
     @Query(nativeQuery = true, value =
             "SELECT\n" +

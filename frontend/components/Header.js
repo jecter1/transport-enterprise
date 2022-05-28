@@ -93,7 +93,6 @@ export default function Header() {
                 <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Распределение по маршрутам</MenuItem>
               </Link>
               <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>TODO: Пробег</MenuItem>
-              <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>TODO: Полученный и списанный</MenuItem>
               <MenuItem onClick={handleCloseTransport}><AddOutlinedIcon/>TODO: Добавить транспорт</MenuItem>
             </Menu>
             <Button style={{fontSize: 18}} onClick={handleClickEmployee}>
