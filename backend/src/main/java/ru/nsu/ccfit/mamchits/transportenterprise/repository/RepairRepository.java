@@ -6,9 +6,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.EmployeeRepairDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.Repair.RepairFullInfoDto;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.Repair.RepairProfileDto;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.Repair.RepairStaffDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.Repair;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface RepairRepository extends JpaRepository<Repair, Integer> {
@@ -63,4 +66,41 @@ public interface RepairRepository extends JpaRepository<Repair, Integer> {
             "    LEFT JOIN Garage_facility g ON r.garage_id = g.id\n" +
             "    JOIN Transport t ON r.transport_id = t.id ;")
     List<RepairFullInfoDto> findAllFullInfo();
+
+    @Query(nativeQuery = true, value =
+            "SELECT\n" +
+            "    r.id,\n" +
+            "    r.garage_id AS garageId,\n" +
+            "    g.location AS garageLocation,\n" +
+            "    r.assembly,\n" +
+            "    r.description,\n" +
+            "    r.cost,\n" +
+            "    r.start_datetime AS startDatetime,\n" +
+            "    r.end_datetime AS endDatetime,\n" +
+            "    r.transport_id AS transportId,\n" +
+            "    t.number AS transportNumber,\n" +
+            "    t.brand AS transportBrand,\n" +
+            "    t.model AS transportModel,\n" +
+            "    t.color AS transportColor,\n" +
+            "    t.transport_type AS transportType\n" +
+            "FROM\n" +
+            "    Repair r\n" +
+            "    LEFT JOIN Garage_facility g ON r.garage_id = g.id\n" +
+            "    JOIN Transport t ON r.transport_id = t.id\n" +
+            "WHERE\n" +
+            "   r.id = :id ;")
+    Optional<RepairProfileDto> findProfileInfoById(@Param("id") int id);
+
+    @Query(nativeQuery = true, value =
+            "SELECT \n" +
+            "    e.id,\n" +
+            "    e.name,\n" +
+            "    e.employee_type AS type\n" +
+            "FROM \n" +
+            "    Repair r \n" +
+            "    JOIN Repair_staff rs ON r.id = rs.repair_id\n" +
+            "    JOIN Employee e ON rs.staff_id = e.id\n" +
+            "WHERE\n" +
+            "    r.id = :id ;")
+    List<RepairStaffDto> findStaffById(@Param("id") int id);
 }
