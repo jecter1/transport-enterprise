@@ -14,12 +14,14 @@ import { Dialog } from "@mui/material";
 import { DialogActions } from "@mui/material";
 import { DialogContent } from "@mui/material";
 import { DialogContentText } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 
 
 export default function RouteProfile() {
   const [route, setRoute] = React.useState();
   const [transportList, setTransportList] = React.useState([]);
   const [openDelete, setOpenDelete] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
   const router = useRouter();
 
@@ -32,6 +34,7 @@ export default function RouteProfile() {
       }
     }
     fetchData();
+    setLoading(false);
   }, [router.isReady]);
 
   const onDeleteClick = () => {
@@ -114,6 +117,10 @@ export default function RouteProfile() {
   }
 
   return (
+    loading
+    ?
+    <PageTemplate hasSidePanels={false} pageTitle={"Загрузка..."}/>
+    :
     route
     ?
     <PageTemplate pageTitle={"Маршрут №" + route["number"]}

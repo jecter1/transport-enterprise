@@ -22,6 +22,7 @@ export default function EmployeeProfile() {
   const [subordinates, setSubordinates] = React.useState([]);
   const [superiors, setSuperiors] = React.useState([]);
   const [openDelete, setOpenDelete] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
   const router = useRouter();
 
@@ -35,6 +36,7 @@ export default function EmployeeProfile() {
       }
     }
     fetchData();
+    setLoading(false);
   }, [router.isReady]);
 
   const onDeleteClick = () => {
@@ -164,6 +166,10 @@ export default function EmployeeProfile() {
   }
 
   return (
+      loading
+      ?
+      <PageTemplate hasSidePanels={false} pageTitle={"Загрузка..."}/>
+      :
       data 
       ? 
       <PageTemplate pageTitle={data["name"]}

@@ -9,12 +9,18 @@ export default function All() {
   const pageTitle = "Список маршрутов";
   
   const [rows, setRows] = React.useState([{}]);
+  const [loading, setLoading] = React.useState(true);
   
   useEffect(() => {
-      getData('route/all', setRows)
+      getData('route/all', setRows);
+      setLoading(false);
   }, []);
 
   return (
+    loading
+    ?
+    <PageTemplate hasSidePanels={false} pageTitle={"Загрузка..."}/>
+    :
     <PageTemplate pageTitle={pageTitle} mainPanel={TableMainPanel(pageTitle, RouteTable, rows)}/>
   );
 }

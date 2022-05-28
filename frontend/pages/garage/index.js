@@ -4,18 +4,23 @@ import getData from "../../util/getData";
 import { useEffect } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import TableMainPanel from "../../templates/TableMainPanel";
-import { Garage } from "@mui/icons-material";
 
 export default function All() {
   const pageTitle = "Список гаражей";
   
   const [rows, setRows] = React.useState([{}]);
+  const [loading, setLoading] = React.useState(true);
   
   useEffect(() => {
-      getData('garage/all', setRows)
+      getData('garage/all', setRows);
+      setLoading(false);
   }, []);
 
   return (
+    loading
+    ?
+    <PageTemplate hasSidePanels={false} pageTitle={"Загрузка..."}/>
+    :
     <PageTemplate pageTitle={pageTitle} mainPanel={TableMainPanel(pageTitle, GarageTable, rows)}/>
   );
 }

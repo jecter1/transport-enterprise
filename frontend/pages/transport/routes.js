@@ -9,12 +9,18 @@ export default function Drivers() {
   const pageTitle = "Распределение транспорта по маршрутам";
   
   const [rows, setRows] = React.useState([{}]);
+  const [loading, setLoading] = React.useState(true);
   
   useEffect(() => {
-      getData('transport/routes', setRows)
+      getData('transport/routes', setRows);
+      setLoading(false);
   }, []);
 
   return (
+    loading
+    ?
+    <PageTemplate hasSidePanels={false} pageTitle={"Загрузка..."}/>
+    :
     <PageTemplate pageTitle={pageTitle} mainPanel={TableMainPanel(pageTitle, RouteTable, rows)}/>
   );
 }

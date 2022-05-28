@@ -16,10 +16,12 @@ export default function Drivers() {
   const [rows, setRows] = React.useState([{}]);
   const [transports, setTransports] = React.useState([]);
   const [transportId, setTransportId] = React.useState(0);
+  const [loading, setLoading] = React.useState(true);
   
   useEffect(() => {
     getData('employee/drivers', setRows);
     getData('transport/short-all', setTransports);
+    setLoading(false);
   }, []);
 
   const handleClick = () => {
@@ -71,6 +73,10 @@ export default function Drivers() {
   }
 
   return (
+    loading
+    ?
+    <PageTemplate hasSidePanels={false} pageTitle={"Загрузка..."}/>
+    :
     <PageTemplate pageTitle={pageTitle}
                   mainPanel={TableMainPanel(pageTitle, DriverTable, rows)}
                   leftPanel={LeftPanel()}/>

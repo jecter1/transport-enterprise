@@ -19,6 +19,7 @@ export default function GarageProfile() {
   const [garage, setGarage] = React.useState();
   const [transportList, setTransportList] = React.useState([]);
   const [openDelete, setOpenDelete] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
   const router = useRouter();
 
@@ -31,6 +32,7 @@ export default function GarageProfile() {
       }
     }
     fetchData();
+    setLoading(false);
   }, [router.isReady]);
 
   const onDeleteClick = () => {
@@ -113,6 +115,10 @@ export default function GarageProfile() {
   }
 
   return (
+    loading
+    ?
+    <PageTemplate hasSidePanels={false} pageTitle={"Загрузка..."}/>
+    :
     garage
     ?
     <PageTemplate pageTitle={"Гараж (" + garage["location"] + ")"}

@@ -20,6 +20,7 @@ export default function EmployeeRepair() {
   const [fromValue, setFromValue] = React.useState(null);
   const [toValue, setToValue] = React.useState(null);
   const [transportId, setTransportId] = React.useState('');
+  const [loading, setLoading] = React.useState(true);
   const router = useRouter();
 
   useEffect(() => { 
@@ -32,6 +33,7 @@ export default function EmployeeRepair() {
       }
     }
     fetchData();
+    setLoading(false);
   }, [router.isReady]);
 
   const handleClick = async () => {
@@ -124,6 +126,10 @@ export default function EmployeeRepair() {
   }
 
   return (
+    loading
+    ?
+    <PageTemplate hasSidePanels={false} pageTitle={"Загрузка..."}/>
+    :
     <PageTemplate pageTitle={"Ремонтные работы | " + employee["name"]}
                   mainPanel={TableMainPanel(employee["name"] + " → Ремонтные работы", EmployeeRepairsTable, rows)}
                   leftPanel={LeftPanel()}

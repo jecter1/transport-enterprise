@@ -20,6 +20,7 @@ export default function TransportProfile() {
   const [transport, setTransport] = React.useState();
   const [drivers, setDrivers] = React.useState([]);
   const [openDelete, setOpenDelete] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
   const router = useRouter();
 
@@ -32,6 +33,7 @@ export default function TransportProfile() {
       }
     }
     fetchData();
+    setLoading(false);
   }, [router.isReady]);
 
   const onDeleteClick = () => {
@@ -159,6 +161,10 @@ export default function TransportProfile() {
   }
 
   return (
+    loading
+    ?
+    <PageTemplate hasSidePanels={false} pageTitle={"Загрузка..."}/>
+    :
     transport
     ?
     <PageTemplate pageTitle={transport["brand"] + " " + transport["model"] + " " + (transport["number"] ? transport["number"] : "(без номера)")}

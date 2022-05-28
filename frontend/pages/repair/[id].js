@@ -20,6 +20,7 @@ export default function RepairProfile() {
   const [repair, setRepair] = React.useState();
   const [staffList, setStaffList] = React.useState();
   const [openDelete, setOpenDelete] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
   const router = useRouter();
 
@@ -32,6 +33,7 @@ export default function RepairProfile() {
       }
     }
     fetchData();
+    setLoading(false);
   }, [router.isReady]);
 
   const onDeleteClick = () => {
@@ -236,6 +238,10 @@ export default function RepairProfile() {
   }
 
   return (
+    loading
+    ?
+    <PageTemplate hasSidePanels={false} pageTitle={"Загрузка..."}/>
+    :
     repair && staffList
     ?
     <PageTemplate pageTitle={"Ремонт (ID: " + repair["id"] + ")"}
