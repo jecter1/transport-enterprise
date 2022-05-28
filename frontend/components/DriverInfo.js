@@ -26,13 +26,13 @@ export default function DriverInfo() {
   return (
     <>
       <Grid container style={{height: '3%'}} />
-      <Grid container justifyContent="center" alignItems="center" style={{width: '50%', height: '5%', backgroundColor: "#222533"}}>
+      <Grid container justifyContent="center" alignItems="center" style={{width: '100%', height: '5%', backgroundColor: "#222533"}}>
         <Typography fontSize={18}>
           Привязанный транспорт
         </Typography>
       </Grid>
       <Grid container style={{height: '0.5%'}} />
-      <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '50%', height: '25%', backgroundColor: "#222533"}}>
+      <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '100%', height: '25%', backgroundColor: "#222533"}}>
         {driverInfo 
         ? 
         <>
