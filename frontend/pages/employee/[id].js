@@ -31,8 +31,8 @@ export default function EmployeeProfile() {
       if (router.isReady) {
         const { id } = router.query;
         await getData(('employee/' + id), setData);
-        await getData(('employee/subordinates/' + id), setSubordinates);
-        await getData(('employee/superiors/' + id), setSuperiors);
+        await getData(('employee/' + id + "/subordinates"), setSubordinates);
+        await getData(('employee/' + id + "/superiors"), setSuperiors);
       }
     }
     fetchData();

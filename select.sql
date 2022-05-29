@@ -7,7 +7,7 @@ SELECT
     t.number, 
     t.receive_date, 
     t.decommissioning_date,
-    t.transport_type,
+    t.type,
     g.location AS garage_location
 FROM 
     Transport t 
@@ -25,8 +25,8 @@ ORDER BY
 SELECT 
     e1.name,
     e1.birth_date,
-    e1.employee_type AS type,
-    e1.employee_position AS position,
+    e1.type,
+    e1.position,
     e2.name AS chief_name
 FROM 
     Driver d
@@ -50,7 +50,7 @@ FROM
 SELECT 
     e1.name,
     e1.birth_date,
-    e1.employee_position AS position,
+    e1.position,
     e2.name AS chief_name
 FROM 
     Driver d
@@ -82,9 +82,9 @@ SELECT
     t.color AS transport_color,
     t.receive_date AS transport_receive_date,
     t.decommissioning_date AS transport_decommissioning_date,
-    t.transport_type AS transport_type,
+    t.type AS transport_type,
     e.name,
-    e.employee_position AS position
+    e.position
 FROM 
     Driver d
     JOIN Employee e ON d.id = e.id
@@ -102,7 +102,7 @@ SELECT
     t.color,
     t.receive_date,
     t.decommissioning_date,
-    t.transport_type,
+    t.type,
     pt.passenger_capacity,
     r.number AS route_number,
     r.start_point AS route_start,
@@ -123,23 +123,23 @@ ORDER BY
 -- 5.1. Для определенной категории
 
 SELECT 
-    t.number,
-    t.brand,
-    t.model,
-    t.color,
-    t.receive_date,
-    t.decommissioning_date,
-    ft.load_capacity,
+    tr.number,
+    tr.brand,
+    tr.model,
+    tr.color,
+    pt.passenger_capacity,
     IFNULL(SUM(mileage), 0) AS sum_mileage
 FROM
     Transport_usage tu
-    JOIN Freight_transport ft ON tu.transport_id = ft.id
-    JOIN Transport t ON tu.transport_id = t.id
+    JOIN Passenger_transport_usage ptu ON tu.id = ptu.id
+    JOIN Taxi t ON ptu.transport_id = t.id
+    JOIN Passenger_transport pt ON ptu.transport_id = pt.id
+    JOIN Transport tr ON t.id = tr.id 
 WHERE
-    (YEAR(start_datetime) = 2022 AND MONTH(start_datetime) = 4 AND DAY(start_datetime) = 6) OR
-    (YEAR(end_datetime) = 2022 AND MONTH(end_datetime) = 4 AND DAY(end_datetime) = 6)
+    (YEAR(tu.start_datetime) = 2022 AND MONTH(tu.start_datetime) = 4 AND DAY(tu.start_datetime) = 6) OR
+    (YEAR(tu.end_datetime) = 2022 AND MONTH(tu.end_datetime) = 4 AND DAY(tu.end_datetime) = 6)
 GROUP BY
-    t.id;
+    tr.id;
 
 
 -- 5.2. Для конкретной автомашины
@@ -147,11 +147,14 @@ GROUP BY
 SELECT 
     IFNULL(SUM(mileage), 0) AS sum_mileage
 FROM
-    Transport_usage
+    Transport_usage tu
+    LEFT JOIN Passenger_transport_usage ptu ON tu.id = ptu.id
+    LEFT JOIN Freight_transport_usage ftu ON tu.id = ftu.id
+    LEFT JOIN Auxiliary_transport_usage atu ON tu.id = atu.id
 WHERE 
-    ((YEAR(start_datetime) = 2022 AND MONTH(start_datetime) = 4 AND DAY(start_datetime) = 6) OR
-    (YEAR(end_datetime) = 2022 AND MONTH(end_datetime) = 4 AND DAY(end_datetime) = 6)) AND
-    transport_id = 3;
+    ((YEAR(start_datetime) = 2022 AND MONTH(start_datetime) = 4 AND DAY(start_datetime) = 5) OR
+    (YEAR(end_datetime) = 2022 AND MONTH(end_datetime) = 4 AND DAY(end_datetime) = 5)) AND
+    (ptu.transport_id = 3 OR ftu.transport_id = 3 OR atu.transport_id = 3);
 
 
 -- 6. Получить данные о числе ремонтов и их стоимости для автотранспорта определенной
@@ -223,7 +226,7 @@ FROM
     
 -- Проверка
 
-SELECT id, name, employee_position, chief_id FROM Employee;
+SELECT id, name, position, chief_id FROM Employee;
 
 
 -- 8. Получить сведения о наличии гаражного хозяйства 
@@ -332,7 +335,7 @@ SELECT
     t.number, 
     t.receive_date, 
     t.decommissioning_date,
-    t.transport_type,
+    t.type,
     g.location AS garage_location
 FROM 
     Transport t 
@@ -355,7 +358,7 @@ SELECT
     t.number, 
     t.receive_date, 
     t.decommissioning_date,
-    t.transport_type,
+    t.type,
     g.location AS garage_location
 FROM 
     Transport t 
@@ -386,8 +389,8 @@ WITH employee_chief AS (
 SELECT 
     e.name,
     e.birth_date,
-    e.employee_position,
-    e.employee_type
+    e.position,
+    e.type
 FROM
     Employee e
     JOIN employee_chief ec ON e.id = ec.id
@@ -400,7 +403,7 @@ WHERE
 
 -- Проверка
 
-SELECT id, name, employee_type, chief_id FROM Employee;
+SELECT id, name, type, chief_id FROM Employee;
 
 
 -- 14. Получить данные о работах, выполненных указанным специалистом 
@@ -414,7 +417,7 @@ SELECT
     t.model AS transport_model,
     t.color AS transport_color,
     t.number AS transport_number,
-    t.transport_type,
+    t.type,
     r.assembly,
     r.cost,
     r.start_datetime,

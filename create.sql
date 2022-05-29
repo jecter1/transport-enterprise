@@ -19,7 +19,7 @@ CREATE TABLE Transport (
 	`number` VARCHAR(6),
 	receive_date DATE NOT NULL,
 	decommissioning_date DATE,
-	transport_type VARCHAR(30) NOT NULL,
+	type ENUM('Вспомогательный', 'Грузовой', 'Пассажирский', 'Легковой', 'Такси', 'Маршрутный', 'Автобус', 'Маршрутное такси') NOT NULL,
 	PRIMARY KEY (id),
 	FOREIGN KEY (garage_id) REFERENCES Garage_facility (id) ON DELETE SET NULL
 );
@@ -87,12 +87,10 @@ CREATE TABLE Minibus (
 
 CREATE TABLE Transport_usage (
 	id INT NOT NULL,
-	transport_id INT NOT NULL,
 	start_datetime DATETIME,
 	end_datetime DATETIME,
 	mileage DECIMAL(8, 2),
-	PRIMARY KEY (id),
-	FOREIGN KEY (transport_id) REFERENCES Transport (id) ON DELETE CASCADE
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE Passenger_transport_usage (
@@ -101,8 +99,7 @@ CREATE TABLE Passenger_transport_usage (
 	passengers INT,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES Transport_usage (id) ON DELETE CASCADE,
-	FOREIGN KEY (transport_id) REFERENCES Passenger_transport (id) ON DELETE CASCADE,
-	FOREIGN KEY (transport_id) REFERENCES Transport_usage (transport_id) ON DELETE CASCADE
+	FOREIGN KEY (transport_id) REFERENCES Passenger_transport (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Freight_transport_usage (
@@ -111,8 +108,7 @@ CREATE TABLE Freight_transport_usage (
 	freight_volume INT,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES Transport_usage (id) ON DELETE CASCADE,
-	FOREIGN KEY (transport_id) REFERENCES Freight_transport (id) ON DELETE CASCADE,
-	FOREIGN KEY (transport_id) REFERENCES Transport_usage (transport_id) ON DELETE CASCADE
+	FOREIGN KEY (transport_id) REFERENCES Freight_transport (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Auxiliary_transport_usage (
@@ -120,8 +116,7 @@ CREATE TABLE Auxiliary_transport_usage (
 	transport_id INT NOT NULL,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES Transport_usage (id) ON DELETE CASCADE,
-	FOREIGN KEY (transport_id) REFERENCES Auxiliary_transport (id) ON DELETE CASCADE,
-	FOREIGN KEY (transport_id) REFERENCES Transport_usage (transport_id) ON DELETE CASCADE
+	FOREIGN KEY (transport_id) REFERENCES Auxiliary_transport (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Repair (
@@ -142,9 +137,9 @@ CREATE TABLE Employee (
 	id INT NOT NULL,
 	name VARCHAR(50) NOT NULL,
 	birth_date DATE NOT NULL,
-	employee_position VARCHAR(30) NOT NULL,
+	position ENUM('Рабочий', 'Бригадир', 'Мастер', 'Начальник участка', 'Начальник цеха') NOT NULL,
 	chief_id INT,
-	employee_type VARCHAR(30),
+	type ENUM('Водитель', 'Обслуживающий персонал', 'Сборщик', 'Слесарь', 'Сварщик', 'Техник'),
 	PRIMARY KEY (id),
 	FOREIGN KEY (chief_id) REFERENCES Employee (id) ON DELETE SET NULL
 );

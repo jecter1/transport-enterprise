@@ -217,7 +217,7 @@ export default function RepairProfile() {
             repair["garageLocation"]
             ?
             <Link passHref href={"/garage/" + repair["garageId"]}>
-              <Button style={{fontSize: 16}}>
+              <Button style={{fontSize: 14}}>
                 {repair["garageLocation"]}
               </Button>
             </Link>

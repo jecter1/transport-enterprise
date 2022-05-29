@@ -130,47 +130,66 @@ export default function TransportProfile() {
         <Grid container style={{height: '0.5%'}}>
         </Grid>
         <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '100%', height: '20%', backgroundColor: "#222533"}}>
-          { transport["type"] ?
-          <Typography fontSize={16}>
-            Тип: {transport["type"]}
-          </Typography>
+          { 
+            transport["type"] 
+            ?
+            <Typography fontSize={16}>
+              Тип: {transport["type"]}
+            </Typography>
             :
             <></>
           }
-          { transport["type"] == "Грузовой" ?
+          { 
+            transport["type"] == "Грузовой" 
+            ?
             <FreightInfo/>
             :
             <></>
           }
-          { transport["type"] == "Автобус" || transport["type"] == "Маршрутное такси" || transport["type"] == "Такси" || transport["type"] == "Легковой" ?
+          { 
+            transport["type"] == "Автобус" ||
+            transport["type"] == "Маршрутное такси" || 
+            transport["type"] == "Такси" || 
+            transport["type"] == "Легковой" ||
+            transport["type"] == "Пассажирский" ||
+            transport["type"] == "Маршрутный" 
+            ?
             <PassengerInfo/>
             :
             <></>
           }
-          { transport["color"] ?
-          <Typography fontSize={16}>
-            Цвет: {transport["color"]}
-          </Typography>
+          { 
+            transport["color"] 
+            ?
+            <Typography fontSize={16}>
+              Цвет: {transport["color"]}
+            </Typography>
             :
             <></>
           }
-          { transport["receiveDate"] ?
-          <Typography fontSize={16}>
-            Дата получения: {transport["receiveDate"]}
-          </Typography>
+          { 
+            transport["receiveDate"] 
+            ?
+            <Typography fontSize={16}>
+              Дата получения: {transport["receiveDate"]}
+            </Typography>
             :
             <></>
           }
-          { transport["decommissioningDate"] ?
-          <Typography fontSize={16}>
-            Дата списания: {transport["decommissioningDate"]}
-          </Typography>
+          { 
+            transport["decommissioningDate"] 
+            ?
+            <Typography fontSize={16}>
+              Дата списания: {transport["decommissioningDate"]}
+            </Typography>
             :
             <></>
           }
         </Grid>
         { 
-          transport["type"] == "Автобус" || transport["type"] == "Маршрутное такси" 
+          transport["type"] == "Автобус" || 
+          transport["type"] == "Маршрутное такси" ||
+          transport["type"] == "Маршрутный"
           ?
           <RouteInfo/>
           :

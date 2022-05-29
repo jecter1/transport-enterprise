@@ -75,7 +75,7 @@ export default function EmployeeRepair() {
                       }/>
         </LocalizationProvider>
         <FormControl fullWidth style={{width: '80%', paddingBottom: '5%'}} sx={{svg: {color: "#ffffff"}, input: {color: "#ffffff"}, label: {color: "#ffffff"}}}>
-          <InputLabel id="demo-simple-select-label">транспорт</InputLabel>
+          <InputLabel>транспорт</InputLabel>
           <Select value={transportId}
                   label="транспорт"
                   onChange={(event) => {
