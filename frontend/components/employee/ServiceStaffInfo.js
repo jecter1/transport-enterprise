@@ -9,7 +9,7 @@ export default function ServiceStaffInfo() {
   const { id } = router.query;
 
   return (
-    <Link passHref href={"repairs/" + id}>
+    <Link passHref href={id + "/repairs"}>
       <Button style={{marginTop: '2%'}}>
         Ремонтные работы {}
       </Button>

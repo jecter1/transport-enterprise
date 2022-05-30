@@ -1,16 +1,16 @@
 import { Grid, Typography } from "@mui/material";
 import { useRouter } from 'next/router';
 import React from "react";
-import getData from "../../util/getData";
+import getData from "../../../util/getData";
 import { useEffect } from "react";
 import { Button } from "@mui/material";
-import DriverInfo from "../../components/employee/DriverInfo";
-import ServiceStaffInfo from "../../components/employee/ServiceStaffInfo";
-import PageTemplate from "../../templates/PageTemplate";
+import DriverInfo from "../../../components/employee/DriverInfo";
+import ServiceStaffInfo from "../../../components/employee/ServiceStaffInfo";
+import PageTemplate from "../../../templates/PageTemplate";
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { IconButton } from "@mui/material";
-import deleteRequest from "../../util/deleteRequest";
+import deleteRequest from "../../../util/deleteRequest";
 import { Tooltip } from "@mui/material";
 import { Dialog } from "@mui/material";
 import { DialogActions } from "@mui/material";
@@ -75,7 +75,7 @@ export default function EmployeeProfile() {
             const subordinate_id = subordinate["id"];
             return (
               <Grid item sx={{paddingX: '5%', paddingY: '2%'}}>
-                <a href={"/employee/"+subordinate_id} style={{textDecoration: "none"}}>
+                <a href={"/employee/" + subordinate_id} style={{textDecoration: "none"}}>
                   <Button style={{fontSize: 14, width: '100%', height: '100%'}}>
                     {subordinate["name"]}
                       <br/>
@@ -125,24 +125,27 @@ export default function EmployeeProfile() {
         <Grid container style={{height: '0.5%'}}>
         </Grid>
         <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '100%', height: '20%', backgroundColor: "#222533"}}>
-          { data["type"] ?
-          <Typography fontSize={16}>
-            Специализация: {data["type"]}
-          </Typography>
+          { 
+            data["type"] ?
+            <Typography fontSize={16}>
+              Специализация: {data["type"]}
+            </Typography>
             :
             <></>
           }
-          { data["position"] ?
-          <Typography fontSize={16}>
-            Должность: {data["position"]}
-          </Typography>
+          { 
+            data["position"] ?
+            <Typography fontSize={16}>
+              Должность: {data["position"]}
+            </Typography>
             :
             <></>
           }
-          { data["birthDate"] ?
-          <Typography fontSize={16}>
-            Дата рождения: {data["birthDate"]}
-          </Typography>
+          { 
+            data["birthDate"] ?
+            <Typography fontSize={16}>
+              Дата рождения: {data["birthDate"]}
+            </Typography>
             :
             <></>
           }

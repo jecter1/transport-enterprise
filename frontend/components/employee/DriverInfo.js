@@ -17,7 +17,7 @@ export default function DriverInfo() {
     const fetchData = async () => {
       if (router.isReady) {
         const { id } = router.query;
-        await getData(('employee/driver/' + id), setDriverInfo);
+        await getData(('/driver/' + id), setDriverInfo);
       }
     }
     fetchData();
@@ -37,19 +37,19 @@ export default function DriverInfo() {
         ? 
         <>
           <Typography fontSize={16}>
-            Тип: {driverInfo["type"]}
+            Тип: {driverInfo["transportType"]}
           </Typography>
           <Typography fontSize={16}>
-            Номер: {driverInfo["number"]}
+            Номер: {driverInfo["transportNumber"]}
           </Typography>
           <Typography fontSize={16}>
-            Марка: {driverInfo["brand"]}
+            Марка: {driverInfo["transportBrand"]}
           </Typography>
           <Typography fontSize={16}>
-            Модель: {driverInfo["model"]}
+            Модель: {driverInfo["transportModel"]}
           </Typography>
           <Typography fontSize={16}>
-            Цвет: {driverInfo["color"]}
+            Цвет: {driverInfo["transportColor"]}
           </Typography>
           <Link passHref href={"/transport/" + driverInfo["id"]}>
             <Button style={{fontSize: 14, marginTop: '2%'}}>

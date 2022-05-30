@@ -34,8 +34,8 @@ export default function TransportProfile() {
       if (router.isReady) {
         const { id } = router.query;
         await getData(('/transport/' + id), setTransport);
-        await getData(('/transport/' + id + '/drivers'), setDrivers);
-        await getData(('/transport/' + id + '/repairs'), setRepairs);
+        await getData(('/driver'), setDrivers, {transportId: id});
+        await getData(('/repair'), setRepairs, {transportId: id});
       }
     }
     fetchData();

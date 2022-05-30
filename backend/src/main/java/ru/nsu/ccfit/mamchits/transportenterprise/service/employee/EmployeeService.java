@@ -1,4 +1,4 @@
-package ru.nsu.ccfit.mamchits.transportenterprise.service;
+package ru.nsu.ccfit.mamchits.transportenterprise.service.employee;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.employee.EmployeeDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.employee.Employee;
-import ru.nsu.ccfit.mamchits.transportenterprise.repository.EmployeeRepository;
+import ru.nsu.ccfit.mamchits.transportenterprise.repository.employee.EmployeeRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -20,7 +20,10 @@ public class EmployeeService {
     private ModelMapper modelMapper;
 
     public List<EmployeeDto> findAll() {
-        return employeeRepository.findAll().stream().map(this::convertToDto).collect(Collectors.toList());
+        return employeeRepository.findAll()
+                .stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
     public Optional<EmployeeDto> findById(Long id) {
@@ -35,7 +38,9 @@ public class EmployeeService {
 
         List<Employee> subordinateList = findAllSubordinatesOfEmployee(employee.get());
 
-        return subordinateList.stream().map(this::convertToDto).collect(Collectors.toList());
+        return subordinateList.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
     public List<EmployeeDto> findSuperiorsById(Long id) {
@@ -72,8 +77,10 @@ public class EmployeeService {
     }
 
     private Set<Employee> findSubordinatesOfEmployeeSet(Set<Employee> employeeSet) {
-        Set<Employee> subordinateSet = new HashSet<>();
-        return employeeSet.stream().map(Employee::getSubordinateSet).flatMap(Set::stream).collect(Collectors.toSet());
+        return employeeSet.stream()
+                .map(Employee::getSubordinateSet)
+                .flatMap(Set::stream)
+                .collect(Collectors.toSet());
     }
 
     private EmployeeDto convertToDto(Employee employee) {
