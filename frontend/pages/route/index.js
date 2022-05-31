@@ -1,4 +1,4 @@
-import RouteTable from "../../components/route/tables/RouteTable";
+import RouteTable from "../../components/list/RouteTable";
 import React from "react";
 import getRequest from "../../util/getRequest";
 import { useEffect } from "react";

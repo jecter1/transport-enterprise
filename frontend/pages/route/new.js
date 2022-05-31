@@ -33,7 +33,7 @@ export default function AddRoute() {
       alignSelf: "center",
     },
     textfieldError: {
-      color: "#ff0000",
+      color: "#d22e2e",
       alignSelf: "center",
     }
   }))();
@@ -90,28 +90,38 @@ export default function AddRoute() {
           }}>
           <TextField 
             onChange={(e) => {setNumber(e.target.value)}}
-            label="Номер маршрута" 
+            label="Номер маршрута*" 
             style={{margin: "2%"}} 
             helperText="положительное число"  
             autoComplete="off"
-            FormHelperTextProps={id == 0 ? {className: classes.textfieldError} : {className: classes.textfield}}/>
+            FormHelperTextProps={id == 0 ? {className: classes.textfieldError} : {className: classes.textfield}}
+          />
           <TextField 
             onChange={(e) => {setStartPoint(e.target.value)}}
-            label="Начальная точка" 
+            label="Начальная точка*" 
             style={{margin: "2%"}} 
             helperText="до 50 символов" 
             autoComplete="off"
-            FormHelperTextProps={id == 0 ? {className: classes.textfieldError} : {className: classes.textfield}}/>
+            FormHelperTextProps={id == 0 ? {className: classes.textfieldError} : {className: classes.textfield}}
+          />
           <TextField 
             onChange={(e) => {setFinishPoint(e.target.value)}}
-            label="Конечная точка" 
+            label="Конечная точка*" 
             style={{margin: "2%"}} 
             helperText="до 50 символов" 
             autoComplete="off"
-            FormHelperTextProps={id == 0 ? {className: classes.textfieldError} : {className: classes.textfield}}/>
+            FormHelperTextProps={id == 0 ? {className: classes.textfieldError} : {className: classes.textfield}}
+          />
+          <Typography 
+            style={id == 0 ? {color: "#d22e2e"} : {color: "#bbbbbb"}}
+            sx={{margin: "2%"}}
+          >
+            * обязательные поля
+          </Typography>
           <Button 
             onClick={handleClick} 
-            style={{margin: "2%", fontSize: 18}}>
+            style={{margin: "2%", fontSize: 18}}
+          >
             Добавить
           </Button>
         </Grid>

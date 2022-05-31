@@ -3,75 +3,75 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Link from 'next/link';
 import { IconButton, Typography } from '@mui/material';
-import TableTemplate from '../../../templates/TableTemplate';
+import TableTemplate from '../../templates/TableTemplate';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 
 const columns = [
   { 
     id: 'id', 
-    label: 'Страница поездки', 
-    align: 'center',
-    minWidth: 50 
-  },
-  { 
-    id: 'startDatetime', 
-    label: 'Время начала', 
-    align: 'center',
-    minWidth: 160 
-  },
-  { 
-    id: 'endDatetime', 
-    label: 'Время окончания', 
-    align: 'center',
-    minWidth: 160 
-  },
-  { 
-    id: 'mileage', 
-    label: 'Пробег, км', 
-    align: 'center',
-    minWidth: 160 
-  },
-  { 
-    id: 'transportId', 
     label: 'Страница транспорта', 
     align: 'center',
     minWidth: 50 
   },
   { 
-    id: 'transportType', 
-    label: 'Тип транспорта', 
+    id: 'number', 
+    label: 'Номер', 
     align: 'center',
     minWidth: 160 
   },
   { 
-    id: 'transportNumber', 
-    label: 'Номер транспорта', 
+    id: 'type', 
+    label: 'Тип', 
     align: 'center',
     minWidth: 160 
   },
   { 
-    id: 'transportBrand', 
-    label: 'Марка транспорта', 
+    id: 'brand', 
+    label: 'Марка', 
     align: 'center',
     minWidth: 160 
   },
   { 
-    id: 'transportModel', 
-    label: 'Модель транспорта', 
+    id: 'model', 
+    label: 'Модель', 
     align: 'center',
     minWidth: 160 
   },
   { 
-    id: 'transportColor', 
-    label: 'Цвет транспорта', 
+    id: 'color', 
+    label: 'Цвет', 
+    align: 'center',
+    minWidth: 160 
+  },
+  { 
+    id: 'receiveDate', 
+    label: 'Дата получения', 
+    align: 'center',
+    minWidth: 160 
+  },
+  { 
+    id: 'decommissioningDate', 
+    label: 'Дата списания', 
+    align: 'center',
+    minWidth: 160 
+  },
+  { 
+    id: 'garageId', 
+    label: 'Страница гаража', 
+    align: 'center',
+    minWidth: 50 
+  },
+  { 
+    id: 'garageLocation', 
+    label: 'Гараж', 
     align: 'center',
     minWidth: 160 
   },
 ];
 
 function rowToCells(columns, row) {
-  const usage_id = "id";
-  const transport_id = "transportId";
+  const transport_id = row["id"];
+  const garage_id = row["garageId"];
 
   return (
     <TableRow hover role="checkbox" tabIndex={-1} key={row["id"]}>
@@ -81,17 +81,17 @@ function rowToCells(columns, row) {
           return (
             <TableCell key={column.id} align={column.align}>
               {
-                column.id == usage_id && row[usage_id] 
+                column.id == 'id' && transport_id 
                 ?
-                <Link href={"/usage/" + row[usage_id]} passHref>
+                <Link href={"/transport/" + transport_id} passHref>
                   <IconButton disableRipple style={{color: "#ffffff"}}>
                     <InsertDriveFileOutlinedIcon/>
                   </IconButton>
                 </Link> 
                 :
-                column.id == transport_id && row[transport_id] 
+                column.id == 'garageId' && garage_id 
                 ?
-                <Link href={"/transport/" + row[transport_id]} passHref>
+                <Link href={"/transport/" + transport_id} passHref>
                   <IconButton disableRipple style={{color: "#ffffff"}}>
                     <InsertDriveFileOutlinedIcon/>
                   </IconButton>

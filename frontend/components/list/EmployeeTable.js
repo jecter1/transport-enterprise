@@ -2,13 +2,20 @@ import * as React from 'react';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Link from 'next/link';
-import { Button, Typography } from '@mui/material';
-import TableTemplate from '../../../templates/TableTemplate';
+import { IconButton, Typography } from '@mui/material';
+import TableTemplate from '../../templates/TableTemplate';
+import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 
 const columns = [
   { 
+    id: 'id', 
+    label: 'Страница сотруднка', 
+    align: 'center',
+    minWidth: 50 
+  },
+  { 
     id: 'name', 
-    label: 'ФИО', 
+    label: 'ФИО сотрудника', 
     align: 'center',
     minWidth: 170 
   },
@@ -25,32 +32,20 @@ const columns = [
     minWidth: 170 
   },
   { 
-    id: 'transportNumber', 
-    label: 'Номер транспорта', 
+    id: 'type', 
+    label: 'Специализация', 
     align: 'center',
     minWidth: 170 
   },
   { 
-    id: 'transportBrand', 
-    label: 'Марка транспорта', 
+    id: 'chiefId', 
+    label: 'Страница начальника', 
     align: 'center',
-    minWidth: 170 
+    minWidth: 50 
   },
   { 
-    id: 'transportModel', 
-    label: 'Модель транспорта', 
-    align: 'center',
-    minWidth: 170 
-  },
-  { 
-    id: 'transportColor', 
-    label: 'Цвет транспорта', 
-    align: 'center',
-    minWidth: 170 
-  },
-  { 
-    id: 'transportType', 
-    label: 'Тип транспорта', 
+    id: 'chiefName', 
+    label: 'ФИО начальника', 
     align: 'center',
     minWidth: 170 
   },
@@ -59,34 +54,33 @@ const columns = [
 function rowToCells(columns, row) {
   const employee_id = row["id"];
   const chief_id = row["chiefId"];
-  const transport_id = row["transportId"];
 
   return (
     <TableRow hover role="checkbox" tabIndex={-1} key={row["id"]}>
       { 
         columns.map((column) => {
-          const employee_col_data = row[column.id];
+          const cell_data = row[column.id];
           return (
             <TableCell key={column.id} align={column.align}>
               {
-                column.id == 'name' && employee_id 
+                column.id == 'id' && employee_id 
                 ?
                 <Link href={"/employee/"+employee_id} passHref>
-                  <Button style={{fontSize: 14, height: '8vh', width: '10vw'}}>
-                    {employee_col_data}
-                  </Button>
+                  <IconButton disableRipple style={{color: "#ffffff"}}>
+                    <InsertDriveFileOutlinedIcon/>
+                  </IconButton>
                 </Link> 
                 :
-                column.id == 'transportNumber' && transport_id 
+                column.id == 'chiefId' && chief_id 
                 ?
-                <Link href={"/transport/"+transport_id} passHref>
-                  <Button style={{fontSize: 14, height: '6vh', width: '6vw'}}>
-                    {employee_col_data}
-                  </Button>
+                <Link href={"/employee/"+chief_id} passHref>
+                  <IconButton disableRipple style={{color: "#ffffff"}}>
+                    <InsertDriveFileOutlinedIcon/>
+                  </IconButton>
                 </Link> 
                 :
                 <Typography>
-                  {employee_col_data ? employee_col_data : "-"}
+                  {cell_data ? cell_data : "-"}
                 </Typography>
               }
             </TableCell>
@@ -97,7 +91,7 @@ function rowToCells(columns, row) {
   );
 }
 
-export default function DriverTable(props) {
+export default function EmployeeTable(props) {
   return (
     <TableTemplate columns={columns} rows={props.rows} rowToCells={rowToCells}/>
   );

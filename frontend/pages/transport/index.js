@@ -1,4 +1,4 @@
-import TransportTable from "../../components/transport/tables/TransportTable";
+import TransportTable from "../../components/list/TransportTable";
 import React from "react";
 import getRequest from "../../util/getRequest";
 import { useEffect } from "react";

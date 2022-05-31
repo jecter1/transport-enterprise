@@ -3,38 +3,32 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Link from 'next/link';
 import { IconButton, Typography } from '@mui/material';
-import TableTemplate from '../../../templates/TableTemplate';
+import TableTemplate from '../../templates/TableTemplate';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 
 const columns = [
   { 
     id: 'id', 
-    label: 'Страница маршрута', 
+    label: 'Страница гаража', 
     align: 'center',
     minWidth: 50 
   },
   { 
-    id: 'number', 
-    label: 'Номер', 
+    id: 'location', 
+    label: 'Местоположение', 
     align: 'center',
     minWidth: 170 
   },
   { 
-    id: 'startPoint', 
-    label: 'Начало', 
-    align: 'center',
-    minWidth: 170 
-  },
-  { 
-    id: 'finishPoint', 
-    label: 'Конец', 
+    id: 'description', 
+    label: 'Описание', 
     align: 'center',
     minWidth: 170 
   },
 ];
 
 function rowToCells(columns, row) {
-  const route_id = row["id"];
+  const garage_id = row["id"];
 
   return (
     <TableRow hover role="checkbox" tabIndex={-1} key={row["id"]}>
@@ -44,9 +38,9 @@ function rowToCells(columns, row) {
           return (
             <TableCell key={column.id} align={column.align}>
               {
-                column.id == 'id' && route_id 
+                column.id == 'id' && garage_id 
                 ?
-                <Link href={"/route/"+route_id} passHref>
+                <Link href={"/garage/"+garage_id} passHref>
                   <IconButton disableRipple style={{color: "#ffffff"}}>
                     <InsertDriveFileOutlinedIcon/>
                   </IconButton>
@@ -64,7 +58,7 @@ function rowToCells(columns, row) {
   );
 }
 
-export default function RouteTable(props) {
+export default function GarageTable(props) {
   return (
     <TableTemplate columns={columns} rows={props.rows} rowToCells={rowToCells}/>
   );

@@ -1,4 +1,4 @@
-import RepairTable from "../../components/repair/tables/RepairTable";
+import RepairTable from "../../components/list/RepairTable";
 import React from "react";
 import getRequest from "../../util/getRequest";
 import { useEffect } from "react";

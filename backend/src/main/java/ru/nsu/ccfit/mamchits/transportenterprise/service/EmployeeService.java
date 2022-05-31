@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.employee.DriverTransportDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.employee.EmployeeListInfoDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.employee.EmployeePageDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.employee.EmployeeSidePanelDto;
@@ -12,6 +13,7 @@ import ru.nsu.ccfit.mamchits.transportenterprise.entity.employee.Employee;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.employee.ServiceStaff;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.repair.Repair;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.transport.Transport;
+import ru.nsu.ccfit.mamchits.transportenterprise.repository.employee.DriverRepository;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.employee.EmployeeRepository;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.repair.RepairRepository;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.transport.TransportRepository;
@@ -25,9 +27,18 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final RepairRepository repairRepository;
     private final TransportRepository transportRepository;
+    private final DriverRepository driverRepository;
 
     @Autowired
     private ModelMapper modelMapper;
+
+    public List<DriverTransportDto> findAllDriversTransportByTransportId(Long transportId) {
+        return driverRepository.findByTransportId(transportId).stream().map(this::convertToDriverTransportDto).collect(Collectors.toList());
+    }
+
+    public List<DriverTransportDto> findAllDriversTransport() {
+        return driverRepository.findAll().stream().map(this::convertToDriverTransportDto).collect(Collectors.toList());
+    }
 
     public boolean deleteById(Long id) {
         Employee employee = employeeRepository.findById(id).orElse(null);
@@ -122,6 +133,24 @@ public class EmployeeService {
                 .map(Employee::getSubordinateSet)
                 .flatMap(Set::stream)
                 .collect(Collectors.toSet());
+    }
+
+    private DriverTransportDto convertToDriverTransportDto(Driver driver) {
+        DriverTransportDto driverTransportDto = modelMapper.map(driver, DriverTransportDto.class);
+        Employee employee = driver.getEmployee();
+        driverTransportDto.setName(employee.getName());
+        driverTransportDto.setBirthDate(employee.getBirthDate());
+        driverTransportDto.setPosition(employee.getPosition());
+        Transport transport = driver.getTransport();
+        if (transport != null) {
+            driverTransportDto.setTransportId(transport.getId());
+            driverTransportDto.setTransportColor(transport.getColor());
+            driverTransportDto.setTransportType(transport.getType());
+            driverTransportDto.setTransportBrand(transport.getBrand());
+            driverTransportDto.setTransportModel(transport.getModel());
+            driverTransportDto.setTransportNumber(transport.getNumber());
+        }
+        return driverTransportDto;
     }
 
     private EmployeeListInfoDto convertToListInfoDto(Employee employee) {

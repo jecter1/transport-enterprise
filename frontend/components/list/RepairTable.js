@@ -3,7 +3,7 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Link from 'next/link';
 import { IconButton, Typography } from '@mui/material';
-import TableTemplate from '../../../templates/TableTemplate';
+import TableTemplate from '../../templates/TableTemplate';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 
 const columns = [

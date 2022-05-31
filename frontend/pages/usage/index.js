@@ -1,4 +1,4 @@
-import UsageTable from "../../components/usage/tables/UsageTable";
+import UsageTable from "../../components/list/UsageTable";
 import React from "react";
 import getRequest from "../../util/getRequest";
 import { useEffect } from "react";

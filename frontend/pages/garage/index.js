@@ -1,4 +1,4 @@
-import GarageTable from "../../components/garage/tables/GarageTable";
+import GarageTable from "../../components/list/GarageTable";
 import React from "react";
 import getRequest from "../../util/getRequest";
 import { useEffect } from "react";

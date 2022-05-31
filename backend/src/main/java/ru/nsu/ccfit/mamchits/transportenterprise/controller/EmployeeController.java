@@ -2,6 +2,7 @@ package ru.nsu.ccfit.mamchits.transportenterprise.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.employee.DriverTransportDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.employee.EmployeeListInfoDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.employee.EmployeePageDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.employee.EmployeeSidePanelDto;
@@ -14,6 +15,16 @@ import java.util.Optional;
 public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
+
+    @GetMapping(path = "/drivers-transport", params = "transportId")
+    public @ResponseBody Iterable<DriverTransportDto> getAllDriversTransportByTransportId(@RequestParam String transportId) {
+        return employeeService.findAllDriversTransportByTransportId(Long.parseLong(transportId));
+    }
+
+    @GetMapping(path = "/drivers-transport")
+    public @ResponseBody Iterable<DriverTransportDto> getAllDriversTransport() {
+        return employeeService.findAllDriversTransport();
+    }
 
     @DeleteMapping(path = "/{id}")
     public @ResponseBody boolean deleteById(@PathVariable String id) {

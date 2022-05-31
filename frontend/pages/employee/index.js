@@ -1,4 +1,4 @@
-import EmployeeTable from "../../components/employee/tables/EmployeeTable";
+import EmployeeTable from "../../components/list/EmployeeTable";
 import React from "react";
 import getRequest from "../../util/getRequest";
 import { useEffect } from "react";
