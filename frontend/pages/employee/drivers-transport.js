@@ -34,7 +34,8 @@ export default function DriversTransport() {
     setLoading(false);
   }, [router.isReady]);
 
-  const onClick = async (e) => {
+  const handleClick = async (e) => {
+    setLoading(true);
     await router.push({ 
       pathname: '/employee/drivers-transport', 
       query: { transportId: transportIdSelected }, 
@@ -111,7 +112,7 @@ export default function DriversTransport() {
             }
           </Select>
         </FormControl>
-            <Button fontSize={16} onClick={onClick}>
+            <Button fontSize={16} onClick={handleClick}>
               Применить
             </Button>
       </Grid>

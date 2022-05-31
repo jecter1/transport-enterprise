@@ -94,7 +94,7 @@ export default function Header() {
               onClose={handleCloseTransport}
             >
               <Link href="/transport/" passHref>
-                <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Список (1)</MenuItem>
+                <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Список (1, 12)</MenuItem>
               </Link>
               <Link href="/transport/transport-drivers" passHref>
                 <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Распределение водителей (3)</MenuItem>

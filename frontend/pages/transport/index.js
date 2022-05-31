@@ -10,41 +10,103 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import ruLocale from 'date-fns/locale/ru';
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import dateToString from '../../util/dateToString';
-import { Switch } from "@mui/material";
+import stringToDate from '../../util/stringToDate';
+import { useRouter } from "next/router";
 
 
 export default function All() {
+  const router = useRouter();
+  
   const pageTitle = "Список транспорта";
   
-  const [rows, setRows] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const [rows, setRows] = React.useState([]);
+
   const [receiveFromValue, setReceiveFromValue] = React.useState(null);
   const [receiveToValue, setReceiveToValue] = React.useState(null);
   const [decommissioningFromValue, setDecommissioningFromValue] = React.useState(null);
   const [decommissioningToValue, setDecommissioningToValue] = React.useState(null);
-  const [decommissioned, setDecommissioned] = React.useState(false);
   
-  useEffect(() => {
-    getRequest('transport/all', setRows);
-      setLoading(false);
-  }, []);
+  useEffect(() => { 
+    const fetchData = async () => {
+      if (router.isReady) {
+        const { receiveFrom, receiveTo, decommissioningFrom, decommissioningTo } = router.query;
+        if (!isNaN(stringToDate(receiveFrom))) {
+          setReceiveFromValue(stringToDate(receiveFrom));
+        }
+        if (!isNaN(stringToDate(receiveTo))) {
+          setReceiveToValue(stringToDate(receiveTo));
+        }
+        if (!isNaN(stringToDate(decommissioningFrom))) {
+          setDecommissioningFromValue(stringToDate(decommissioningFrom));
+        }
+        if (!isNaN(stringToDate(decommissioningTo))) {
+          setDecommissioningToValue(stringToDate(decommissioningTo));
+        }
+        await getRequest('/transport/all', setRows, router.query);
+      }
+    }
+    fetchData();
+    setLoading(false);
+  }, [router.isReady]);
 
   const handleClick = async () => {
     setLoading(true);
-    const urlparams = {
-      receiveFrom: dateToString(receiveFromValue), 
-      receiveTo: dateToString(receiveToValue), 
-      decommissioningFrom: decommissioned ? dateToString(decommissioningFromValue) : null, 
-      decommissioningTo: decommissioned ? dateToString(decommissioningToValue) : null
+    var query = {};
+    if (!isNaN(receiveFromValue) && receiveFromValue) {
+      query.receiveFrom = dateToString(receiveFromValue);
     }
-    console.log(urlparams);
-    await getRequest(('transport/all'), setRows, urlparams);
-    setLoading(false);
+    if (!isNaN(receiveToValue) && receiveToValue) {
+      query.receiveTo = dateToString(receiveToValue);
+    }
+    if (!isNaN(decommissioningFromValue) && decommissioningFromValue) {
+      query.decommissioningFrom = dateToString(decommissioningFromValue);
+    }
+    if (!isNaN(decommissioningToValue) && decommissioningToValue) {
+      query.decommissioningTo = dateToString(decommissioningToValue);
+    }
+    await router.push({ 
+      pathname: '/transport', 
+      query: query, 
+    }); 
+    router.reload();
   };
 
   const LeftPanel = () => {
     return (
-      <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '100%', height: '100%'}}>
+      <Grid 
+        container 
+        direction="column" 
+        justifyContent="center" 
+        alignItems="center" 
+        style={{width: '100%', height: '100%'}}
+        sx={{
+          svg: {color: "#ffffff"}, 
+          input: {color: "#ffffff"}, 
+          label: {color: "#ffffff"},
+          '& label.Mui-focused': {
+            color: '#ffffff',
+          },
+          '& .MuiInput-underline:after': {
+            borderBottomColor: '#ffffff',
+            color: '#ffffff'
+          },
+          '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+              borderColor: '#ffffff',
+              color: '#ffffff'
+            },
+            '&:hover fieldset': {
+              borderColor: '#ffffff',
+              color: '#ffffff'
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: '#ffffff',
+              color: '#ffffff'
+            }
+          },
+        }}
+      >
         <Typography fontSize={16} margin="5%">Получен</Typography>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>
           <DatePicker label="с"
@@ -70,16 +132,11 @@ export default function All() {
         </LocalizationProvider>
         <Grid container direction="row" justifyContent="center" alignItems="center">
           <Typography fontSize={16} margin="5%">Списан</Typography>
-          <Switch
-            checked={decommissioned}
-            onChange={(e) => {setDecommissioned(!decommissioned)}}
-          />
         </Grid>
         <Grid container direction="row" justifyContent="center" alignItems="center">
           <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>
             <DatePicker label="с"
                         inputProps={{autoComplete: "off"}}
-                        disabled={!decommissioned}
                         value={decommissioningFromValue}
                         onChange={(newValue) => {
                           setDecommissioningFromValue(newValue);
@@ -92,7 +149,6 @@ export default function All() {
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>
           <DatePicker label="по"
                       inputProps={{autoComplete: "off"}}
-                      disabled={!decommissioned}
                       value={decommissioningToValue}
                       onChange={(newValue) => {
                         setDecommissioningToValue(newValue);
@@ -111,8 +167,15 @@ export default function All() {
   return (
     loading
     ?
-    <PageTemplate hasSidePanels={false} pageTitle={"Загрузка..."}/>
+    <PageTemplate 
+      hasSidePanels={false} 
+      pageTitle={"Загрузка..."}
+    />
     :
-    <PageTemplate pageTitle={pageTitle} mainPanel={TableMainPanel(pageTitle, TransportTable, rows)} leftPanel={LeftPanel()}/>
+    <PageTemplate 
+      pageTitle={pageTitle} 
+      mainPanel={TableMainPanel(pageTitle, TransportTable, rows)} 
+      leftPanel={LeftPanel()}
+    />
   );
 }

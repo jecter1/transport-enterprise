@@ -1,11 +1,11 @@
-export default function formatDate(date) {
+export default function dateToString(date) {
   if (date) {
     const year = date.getFullYear();
     const month = date.getMonth();
     const day = date.getDate();
 
     if (isNaN(year)) {
-      return;
+      return null;
     }
 
     let res = "" + year;
@@ -20,4 +20,5 @@ export default function formatDate(date) {
 
     return res;
   }
+  return null;
 }

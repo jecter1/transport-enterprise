@@ -20,6 +20,7 @@ import ru.nsu.ccfit.mamchits.transportenterprise.repository.transport.RouteTrans
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.transport.TransportRepository;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.usage.TransportUsageRepository;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -102,9 +103,20 @@ public class TransportService {
                 .collect(Collectors.toList());
     }
 
-    public List<TransportListInfoDto> findAll() {
-        return transportRepository.findAll().stream().map(this::convertToListInfoDto).collect(Collectors.toList());
+    public List<TransportListInfoDto> findAll(String receiveFrom,
+                                              String receiveTo,
+                                              String decommissioningFrom,
+                                              String decommissioningTo) {
+        return transportRepository
+                .findAll()
+                .stream()
+                .filter(transport ->
+                        dateBetween(transport.getReceiveDate(), receiveFrom, receiveTo) &&
+                        dateBetween(transport.getDecommissioningDate(), decommissioningFrom, decommissioningTo)
+                )
+                .map(this::convertToListInfoDto).collect(Collectors.toList());
     }
+
 
     private boolean routeTransportHasRouteId(RouteTransport routeTransport, Long routeId) {
         Route route = routeTransport.getRoute();
@@ -120,6 +132,17 @@ public class TransportService {
             return false;
         }
         return Objects.equals(garage.getId(), garageId);
+    }
+
+    private boolean dateBetween(Calendar calendar, String from, String to) {
+        if (calendar == null && from == null && to == null) {
+            return true;
+        } else if (calendar == null) {
+            return false;
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        String date = simpleDateFormat.format(calendar.getTime());
+        return (from == null || date.compareTo(from) >= 0) && (to == null || date.compareTo(to) <= 0);
     }
 
     private RouteTransportRouteDto convertToRouteTransportRouteDto(RouteTransport routeTransport) {

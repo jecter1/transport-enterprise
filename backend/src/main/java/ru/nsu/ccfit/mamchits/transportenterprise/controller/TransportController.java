@@ -59,7 +59,11 @@ public class TransportController {
     }
 
     @GetMapping(path="/all")
-    public @ResponseBody Iterable<TransportListInfoDto> getAll() {
-        return transportService.findAll();
+    public @ResponseBody Iterable<TransportListInfoDto> getAll(
+            @RequestParam(required = false) String receiveFrom,
+            @RequestParam(required = false) String receiveTo,
+            @RequestParam(required = false) String decommissioningFrom,
+            @RequestParam(required = false) String decommissioningTo) {
+        return transportService.findAll(receiveFrom, receiveTo, decommissioningFrom, decommissioningTo);
     }
 }
