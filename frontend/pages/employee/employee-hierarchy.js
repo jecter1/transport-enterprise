@@ -1,18 +1,18 @@
-import HierarchyTable from "../../components/employee/tables/HierarchyTable";
+import EmployeeHierarchyTable from "../../components/tables/employee/EmployeeHierarchyTable";
 import React from "react";
 import getRequest from "../../util/getRequest";
 import { useEffect } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import TableMainPanel from "../../templates/TableMainPanel";
 
-export default function Hierarchy() {
+export default function EmployeeHierarchy() {
   const pageTitle = "Подчиненность сотрудников";
 
   const [rows, setRows] = React.useState([{}]);
   const [loading, setLoading] = React.useState(true);
   
   useEffect(() => {
-    getRequest('employee/hierarchy', setRows);
+      getRequest('employee/employee-hierarchy', setRows);
       setLoading(false);
   }, []);
 
@@ -21,6 +21,6 @@ export default function Hierarchy() {
     ?
     <PageTemplate hasSidePanels={false} pageTitle={"Загрузка..."}/>
     :
-    <PageTemplate pageTitle={pageTitle} mainPanel={TableMainPanel(pageTitle, HierarchyTable, rows)}/>
+    <PageTemplate pageTitle={pageTitle} mainPanel={TableMainPanel(pageTitle, EmployeeHierarchyTable, rows)}/>
   );
 }

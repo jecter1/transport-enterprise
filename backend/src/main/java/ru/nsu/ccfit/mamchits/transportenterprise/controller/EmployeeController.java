@@ -2,10 +2,7 @@ package ru.nsu.ccfit.mamchits.transportenterprise.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.employee.DriverTransportDto;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.employee.EmployeeListInfoDto;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.employee.EmployeePageDto;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.employee.EmployeeSidePanelDto;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.employee.*;
 import ru.nsu.ccfit.mamchits.transportenterprise.service.EmployeeService;
 
 import java.util.Optional;
@@ -15,6 +12,11 @@ import java.util.Optional;
 public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
+
+    @GetMapping(path = "/employee-hierarchy")
+    public @ResponseBody Iterable<EmployeeHierarchyDto> getAllEmployeeHierarchy() {
+        return employeeService.findAllEmployeeHierarchy();
+    }
 
     @GetMapping(path = "/drivers-transport", params = "transportId")
     public @ResponseBody Iterable<DriverTransportDto> getAllDriversTransportByTransportId(@RequestParam String transportId) {

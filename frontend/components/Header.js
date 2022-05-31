@@ -94,7 +94,7 @@ export default function Header() {
               onClose={handleCloseTransport}
             >
               <Link href="/transport/" passHref>
-                <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Список (1)</MenuItem>
+                <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Список (1, 9)</MenuItem>
               </Link>
               <Link href="/transport/transport-drivers" passHref>
                 <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Распределение по водителям (3)</MenuItem>
@@ -117,6 +117,9 @@ export default function Header() {
               </Link>
               <Link href="/employee/drivers-transport" passHref>
                 <MenuItem onClick={handleCloseEmployee}><SearchOutlinedIcon/>Распределение по транспорту (2)</MenuItem>
+              </Link>
+              <Link href="/employee/employee-hierarchy" passHref>
+                <MenuItem onClick={handleCloseEmployee}><SearchOutlinedIcon/>Подчиненность (7)</MenuItem>
               </Link>
               <MenuItem onClick={handleCloseEmployee}><AddOutlinedIcon/>TODO: Добавить сотрудника</MenuItem>
             </Menu>

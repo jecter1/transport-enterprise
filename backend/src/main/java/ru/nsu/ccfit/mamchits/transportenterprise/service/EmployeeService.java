@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.employee.DriverTransportDto;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.employee.EmployeeListInfoDto;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.employee.EmployeePageDto;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.employee.EmployeeSidePanelDto;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.employee.*;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.employee.Driver;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.employee.Employee;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.employee.ServiceStaff;
@@ -17,6 +14,7 @@ import ru.nsu.ccfit.mamchits.transportenterprise.repository.employee.DriverRepos
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.employee.EmployeeRepository;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.repair.RepairRepository;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.transport.TransportRepository;
+import ru.nsu.ccfit.mamchits.transportenterprise.type.EmployeePosition;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -31,6 +29,14 @@ public class EmployeeService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    public List<EmployeeHierarchyDto> findAllEmployeeHierarchy() {
+        return employeeRepository
+                .findAllByPosition(EmployeePosition.WORKER)
+                .stream()
+                .map(this::convertToEmployeeHierarchyDto)
+                .collect(Collectors.toList());
+    }
 
     public List<DriverTransportDto> findAllDriversTransportByTransportId(Long transportId) {
         return driverRepository.findByTransportId(transportId).stream().map(this::convertToDriverTransportDto).collect(Collectors.toList());
@@ -133,6 +139,29 @@ public class EmployeeService {
                 .map(Employee::getSubordinateSet)
                 .flatMap(Set::stream)
                 .collect(Collectors.toSet());
+    }
+
+    // Only for employees with position WORKER
+    private EmployeeHierarchyDto convertToEmployeeHierarchyDto(Employee employee) {
+        if (employee.getPosition() != EmployeePosition.WORKER) {
+            return null;
+        }
+        EmployeeHierarchyDto employeeHierarchyDto = new EmployeeHierarchyDto();
+        employeeHierarchyDto.setWorkerId(employee.getId());
+        employeeHierarchyDto.setWorkerName(employee.getName());
+        Employee chief = employee.getChief();
+        employeeHierarchyDto.setBrigadeLeaderId(chief.getId());
+        employeeHierarchyDto.setBrigadeLeaderName(chief.getName());
+        chief = chief.getChief();
+        employeeHierarchyDto.setMasterId(chief.getId());
+        employeeHierarchyDto.setMasterName(chief.getName());
+        chief = chief.getChief();
+        employeeHierarchyDto.setSectionHeadId(chief.getId());
+        employeeHierarchyDto.setSectionHeadName(chief.getName());
+        chief = chief.getChief();
+        employeeHierarchyDto.setForemanId(chief.getId());
+        employeeHierarchyDto.setForemanName(chief.getName());
+        return employeeHierarchyDto;
     }
 
     private DriverTransportDto convertToDriverTransportDto(Driver driver) {
