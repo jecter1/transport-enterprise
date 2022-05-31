@@ -13,7 +13,6 @@ import java.util.Set;
 @Table(name = "Passenger_transport")
 public class PassengerTransport {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private Integer passengerCapacity;

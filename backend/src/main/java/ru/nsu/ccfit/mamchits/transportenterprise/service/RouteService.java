@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.route.RouteCreateDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.route.RouteListInfoDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.route.RoutePageDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.route.Route;
@@ -24,6 +25,18 @@ public class RouteService {
     @Autowired
     private ModelMapper modelMapper;
 
+    public Long create(RouteCreateDto routeCreateDto) {
+        if (routeCreateDto.getNumber() == null ||
+                routeCreateDto.getNumber() <= 0 ||
+                routeCreateDto.getFinishPoint() == null ||
+                routeCreateDto.getStartPoint() == null) {
+            return 0L;
+        }
+        Route route = convertToEntity(routeCreateDto);
+        route = routeRepository.save(route);
+        return route.getId();
+    }
+
     public boolean deleteById(Long id) {
         Route route = routeRepository.findById(id).orElse(null);
         if (route == null) {
@@ -43,6 +56,10 @@ public class RouteService {
 
     public List<RouteListInfoDto> findAll() {
         return routeRepository.findAll().stream().map(this::convertToListInfoDto).collect(Collectors.toList());
+    }
+
+    public Route convertToEntity(RouteCreateDto routeCreateDto) {
+        return modelMapper.map(routeCreateDto, Route.class);
     }
 
     private RouteListInfoDto convertToListInfoDto(Route route) {

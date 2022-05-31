@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import { useRouter } from 'next/router';
 import React from "react";
-import getData from "../../util/getData";
+import getRequest from "../../util/getRequest";
 import { useEffect } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import { Button } from "@mui/material";
@@ -16,6 +16,7 @@ export default function RepairProfile() {
   const [transport, setTransport] = React.useState();
   const [staffList, setStaffList] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const [deleted, setDeleted] = React.useState(false);
 
   const router = useRouter();
 
@@ -23,10 +24,10 @@ export default function RepairProfile() {
     const fetchData = async () => {
       if (router.isReady) {
         const { id } = router.query;
-        await getData(('/repair/' + id), setRepair);
-        await getData(('/transport'), setTransport, {repairId: id});
-        await getData(('/employee'), setStaffList, {repairId: id});
-        await getData(('/garage'), setGarage, {repairId: id});
+        await getRequest(('/repair/' + id), setRepair);
+        await getRequest(('/transport'), setTransport, {repairId: id});
+        await getRequest(('/employee'), setStaffList, {repairId: id});
+        await getRequest(('/garage'), setGarage, {repairId: id});
       }
     }
     fetchData();
@@ -34,8 +35,7 @@ export default function RepairProfile() {
   }, [router.isReady]);
 
   const onDeleteClick = () => {
-    deleteRequest("/repair/" + repair["id"]);
-    location.href = "/repair/";
+    deleteRequest("/repair/" + repair["id"], setDeleted);
   }
 
   const LeftPanel = () => {
@@ -62,6 +62,9 @@ export default function RepairProfile() {
   }
 
   const MainPanel = () => {
+    if (deleted) {
+      location.href = "/repair/";
+    }
     return (
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '50%', height: '100%'}}>
         <RepairCard repair={repair} isMain={true} onDeleteClick={onDeleteClick}/>

@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import { useRouter } from 'next/router';
 import React from "react";
-import getData from "../../util/getData";
+import getRequest from "../../util/getRequest";
 import { useEffect } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import { Button } from "@mui/material";
@@ -13,6 +13,7 @@ export default function RouteProfile() {
   const [route, setRoute] = React.useState();
   const [transportList, setTransportList] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const [deleted, setDeleted] = React.useState(false);
 
   const router = useRouter();
 
@@ -20,8 +21,8 @@ export default function RouteProfile() {
     const fetchData = async () => {
       if (router.isReady) {
         const { id } = router.query;
-        await getData(('/route/' + id), setRoute);
-        await getData(('/transport'), setTransportList, {routeId: id});
+        await getRequest(('/route/' + id), setRoute);
+        await getRequest(('/transport'), setTransportList, {routeId: id});
       }
     }
     fetchData();
@@ -29,8 +30,7 @@ export default function RouteProfile() {
   }, [router.isReady]);
 
   const onDeleteClick = () => {
-    deleteRequest("/route/" + route["id"]);
-    location.href = "/route";
+    deleteRequest("/route/" + route["id"], setDeleted);
   }
 
   const LeftPanel = () => {
@@ -59,6 +59,9 @@ export default function RouteProfile() {
   }
 
   const MainPanel = () => {
+    if (deleted) {
+      location.href = "/route";
+    }
     return (
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '50%', height: '100%'}}>
         <RouteCard route={route} isMain={true} onDeleteClick={onDeleteClick}/>

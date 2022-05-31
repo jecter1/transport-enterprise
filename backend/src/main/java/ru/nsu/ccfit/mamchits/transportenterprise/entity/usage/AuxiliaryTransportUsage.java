@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Table(name = "Auxiliary_transport_usage")
 public class AuxiliaryTransportUsage {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

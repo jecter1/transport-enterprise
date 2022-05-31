@@ -1,6 +1,6 @@
 import HierarchyTable from "../../components/employee/tables/HierarchyTable";
 import React from "react";
-import getData from "../../util/getData";
+import getRequest from "../../util/getRequest";
 import { useEffect } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import TableMainPanel from "../../templates/TableMainPanel";
@@ -12,7 +12,7 @@ export default function Hierarchy() {
   const [loading, setLoading] = React.useState(true);
   
   useEffect(() => {
-      getData('employee/hierarchy', setRows);
+    getRequest('employee/hierarchy', setRows);
       setLoading(false);
   }, []);
 

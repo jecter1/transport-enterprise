@@ -13,7 +13,7 @@ import java.util.Set;
 @Table(name = "Route")
 public class Route {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)

@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Table(name = "Bus")
 public class Bus {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)

@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Table(name = "Route_transport")
 public class RouteTransport {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private Integer fare;

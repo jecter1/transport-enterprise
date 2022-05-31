@@ -12,7 +12,7 @@ import java.util.Calendar;
 @Table(name = "Transport_usage")
 public class TransportUsage {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Temporal(TemporalType.TIMESTAMP)

@@ -13,7 +13,6 @@ import java.util.Set;
 @Table(name = "Auxiliary_transport")
 public class AuxiliaryTransport {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)

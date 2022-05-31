@@ -1,5 +1,5 @@
 import React from "react";
-import getData from "../../util/getData";
+import getRequest from "../../util/getRequest";
 import { useEffect } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import TableMainPanel from "../../templates/TableMainPanel";
@@ -12,7 +12,7 @@ export default function All() {
   const [loading, setLoading] = React.useState(true);
   
   useEffect(() => {
-      getData('garage/transport', setRows);
+    getRequest('garage/transport', setRows);
       setLoading(false);
   }, []);
 

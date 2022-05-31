@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import { useRouter } from 'next/router';
 import React from "react";
-import getData from "../../util/getData";
+import getRequest from "../../util/getRequest";
 import { useEffect } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import deleteRequest from "../../util/deleteRequest";
@@ -13,6 +13,7 @@ export default function UsageProfile() {
   const [usage, setUsage] = React.useState();
   const [transport, setTransport] = React.useState();
   const [loading, setLoading] = React.useState(true);
+  const [deleted, setDeleted] = React.useState(false);
 
   const router = useRouter();
 
@@ -20,8 +21,8 @@ export default function UsageProfile() {
     const fetchData = async () => {
       if (router.isReady) {
         const { id } = router.query;
-        await getData(('/usage/' + id), setUsage);
-        await getData(('/transport'), setTransport, {transportUsageId: id});
+        await getRequest(('/usage/' + id), setUsage);
+        await getRequest(('/transport'), setTransport, {transportUsageId: id});
       }
     }
     fetchData();
@@ -29,11 +30,13 @@ export default function UsageProfile() {
   }, [router.isReady]);
 
   const onDeleteClick = (e) => {
-    deleteRequest("/usage/" + usage["id"]);
-    location.href = "/usage";
+    deleteRequest("/usage/" + usage["id"], setDeleted);
   }
 
   const MainPanel = () => {
+    if (deleted) {
+      location.href = "/usage";
+    }
     return (
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '50%', height: '100%'}}>
         <UsageCard usage={usage} isMain={true} onDeleteClick={onDeleteClick}/>

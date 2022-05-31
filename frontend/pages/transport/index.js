@@ -1,6 +1,6 @@
 import TransportTable from "../../components/transport/tables/TransportTable";
 import React from "react";
-import getData from "../../util/getData";
+import getRequest from "../../util/getRequest";
 import { useEffect } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import TableMainPanel from "../../templates/TableMainPanel";
@@ -25,7 +25,7 @@ export default function All() {
   const [decommissioned, setDecommissioned] = React.useState(false);
   
   useEffect(() => {
-      getData('transport/all', setRows);
+    getRequest('transport/all', setRows);
       setLoading(false);
   }, []);
 
@@ -38,7 +38,7 @@ export default function All() {
       decommissioningTo: decommissioned ? dateToString(decommissioningToValue) : null
     }
     console.log(urlparams);
-    await getData(('transport/all'), setRows, urlparams);
+    await getRequest(('transport/all'), setRows, urlparams);
     setLoading(false);
   };
 

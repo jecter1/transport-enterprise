@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Table(name = "Freight_transport_usage")
 public class FreightTransportUsage {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private Integer freightVolume;

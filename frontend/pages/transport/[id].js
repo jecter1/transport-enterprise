@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import { useRouter } from 'next/router';
 import React from "react";
-import getData from "../../util/getData";
+import getRequest from "../../util/getRequest";
 import { useEffect } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import { Button } from "@mui/material";
@@ -18,6 +18,7 @@ export default function TransportProfile() {
   const [drivers, setDrivers] = React.useState([]);
   const [repairs, setRepairs] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const [deleted, setDeleted] = React.useState(false);
 
   const router = useRouter();
 
@@ -25,11 +26,11 @@ export default function TransportProfile() {
     const fetchData = async () => {
       if (router.isReady) {
         const { id } = router.query;
-        await getData(('/transport/' + id), setTransport);
-        await getData(('/garage'), setGarage, {transportId: id});
-        await getData(('/route'), setRoute, {transportId: id});
-        await getData(('/employee'), setDrivers, {transportId: id});
-        await getData(('/repair'), setRepairs, {transportId: id});
+        await getRequest(('/transport/' + id), setTransport);
+        await getRequest(('/garage'), setGarage, {transportId: id});
+        await getRequest(('/route'), setRoute, {transportId: id});
+        await getRequest(('/employee'), setDrivers, {transportId: id});
+        await getRequest(('/repair'), setRepairs, {transportId: id});
       }
     }
     fetchData();
@@ -37,8 +38,7 @@ export default function TransportProfile() {
   }, [router.isReady]);
 
   const onDeleteClick = () => {
-    deleteRequest("/transport/" + transport["id"]);
-    location.href = "/transport/";
+    deleteRequest("/transport/" + transport["id"], setDeleted);
   }
 
   const LeftPanel = () => {
@@ -86,6 +86,10 @@ export default function TransportProfile() {
   }
 
   const MainPanel = () => {
+    if (deleted) {
+      location.href = "/transport";
+    }
+
     return (
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '50%', height: '100%'}}>
         <TransportCard transport={transport} isMain={true} onDeleteClick={onDeleteClick}/>

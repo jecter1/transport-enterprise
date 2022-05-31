@@ -1,6 +1,6 @@
 import GarageTable from "../../components/garage/tables/GarageTable";
 import React from "react";
-import getData from "../../util/getData";
+import getRequest from "../../util/getRequest";
 import { useEffect } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import TableMainPanel from "../../templates/TableMainPanel";
@@ -16,8 +16,8 @@ export default function All() {
   const [categories, setCategories] = React.useState([]);
   
   useEffect(() => {
-      getData('garage/all', setRows);
-      getData('transport/types', setCategories);
+      getRequest('garage/all', setRows);
+      getRequest('transport/types', setCategories);
       setLoading(false);
   }, []);
 

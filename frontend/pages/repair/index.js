@@ -1,6 +1,6 @@
 import RepairTable from "../../components/repair/tables/RepairTable";
 import React from "react";
-import getData from "../../util/getData";
+import getRequest from "../../util/getRequest";
 import { useEffect } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import TableMainPanel from "../../templates/TableMainPanel";
@@ -12,7 +12,7 @@ export default function All() {
   const [loading, setLoading] = React.useState(true);
   
   useEffect(() => {
-      getData('repair/all', setRows);
+      getRequest('repair/all', setRows);
       setLoading(false);
   }, []);
 

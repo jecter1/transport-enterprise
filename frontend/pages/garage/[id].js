@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import { useRouter } from 'next/router';
 import React from "react";
-import getData from "../../util/getData";
+import getRequest from "../../util/getRequest";
 import { useEffect } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import { Button } from "@mui/material";
@@ -13,6 +13,7 @@ export default function GarageProfile() {
   const [transportList, setTransportList] = React.useState([]);
   const [repairList, setRepairList] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const [deleted, setDeleted] = React.useState(false);
 
   const router = useRouter();
 
@@ -20,9 +21,9 @@ export default function GarageProfile() {
     const fetchData = async () => {
       if (router.isReady) {
         const { id } = router.query;
-        await getData(('/garage/' + id), setGarage);
-        await getData(('/transport'), setTransportList, {garageId: id});
-        await getData(('/repair'), setRepairList, {garageId: id});
+        await getRequest(('/garage/' + id), setGarage);
+        await getRequest(('/transport'), setTransportList, {garageId: id});
+        await getRequest(('/repair'), setRepairList, {garageId: id});
       }
     }
     fetchData();
@@ -30,8 +31,7 @@ export default function GarageProfile() {
   }, [router.isReady]);
 
   const onDeleteClick = () => {
-    deleteRequest("/garage/" + garage["id"]);
-    location.href = "/garage";
+    deleteRequest("/garage/" + garage["id"], setDeleted);
   }
 
   const LeftPanel = () => {
@@ -85,6 +85,9 @@ export default function GarageProfile() {
   }
 
   const MainPanel = () => {
+    if (deleted) {
+      location.href = "/garage";
+    }
     return (
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '50%', height: '100%'}}>
         <GarageCard garage={garage} isMain={true} onDeleteClick={onDeleteClick}/>

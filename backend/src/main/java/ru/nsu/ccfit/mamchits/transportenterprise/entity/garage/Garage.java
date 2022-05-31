@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name = "Garage_facility")
 public class Garage {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, length=100)

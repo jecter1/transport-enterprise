@@ -33,7 +33,7 @@ const theme = createTheme({
         minDate: parseISO("00010101"),
         maxDate: parseISO("99991231")
       }
-    }
+    },
   },
 });
 

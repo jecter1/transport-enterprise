@@ -4,14 +4,14 @@ CREATE DATABASE transport_enterprise;
 USE transport_enterprise;
 
 CREATE TABLE Garage_facility (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	location VARCHAR(100) NOT NULL,
 	description VARCHAR(200),
 	PRIMARY KEY (id)
 );
 
 CREATE TABLE Transport (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	garage_id INT,
 	brand VARCHAR(30) NOT NULL,
 	model VARCHAR(30) NOT NULL,
@@ -25,39 +25,39 @@ CREATE TABLE Transport (
 );
 
 CREATE TABLE Passenger_transport (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	passenger_capacity INT,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES Transport (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Freight_transport (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	load_capacity INT, 
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES Transport (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Auxiliary_transport (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES Transport (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Taxi (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES Passenger_transport (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Car (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES Passenger_transport (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Route (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	`number` INT NOT NULL,
 	start_point VARCHAR(50) NOT NULL,
 	finish_point VARCHAR(50) NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE Route (
 );
 
 CREATE TABLE Route_transport (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	route_id INT,
 	fare INT,
 	PRIMARY KEY (id),
@@ -74,19 +74,19 @@ CREATE TABLE Route_transport (
 );
 
 CREATE TABLE Bus (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES Route_transport (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Minibus (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES Route_transport (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Transport_usage (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	start_datetime DATETIME,
 	end_datetime DATETIME,
 	mileage DECIMAL(8, 2),
@@ -94,7 +94,7 @@ CREATE TABLE Transport_usage (
 );
 
 CREATE TABLE Passenger_transport_usage (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	transport_id INT NOT NULL,
 	passengers INT,
 	PRIMARY KEY (id),
@@ -103,7 +103,7 @@ CREATE TABLE Passenger_transport_usage (
 );
 
 CREATE TABLE Freight_transport_usage (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	transport_id INT NOT NULL,
 	freight_volume INT,
 	PRIMARY KEY (id),
@@ -112,7 +112,7 @@ CREATE TABLE Freight_transport_usage (
 );
 
 CREATE TABLE Auxiliary_transport_usage (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	transport_id INT NOT NULL,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES Transport_usage (id) ON DELETE CASCADE,
@@ -120,7 +120,7 @@ CREATE TABLE Auxiliary_transport_usage (
 );
 
 CREATE TABLE Repair (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
   	transport_id INT NOT NULL,
 	garage_id INT,
 	assembly VARCHAR(50) NOT NULL,
@@ -134,7 +134,7 @@ CREATE TABLE Repair (
 );
 
 CREATE TABLE Employee (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	name VARCHAR(50) NOT NULL,
 	birth_date DATE NOT NULL,
 	position ENUM('Рабочий', 'Бригадир', 'Мастер', 'Начальник участка', 'Начальник цеха') NOT NULL,
@@ -145,7 +145,7 @@ CREATE TABLE Employee (
 );
 
 CREATE TABLE Driver (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	transport_id INT,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES Employee (id) ON DELETE CASCADE,
@@ -153,31 +153,31 @@ CREATE TABLE Driver (
 );
 
 CREATE TABLE Service_staff (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES Employee (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Technician (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES Service_staff (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Welder (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES Service_staff (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Locksmith (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES Service_staff (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Assembler (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES Service_staff (id) ON DELETE CASCADE
 );

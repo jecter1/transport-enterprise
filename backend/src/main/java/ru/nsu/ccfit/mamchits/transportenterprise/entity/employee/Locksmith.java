@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Table(name = "Locksmith")
 public class Locksmith {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

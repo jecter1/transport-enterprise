@@ -1,6 +1,6 @@
 import DriverTable from "../../components/transport/tables/DriverTable";
 import React from "react";
-import getData from "../../util/getData";
+import getRequest from "../../util/getRequest";
 import { useEffect } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import TableMainPanel from "../../templates/TableMainPanel";
@@ -12,7 +12,7 @@ export default function Drivers() {
   const [loading, setLoading] = React.useState(true);
   
   useEffect(() => {
-      getData('transport/drivers', setRows);
+      getRequest('transport/drivers', setRows);
       setLoading(false);
   }, []);
 

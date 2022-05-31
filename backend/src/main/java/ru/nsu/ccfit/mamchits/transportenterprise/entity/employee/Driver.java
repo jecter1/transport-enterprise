@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Table(name="Driver")
 public class Driver {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

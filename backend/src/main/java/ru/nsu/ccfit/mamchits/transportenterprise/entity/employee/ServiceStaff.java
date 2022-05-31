@@ -13,7 +13,6 @@ import java.util.Set;
 @Table(name = "Service_staff")
 public class ServiceStaff {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToMany(mappedBy = "serviceStaffSet")

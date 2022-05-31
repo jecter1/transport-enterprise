@@ -1,6 +1,6 @@
 import UsageTable from "../../components/usage/tables/UsageTable";
 import React from "react";
-import getData from "../../util/getData";
+import getRequest from "../../util/getRequest";
 import { useEffect } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import TableMainPanel from "../../templates/TableMainPanel";
@@ -13,7 +13,7 @@ export default function All() {
   const [loading, setLoading] = React.useState(true);
   
   useEffect(() => {
-      getData('usage/all', setRows);
+      getRequest('usage/all', setRows);
       setLoading(false);
   }, []);
 

@@ -1,7 +1,7 @@
 import { Button, Grid } from "@mui/material";
 import DriverTable from "../../components/employee/tables/DriverTable";
 import React from "react";
-import getData from "../../util/getData";
+import getRequest from "../../util/getRequest";
 import { useEffect } from "react";
 import { FormControl } from "@mui/material";
 import { InputLabel } from "@mui/material";
@@ -19,13 +19,13 @@ export default function Drivers() {
   const [loading, setLoading] = React.useState(true);
   
   useEffect(() => {
-    getData('driver/all', setRows);
-    getData('transport/short-all', setTransports);
+    getRequest('driver/all', setRows);
+    getRequest('transport/short-all', setTransports);
     setLoading(false);
   }, []);
 
   const handleClick = () => {
-    getData(('employee/drivers'), setRows, {transportId: transportId});
+    getRequest(('employee/drivers'), setRows, {transportId: transportId});
   };
   
   const LeftPanel = () => {

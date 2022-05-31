@@ -156,7 +156,9 @@ export default function Header() {
               <Link href="/route/" passHref>
                 <MenuItem onClick={handleCloseRoute}><SearchOutlinedIcon/>Список</MenuItem>
               </Link>
-              <MenuItem onClick={handleCloseRoute}><AddOutlinedIcon/>TODO: Добавить маршрут</MenuItem>
+              <Link href="/route/new" passHref>
+                <MenuItem onClick={handleCloseRoute}><AddOutlinedIcon/>Добавить маршрут</MenuItem>
+              </Link>
             </Menu>
             <Button style={{fontSize: 18}} onClick={handleClickUsage}>
               Поездки
