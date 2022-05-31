@@ -2,9 +2,7 @@ package ru.nsu.ccfit.mamchits.transportenterprise.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.transport.TransportPageDto;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.transport.TransportSidePanelDto;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.transport.TransportListInfoDto;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.transport.*;
 import ru.nsu.ccfit.mamchits.transportenterprise.service.TransportService;
 
 import java.util.Optional;
@@ -14,6 +12,16 @@ import java.util.Optional;
 public class TransportController {
     @Autowired
     private TransportService transportService;
+
+    @GetMapping(path = "/route-transport-routes")
+    public Iterable<RouteTransportRouteDto> getAllRouteTransportRoutes() {
+        return transportService.findAllRouteTransportRoutes();
+    }
+
+    @GetMapping(path = "/transport-drivers")
+    public Iterable<TransportDriverDto> getAllTransportDrivers() {
+        return transportService.findAllTransportDrivers();
+    }
 
     @DeleteMapping(path = "/{id}")
     public boolean deleteById(@PathVariable String id) {

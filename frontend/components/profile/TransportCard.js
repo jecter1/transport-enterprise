@@ -17,7 +17,7 @@ export default function TransportCard(props) {
 
   const deleteWarning = "ВНИМАНИЕ: УДАЛЕНИЕ ТРАНСПОРТА ВЛЕЧЕТ ЗА СОБОЙ УДАЛЕНИЕ ВСЕХ ЕГО РЕМОНТОВ И ВСЕХ ПОЕЗДОК НА НЕМ. Вы точно хотите удалить данные о транспорте?";
   const unbindWarning = "Вы точно хотите отвязать транспорт?";
-  const headerName = props.isMain && transport ? transport["model"] + " " + transport["brand"] + " (" + (transport["number"] ? transport["number"] + ")": "(без номера)") : "Транспорт";
+  const headerName = props.isMain && transport ? transport["model"] + " " + transport["brand"] + " " + (transport["number"] ? "(" + transport["number"] + ")": "(без номера)") : "Транспорт";
 
   const cardHeight = !props.isMain && !transport ? '10%' : '25%';
 

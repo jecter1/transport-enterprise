@@ -94,11 +94,14 @@ export default function Header() {
               onClose={handleCloseTransport}
             >
               <Link href="/transport/" passHref>
-                <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Список</MenuItem>
+                <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Список (1)</MenuItem>
               </Link>
-              <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>TODO: Распределение по водителям</MenuItem>
-              <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>TODO: Распределение по маршрутам</MenuItem>
-              <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>TODO: Пробег</MenuItem>
+              <Link href="/transport/transport-drivers" passHref>
+                <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Распределение по водителям (3)</MenuItem>
+              </Link>
+              <Link href="/transport/route-transport-routes" passHref>
+                <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Распределение по маршрутам (4)</MenuItem>
+              </Link>
               <MenuItem onClick={handleCloseTransport}><AddOutlinedIcon/>TODO: Добавить транспорт</MenuItem>
             </Menu>
             <Button style={{fontSize: 18}} onClick={handleClickEmployee}>
@@ -112,8 +115,9 @@ export default function Header() {
               <Link href="/employee/" passHref>
                 <MenuItem onClick={handleCloseEmployee}><SearchOutlinedIcon/>Список</MenuItem>
               </Link>
-              <MenuItem onClick={handleCloseEmployee}><SearchOutlinedIcon/>TODO: Распределение водителей</MenuItem>
-              <MenuItem onClick={handleCloseEmployee}><SearchOutlinedIcon/>TODO: Подчиненность</MenuItem>
+              <Link href="/employee/drivers-transport" passHref>
+                <MenuItem onClick={handleCloseEmployee}><SearchOutlinedIcon/>Распределение по транспорту (2)</MenuItem>
+              </Link>
               <MenuItem onClick={handleCloseEmployee}><AddOutlinedIcon/>TODO: Добавить сотрудника</MenuItem>
             </Menu>
             <Button style={{fontSize: 18}} onClick={handleClickRepair}>
@@ -127,8 +131,6 @@ export default function Header() {
               <Link href="/repair" passHref>
                 <MenuItem onClick={handleCloseRepair}><SearchOutlinedIcon/>Список</MenuItem>
               </Link>
-              <MenuItem onClick={handleCloseRepair}><SearchOutlinedIcon/>TODO: Число и стоимость</MenuItem>
-              <MenuItem onClick={handleCloseRepair}><SearchOutlinedIcon/>TODO: Число использованных узлов</MenuItem>
               <MenuItem onClick={handleCloseRepair}><AddOutlinedIcon/>TODO: Добавить запись о ремонте</MenuItem>
             </Menu> 
             <Button style={{fontSize: 18}} onClick={handleClickGarage}>
@@ -142,7 +144,6 @@ export default function Header() {
               <Link href="/garage" passHref>
                 <MenuItem onClick={handleCloseGarage}><SearchOutlinedIcon/>Список</MenuItem>
               </Link>
-              <MenuItem onClick={handleCloseGarage}><SearchOutlinedIcon/>TODO: Распределение транспорта</MenuItem>
               <MenuItem onClick={handleCloseGarage}><AddOutlinedIcon/>TODO: Добавить гараж</MenuItem>
             </Menu>
             <Button style={{fontSize: 18}} onClick={handleClickRoute}>

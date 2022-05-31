@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.transport.TransportPageDto;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.transport.TransportSidePanelDto;
-import ru.nsu.ccfit.mamchits.transportenterprise.dto.transport.TransportListInfoDto;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.transport.*;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.employee.Driver;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.garage.Garage;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.repair.Repair;
@@ -22,9 +20,7 @@ import ru.nsu.ccfit.mamchits.transportenterprise.repository.transport.RouteTrans
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.transport.TransportRepository;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.usage.TransportUsageRepository;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,6 +34,14 @@ public class TransportService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    public List<RouteTransportRouteDto> findAllRouteTransportRoutes() {
+        return routeTransportRepository.findAll().stream().map(this::convertToRouteTransportRouteDto).collect(Collectors.toList());
+    }
+
+    public List<TransportDriverDto> findAllTransportDrivers() {
+        return transportRepository.findAll().stream().map(this::convertToTransportDriverDtoList).flatMap(List::stream).collect(Collectors.toList());
+    }
 
     public boolean deleteById(Long id) {
         Transport transport = transportRepository.findById(id).orElse(null);
@@ -116,6 +120,41 @@ public class TransportService {
             return false;
         }
         return Objects.equals(garage.getId(), garageId);
+    }
+
+    private RouteTransportRouteDto convertToRouteTransportRouteDto(RouteTransport routeTransport) {
+        Transport transport = routeTransport.getPassengerTransport().getTransport();
+        RouteTransportRouteDto routeTransportRouteDto = modelMapper.map(transport, RouteTransportRouteDto.class);
+        routeTransportRouteDto.setPassengerCapacity(routeTransport.getPassengerTransport().getPassengerCapacity());
+        routeTransportRouteDto.setFare(routeTransport.getFare());
+        Route route = routeTransport.getRoute();
+        if (route == null) {
+            return routeTransportRouteDto;
+        }
+        routeTransportRouteDto.setRouteId(route.getId());
+        routeTransportRouteDto.setRouteNumber(route.getNumber());
+        routeTransportRouteDto.setRouteStartPoint(route.getStartPoint());
+        routeTransportRouteDto.setRouteFinishPoint(route.getFinishPoint());
+        return routeTransportRouteDto;
+    }
+
+    private List<TransportDriverDto> convertToTransportDriverDtoList(Transport transport) {
+        List<TransportDriverDto> transportDriverDtoList = new ArrayList<>();
+        Set<Driver> driverSet = transport.getDriverSet();
+        if (driverSet.size() == 0) {
+            TransportDriverDto transportDriverDto = modelMapper.map(transport, TransportDriverDto.class);
+            transportDriverDtoList.add(transportDriverDto);
+            return transportDriverDtoList;
+        }
+        for (var driver : driverSet) {
+            TransportDriverDto transportDriverDto = modelMapper.map(transport, TransportDriverDto.class);
+            transportDriverDto.setDriverId(driver.getId());
+            transportDriverDto.setDriverName(driver.getEmployee().getName());
+            transportDriverDto.setDriverPosition(driver.getEmployee().getPosition());
+            transportDriverDto.setDriverBirthDate(driver.getEmployee().getBirthDate());
+            transportDriverDtoList.add(transportDriverDto);
+        }
+        return transportDriverDtoList;
     }
 
     private TransportListInfoDto convertToListInfoDto(Transport transport) {

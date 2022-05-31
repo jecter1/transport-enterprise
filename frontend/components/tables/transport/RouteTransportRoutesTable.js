@@ -9,69 +9,81 @@ import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutl
 const columns = [
   { 
     id: 'id', 
-    label: 'Страница водителя', 
-    align: 'center',
-    minWidth: 50 
-  },
-  { 
-    id: 'name', 
-    label: 'ФИО', 
-    align: 'center',
-    minWidth: 170 
-  },
-  { 
-    id: 'birthDate', 
-    label: 'Дата рождения', 
-    align: 'center',
-    minWidth: 170 
-  },
-  { 
-    id: 'position', 
-    label: 'Должность', 
-    align: 'center',
-    minWidth: 170 
-  },
-  { 
-    id: 'transportId', 
     label: 'Страница транспорта', 
     align: 'center',
     minWidth: 50 
   },
   { 
-    id: 'transportNumber', 
-    label: 'Номер транспорта', 
+    id: 'type', 
+    label: 'Тип', 
     align: 'center',
     minWidth: 170 
   },
   { 
-    id: 'transportBrand', 
-    label: 'Марка транспорта', 
+    id: 'number', 
+    label: 'Номер', 
     align: 'center',
     minWidth: 170 
   },
   { 
-    id: 'transportModel', 
-    label: 'Модель транспорта', 
+    id: 'brand', 
+    label: 'Марка', 
     align: 'center',
     minWidth: 170 
   },
   { 
-    id: 'transportColor', 
-    label: 'Цвет транспорта', 
+    id: 'model', 
+    label: 'Модель', 
     align: 'center',
     minWidth: 170 
   },
   { 
-    id: 'transportType', 
-    label: 'Тип транспорта', 
+    id: 'color', 
+    label: 'Цвет', 
+    align: 'center',
+    minWidth: 170 
+  },
+  { 
+    id: 'routeId', 
+    label: 'Страница маршрута', 
+    align: 'center',
+    minWidth: 50 
+  },
+  { 
+    id: 'routeNumber', 
+    label: 'Номер маршрута', 
+    align: 'center',
+    minWidth: 170 
+  },
+  { 
+    id: 'routeStartPoint', 
+    label: 'Начало маршрута', 
+    align: 'center',
+    minWidth: 170 
+  },
+  { 
+    id: 'routeFinishPoint', 
+    label: 'Конец маршрута', 
+    align: 'center',
+    minWidth: 170 
+  },
+  { 
+    id: 'passengerCapacity', 
+    label: 'Вместимость, чел.', 
+    align: 'center',
+    minWidth: 170 
+  },
+  { 
+    id: 'fare', 
+    label: 'Стоимость проезда, руб.', 
     align: 'center',
     minWidth: 170 
   },
 ];
 
 function rowToCells(columns, row) {
-  const employee_id = "id";
-  const transport_id = "transportId";
+  const transport_id = "id";
+  const route_id = "routeId";
 
   return (
     <TableRow hover role="checkbox" tabIndex={-1} key={row["id"]}>
@@ -81,17 +93,17 @@ function rowToCells(columns, row) {
           return (
             <TableCell key={column.id} align={column.align}>
               {
-                column.id == employee_id && row[employee_id] 
+                column.id == transport_id && row[transport_id] 
                 ?
-                <Link href={"/employee/"+row[column.id]} passHref>
+                <Link href={"/transport/" + row[transport_id]} passHref>
                   <IconButton disableRipple style={{color: "#ffffff"}}>
                     <InsertDriveFileOutlinedIcon/>
                   </IconButton>
                 </Link> 
                 :
-                column.id == transport_id && row[transport_id] 
+                column.id == route_id && row[route_id] 
                 ?
-                <Link href={"/transport/"+row[transport_id]} passHref>
+                <Link href={"/route/" + row[route_id]} passHref>
                   <IconButton disableRipple style={{color: "#ffffff"}}>
                     <InsertDriveFileOutlinedIcon/>
                   </IconButton>
@@ -109,7 +121,7 @@ function rowToCells(columns, row) {
   );
 }
 
-export default function DriversTransportTable(props) {
+export default function RouteTransportRoutesTable(props) {
   return (
     <TableTemplate columns={columns} rows={props.rows} rowToCells={rowToCells}/>
   );

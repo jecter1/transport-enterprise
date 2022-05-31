@@ -1,5 +1,5 @@
 import { Button, Grid } from "@mui/material";
-import DriverTable from "../../components/tables/employee/DriversTransportTable";
+import DriversTransportTable from "../../components/tables/employee/DriversTransportTable";
 import React from "react";
 import getRequest from "../../util/getRequest";
 import { useEffect } from "react";
@@ -10,12 +10,11 @@ import MenuItem from '@mui/material/MenuItem';
 import PageTemplate from "../../templates/PageTemplate";
 import TableMainPanel from "../../templates/TableMainPanel";
 import { useRouter } from "next/router";
-import Link from "next/link";
 
 export default function DriversTransport() {
   const router = useRouter();
 
-  const pageTitle = "Перечень водителей";
+  const pageTitle = "Распределение водителей по транспорту";
 
   const [loading, setLoading] = React.useState(true);
   const [rows, setRows] = React.useState([]);
@@ -129,7 +128,7 @@ export default function DriversTransport() {
     :
     <PageTemplate 
       pageTitle={pageTitle}
-      mainPanel={TableMainPanel(pageTitle, DriverTable, rows)}
+      mainPanel={TableMainPanel(pageTitle, DriversTransportTable, rows)}
       leftPanel={LeftPanel()}
     />
   );

@@ -1,18 +1,18 @@
-import DriverTable from "../../components/transport/tables/DriverTable";
+import RouteTransportRoutesTable from "../../components/tables/transport/RouteTransportRoutesTable";
 import React from "react";
 import getRequest from "../../util/getRequest";
 import { useEffect } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import TableMainPanel from "../../templates/TableMainPanel";
 
-export default function Drivers() {
-  const pageTitle = "Распределение транспорта по водителям";
+export default function RouteTransportRoutes() {
+  const pageTitle = "Распределение транспорта по маршрутам";
   
   const [rows, setRows] = React.useState([{}]);
   const [loading, setLoading] = React.useState(true);
   
   useEffect(() => {
-      getRequest('transport/drivers', setRows);
+      getRequest('transport/route-transport-routes', setRows);
       setLoading(false);
   }, []);
 
@@ -21,6 +21,6 @@ export default function Drivers() {
     ?
     <PageTemplate hasSidePanels={false} pageTitle={"Загрузка..."}/>
     :
-    <PageTemplate pageTitle={pageTitle} mainPanel={TableMainPanel(pageTitle, DriverTable, rows)}/>
+    <PageTemplate pageTitle={pageTitle} mainPanel={TableMainPanel(pageTitle, RouteTransportRoutesTable, rows)}/>
   );
 }
