@@ -36,7 +36,7 @@ public class RepairService {
             return false;
         }
         repairRepository.deleteById(id);
-        return true;
+        return repairRepository.findById(id).isEmpty();
     }
 
     public List<RepairSidePanelDto> findByTransportId(Long transportId) {

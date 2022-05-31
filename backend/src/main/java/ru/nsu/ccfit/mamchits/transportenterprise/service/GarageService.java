@@ -33,7 +33,7 @@ public class GarageService {
             return false;
         }
         garageRepository.deleteById(id);
-        return true;
+        return garageRepository.findById(id).isEmpty();
     }
 
     public Optional<GaragePageDto> findByTransportId(Long transportId) {

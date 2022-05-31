@@ -9,6 +9,7 @@ import CardHeader from "./CardHeader";
  * props.disableUnbind (not main)
  * props.onEditClick (main)
  * props.onDeleteClick (main)
+ * props.disableDelete (main)
  */
 export default function RepairCard(props) {
   const repair = props.repair;
@@ -30,6 +31,7 @@ export default function RepairCard(props) {
                   onEditClick={props.onEditClick}
                   onDeleteClick={props.onDeleteClick}
                   disableUnbind={repair == null || props.disableUnbind}
+                  disableDelete={props.disableDelete}
                   disableRef={repair ? false : true}
                   refTooltip="Перейти к ремонту"/>
 
@@ -102,5 +104,6 @@ export default function RepairCard(props) {
 
 RepairCard.defaultProps = {
   isMain: false,
-  disableUnbind: false
+  disableUnbind: false,
+  disableDelete: false
 };

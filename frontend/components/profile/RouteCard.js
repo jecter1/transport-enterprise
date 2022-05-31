@@ -9,6 +9,7 @@ import CardHeader from "./CardHeader";
  * props.disableUnbind (not main)
  * props.onEditClick (main)
  * props.onDeleteClick (main)
+ * props.disableDelete (main)
  */
 export default function RouteCard(props) {
   const route = props.route;
@@ -30,6 +31,7 @@ export default function RouteCard(props) {
                   onEditClick={props.onEditClick}
                   onDeleteClick={props.onDeleteClick}
                   disableUnbind={route == null || props.disableUnbind}
+                  disableDelete={props.disableDelete}
                   disableRef={route ? false : true}
                   refTooltip="Перейти к маршруту"/>
 
@@ -70,5 +72,6 @@ export default function RouteCard(props) {
 
 RouteCard.defaultProps = {
   isMain: false,
-  disableUnbind: false
+  disableUnbind: false,
+  disableDelete: false
 };

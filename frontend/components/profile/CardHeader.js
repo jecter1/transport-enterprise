@@ -19,6 +19,7 @@ import Link from "next/link";
  * props.unbindWarning (not main)
  * 
  * props.onEditClick (main)
+ * props.disableDelete (main)
  * props.onDeleteClick (main)
  * props.deleteWarning (main)
  */
@@ -26,6 +27,7 @@ export default function CardHeader(props) {
   const [openDelete, setOpenDelete] = React.useState(false);
   const [openUnbind, setOpenUnbind] = React.useState(false);
   const unbindColor = props.disableUnbind ? '#444444' : '#ffffff';
+  const deleteColor = props.disableDelete ? '#444444' : '#ffffff';
 
   return (
     <Grid container justifyContent="space-around" alignItems="center" style={{width: '100%', height: '5%', backgroundColor: "#222533"}}>
@@ -60,7 +62,7 @@ export default function CardHeader(props) {
         ?
         <>
           <Tooltip title="Удалить">
-            <IconButton color="white" disableRipple onClick={(e) => {setOpenDelete(true)}}>
+            <IconButton disabled={props.disableDelete} disableRipple style={{color: deleteColor}} onClick={(e) => {setOpenDelete(true)}}>
               <DeleteOutlinedIcon/>
             </IconButton>
           </Tooltip>

@@ -86,7 +86,7 @@ export default function EmployeeProfile() {
   const MainPanel = () => {
     return (
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '50%', height: '100%'}}>
-        <EmployeeCard employee={employee} isMain={true} onDeleteClick={onDeleteClick}/>
+        <EmployeeCard disableDelete={subordinates.length != 0} employee={employee} isMain={true} onDeleteClick={onDeleteClick}/>
         {
           employee["type"] == "Водитель"
           ?

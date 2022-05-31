@@ -9,6 +9,7 @@ import CardHeader from "./CardHeader";
  * props.disableUnbind (not main)
  * props.onEditClick (main)
  * props.onDeleteClick (main)
+ * props.disableDelete (main)
  */
 export default function UsageCard(props) {
   const usage = props.usage;
@@ -30,6 +31,7 @@ export default function UsageCard(props) {
                   onEditClick={props.onEditClick}
                   onDeleteClick={props.onDeleteClick}
                   disableUnbind={usage == null || props.disableUnbind}
+                  disableDelete={props.disableDelete}
                   disableRef={usage ? false : true}
                   refTooltip="Перейти к поездке"/>
 
@@ -84,5 +86,6 @@ export default function UsageCard(props) {
 
 UsageCard.defaultProps = {
   isMain: false,
-  disableUnbind: false
+  disableUnbind: false,
+  disableDelete: false
 };

@@ -30,7 +30,7 @@ public class RouteService {
             return false;
         }
         routeRepository.deleteById(id);
-        return true;
+        return routeRepository.findById(id).isEmpty();
     }
 
     public Optional<RoutePageDto> findByTransportId(Long transportId) {

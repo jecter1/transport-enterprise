@@ -141,7 +141,7 @@ CREATE TABLE Employee (
 	chief_id INT,
 	type ENUM('Водитель', 'Обслуживающий персонал', 'Сборщик', 'Слесарь', 'Сварщик', 'Техник'),
 	PRIMARY KEY (id),
-	FOREIGN KEY (chief_id) REFERENCES Employee (id) ON DELETE SET NULL
+	FOREIGN KEY (chief_id) REFERENCES Employee (id) ON DELETE RESTRICT
 );
 
 CREATE TABLE Driver (

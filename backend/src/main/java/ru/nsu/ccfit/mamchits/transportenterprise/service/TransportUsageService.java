@@ -31,7 +31,7 @@ public class TransportUsageService {
             return false;
         }
         transportUsageRepository.deleteById(id);
-        return true;
+        return transportUsageRepository.findById(id).isEmpty();
     }
 
     public List<TransportUsageListInfoDto> findAll() {

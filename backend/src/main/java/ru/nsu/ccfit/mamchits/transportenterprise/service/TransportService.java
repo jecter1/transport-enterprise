@@ -45,7 +45,7 @@ public class TransportService {
             return false;
         }
         transportRepository.deleteById(id);
-        return true;
+        return transportRepository.findById(id).isEmpty();
     }
 
     public Optional<TransportPageDto> findById(Long id) {

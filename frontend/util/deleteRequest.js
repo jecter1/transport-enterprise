@@ -1,5 +1,5 @@
 import axios from "axios";
 
-export default function deleteRequest(url, urlparams) {
-  axios.delete(url, { params: urlparams });
+export default function deleteRequest(url, setter, urlparams) {
+  axios.delete(url, { params: urlparams }).then(res => {setter(res.data); console.log(res.data)});
 }

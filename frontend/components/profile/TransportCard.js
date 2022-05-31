@@ -10,6 +10,7 @@ import Link from "next/link"
  * props.disableUnbind (not main)
  * props.onEditClick (main)
  * props.onDeleteClick (main)
+ * props.disableDelete (main)
  */
 export default function TransportCard(props) {
   const transport = props.transport;
@@ -31,6 +32,7 @@ export default function TransportCard(props) {
                   onEditClick={props.onEditClick}
                   onDeleteClick={props.onDeleteClick}
                   disableUnbind={transport == null || props.disableUnbind}
+                  disableDelete={props.disableDelete}
                   disableRef={transport ? false : true}
                   refTooltip="Перейти к транспорту"/>
 
@@ -159,6 +161,6 @@ export default function TransportCard(props) {
 
 TransportCard.defaultProps = {
   isMain: false,
-  disableUnbind: false
+  disableUnbind: false,
+  disableDelete: false
 };
-// {"/transport/" + transport["id"] + "/usage"}

@@ -34,9 +34,11 @@ public class EmployeeService {
         if (employee == null) {
             return false;
         }
-        System.out.println("Удаляется пользователь #" + employee.getId());
+        if (employee.getSubordinateSet().size() != 0) {
+            return false;
+        }
         employeeRepository.deleteById(id);
-        return true;
+        return employeeRepository.findById(id).isEmpty();
     }
 
     public List<EmployeeSidePanelDto> findByTransportId(Long transportId) {

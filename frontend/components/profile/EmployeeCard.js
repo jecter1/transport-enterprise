@@ -10,6 +10,7 @@ import Link from "next/link";
  * props.disableUnbind (not main)
  * props.onEditClick (main)
  * props.onDeleteClick (main)
+ * props.disableDelete (main)
  */
 export default function EmployeeCard(props) {
   const employee = props.employee;
@@ -31,6 +32,7 @@ export default function EmployeeCard(props) {
                   onEditClick={props.onEditClick}
                   onDeleteClick={props.onDeleteClick}
                   disableUnbind={employee == null || props.disableUnbind}
+                  disableDelete={props.disableDelete}
                   disableRef={employee ? false : true}
                   refTooltip="Перейти к сотруднику"/>
 
@@ -114,5 +116,6 @@ export default function EmployeeCard(props) {
 
 EmployeeCard.defaultProps = {
   isMain: false,
-  disableUnbind: false
+  disableUnbind: false,
+  disableDelete: false
 };

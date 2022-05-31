@@ -9,6 +9,7 @@ import CardHeader from "./CardHeader";
  * props.disableUnbind (not main)
  * props.onEditClick (main)
  * props.onDeleteClick (main)
+ * props.disableDelete (main)
  */
 export default function GarageCard(props) {
   const garage = props.garage;
@@ -30,6 +31,7 @@ export default function GarageCard(props) {
                   onEditClick={props.onEditClick}
                   onDeleteClick={props.onDeleteClick}
                   disableUnbind={garage == null || props.disableUnbind}
+                  disableDelete={props.disableDelete}
                   disableRef={garage ? false : true}
                   refTooltip="Перейти к гаражу"/>
 
@@ -70,5 +72,6 @@ export default function GarageCard(props) {
 
 GarageCard.defaultProps = {
   isMain: false,
-  disableUnbind: false
+  disableUnbind: false,
+  disableDelete: false
 };
