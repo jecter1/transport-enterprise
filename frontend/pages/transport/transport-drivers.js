@@ -19,8 +19,14 @@ export default function TransportDrivers() {
   return (
     loading
     ?
-    <PageTemplate hasSidePanels={false} pageTitle={"Загрузка..."}/>
+    <PageTemplate 
+      hasSidePanels={false} 
+      pageTitle={"Загрузка..."}
+    />
     :
-    <PageTemplate pageTitle={pageTitle} mainPanel={TableMainPanel(pageTitle, TransportDriversTable, rows)}/>
+    <PageTemplate 
+      pageTitle={pageTitle} 
+      mainPanel={TableMainPanel(pageTitle, TransportDriversTable, rows)}
+    />
   );
 }

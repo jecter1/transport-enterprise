@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.garage.GarageListInfoDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.garage.GaragePageDto;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.garage.GarageTransportDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.garage.Garage;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.repair.Repair;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.transport.Transport;
@@ -13,8 +14,10 @@ import ru.nsu.ccfit.mamchits.transportenterprise.repository.garage.GarageReposit
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.repair.RepairRepository;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.transport.TransportRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,6 +29,10 @@ public class GarageService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    public List<GarageTransportDto> findAllGaragesTransport() {
+        return garageRepository.findAll().stream().map(this::convertToGarageTransportDto).flatMap(List::stream).collect(Collectors.toList());
+    }
 
     public boolean deleteById(Long id) {
         Garage garage = garageRepository.findById(id).orElse(null);
@@ -52,6 +59,27 @@ public class GarageService {
 
     public List<GarageListInfoDto> findAll() {
         return garageRepository.findAll().stream().map(this::convertToListInfoDto).collect(Collectors.toList());
+    }
+
+    private List<GarageTransportDto> convertToGarageTransportDto(Garage garage) {
+        List<GarageTransportDto> garageTransportDtoList = new ArrayList<>();
+        Set<Transport> transportSet = garage.getTransportSet();
+        if (transportSet.size() == 0) {
+            GarageTransportDto garageTransportDto = modelMapper.map(garage, GarageTransportDto.class);
+            garageTransportDtoList.add(garageTransportDto);
+            return garageTransportDtoList;
+        }
+        for (var transport : transportSet) {
+            GarageTransportDto garageTransportDto = modelMapper.map(garage, GarageTransportDto.class);
+            garageTransportDto.setTransportId(transport.getId());
+            garageTransportDto.setTransportColor(transport.getColor());
+            garageTransportDto.setTransportBrand(transport.getBrand());
+            garageTransportDto.setTransportType(transport.getType());
+            garageTransportDto.setTransportModel(transport.getModel());
+            garageTransportDto.setTransportNumber(transport.getNumber());
+            garageTransportDtoList.add(garageTransportDto);
+        }
+        return garageTransportDtoList;
     }
 
     private GarageListInfoDto convertToListInfoDto(Garage garage) {

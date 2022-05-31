@@ -94,10 +94,10 @@ export default function Header() {
               onClose={handleCloseTransport}
             >
               <Link href="/transport/" passHref>
-                <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Список (1, 9)</MenuItem>
+                <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Список (1)</MenuItem>
               </Link>
               <Link href="/transport/transport-drivers" passHref>
-                <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Распределение по водителям (3)</MenuItem>
+                <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Распределение водителей (3)</MenuItem>
               </Link>
               <Link href="/transport/route-transport-routes" passHref>
                 <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Распределение по маршрутам (4)</MenuItem>
@@ -116,7 +116,7 @@ export default function Header() {
                 <MenuItem onClick={handleCloseEmployee}><SearchOutlinedIcon/>Список</MenuItem>
               </Link>
               <Link href="/employee/drivers-transport" passHref>
-                <MenuItem onClick={handleCloseEmployee}><SearchOutlinedIcon/>Распределение по транспорту (2)</MenuItem>
+                <MenuItem onClick={handleCloseEmployee}><SearchOutlinedIcon/>Распределение транспорта (2)</MenuItem>
               </Link>
               <Link href="/employee/employee-hierarchy" passHref>
                 <MenuItem onClick={handleCloseEmployee}><SearchOutlinedIcon/>Подчиненность (7)</MenuItem>
@@ -146,6 +146,9 @@ export default function Header() {
             >
               <Link href="/garage" passHref>
                 <MenuItem onClick={handleCloseGarage}><SearchOutlinedIcon/>Список</MenuItem>
+              </Link>
+              <Link href="/garage/garages-transport" passHref>
+                <MenuItem onClick={handleCloseGarage}><SearchOutlinedIcon/>Распределение транспорта (9)</MenuItem>
               </Link>
               <MenuItem onClick={handleCloseGarage}><AddOutlinedIcon/>TODO: Добавить гараж</MenuItem>
             </Menu>
