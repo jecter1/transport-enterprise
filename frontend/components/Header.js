@@ -16,12 +16,14 @@ export default function Header() {
   const [anchorRepairEl, setAnchorRepairEl] = React.useState(null);
   const [anchorGarageEl, setAnchorGarageEl] = React.useState(null);
   const [anchorRouteEl, setAnchorRouteEl] = React.useState(null);
+  const [anchorUsageEl, setAnchorUsageEl] = React.useState(null);
 
   const openEmployee = Boolean(anchorEmployeeEl);
   const openTransport = Boolean(anchorTransportEl);
   const openRepair = Boolean(anchorRepairEl);
   const openGarage = Boolean(anchorGarageEl);
   const openRoute = Boolean(anchorRouteEl);
+  const openUsage = Boolean(anchorUsageEl);
 
   const handleClickEmployee = (event) => {
     setAnchorEmployeeEl(event.currentTarget);
@@ -61,6 +63,14 @@ export default function Header() {
 
   const handleCloseRoute = () => {
     setAnchorRouteEl(null);
+  };
+
+  const handleClickUsage = (event) => {
+    setAnchorUsageEl(event.currentTarget);
+  };
+
+  const handleCloseUsage = () => {
+    setAnchorUsageEl(null);
   };
 
   return (
@@ -159,6 +169,21 @@ export default function Header() {
                 <MenuItem onClick={handleCloseRoute}><SearchOutlinedIcon/>Список</MenuItem>
               </Link>
               <MenuItem onClick={handleCloseRoute}><AddOutlinedIcon/>TODO: Добавить маршрут</MenuItem>
+            </Menu>
+            <Button style={{fontSize: 18}} onClick={handleClickUsage}>
+              Поездки
+            </Button>
+            <Menu
+              anchorEl={anchorUsageEl}
+              open={openUsage}
+              onClose={handleCloseUsage}
+            >
+              <Link href="/usage/" passHref>
+                <MenuItem onClick={handleCloseUsage}><SearchOutlinedIcon/>Список</MenuItem>
+              </Link>
+              <Link href="/usage/add" passHref>
+                <MenuItem onClick={handleCloseUsage}><AddOutlinedIcon/>TODO: Добавить поездку</MenuItem>
+              </Link>
             </Menu>
           </Grid>
           <Grid item sm={2} style={{ textAlign: 'center' }}>

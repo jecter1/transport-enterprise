@@ -19,7 +19,7 @@ public class ServiceStaff {
     @ManyToMany(mappedBy = "serviceStaffSet")
     private Set<Repair> repairSet;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "id", nullable = false)
     private Employee employee;

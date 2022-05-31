@@ -34,7 +34,7 @@ public class Employee {
     @JoinColumn(name="chief_id")
     private Employee chief;
 
-    @OneToMany(mappedBy="chief", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="chief", fetch = FetchType.LAZY)
     private Set<Employee> subordinateSet;
 
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

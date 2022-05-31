@@ -19,7 +19,7 @@ public class Driver {
     @JoinColumn(name="transport_id")
     private Transport transport;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "id", nullable = false)
     private Employee employee;

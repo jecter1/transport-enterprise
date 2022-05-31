@@ -19,7 +19,7 @@ export default function Drivers() {
   const [loading, setLoading] = React.useState(true);
   
   useEffect(() => {
-    getData('employee/drivers', setRows);
+    getData('driver/all', setRows);
     getData('transport/short-all', setTransports);
     setLoading(false);
   }, []);

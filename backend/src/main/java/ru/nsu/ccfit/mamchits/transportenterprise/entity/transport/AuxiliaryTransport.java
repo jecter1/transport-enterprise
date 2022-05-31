@@ -21,6 +21,6 @@ public class AuxiliaryTransport {
     @JoinColumn(name = "id", nullable = false)
     private Transport transport;
 
-    @OneToMany(mappedBy="auxiliaryTransport", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="auxiliaryTransport", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<AuxiliaryTransportUsage> auxiliaryTransportUsageSet;
 }

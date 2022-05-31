@@ -25,12 +25,6 @@ const columns = [
     minWidth: 170 
   },
   { 
-    id: 'chiefName', 
-    label: 'Начальник', 
-    align: 'center',
-    minWidth: 170 
-  },
-  { 
     id: 'transportNumber', 
     label: 'Номер транспорта', 
     align: 'center',
@@ -60,18 +54,6 @@ const columns = [
     align: 'center',
     minWidth: 170 
   },
-  { 
-    id: 'transportReceiveDate', 
-    label: 'Дата получения транспорта', 
-    align: 'center',
-    minWidth: 170 
-  },
-  { 
-    id: 'transportDecommissioningDate', 
-    label: 'Дата списания транспорта', 
-    align: 'center',
-    minWidth: 170 
-  },
 ];
 
 function rowToCells(columns, row) {
@@ -90,14 +72,6 @@ function rowToCells(columns, row) {
                 column.id == 'name' && employee_id 
                 ?
                 <Link href={"/employee/"+employee_id} passHref>
-                  <Button style={{fontSize: 14, height: '8vh', width: '10vw'}}>
-                    {employee_col_data}
-                  </Button>
-                </Link> 
-                :
-                column.id == 'chiefName' && chief_id 
-                ?
-                <Link href={"/employee/"+chief_id} passHref>
                   <Button style={{fontSize: 14, height: '8vh', width: '10vw'}}>
                     {employee_col_data}
                   </Button>

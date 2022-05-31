@@ -19,7 +19,7 @@ public class AuxiliaryTransportUsage {
     @JoinColumn(name="transport_id", nullable = false)
     private AuxiliaryTransport auxiliaryTransport;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "id", nullable = false)
     private TransportUsage transportUsage;

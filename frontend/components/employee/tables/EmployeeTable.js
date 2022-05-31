@@ -2,13 +2,20 @@ import * as React from 'react';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Link from 'next/link';
-import { Button, Typography } from '@mui/material';
+import { IconButton, Typography } from '@mui/material';
 import TableTemplate from '../../../templates/TableTemplate';
+import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 
 const columns = [
   { 
+    id: 'id', 
+    label: 'Страница сотруднка', 
+    align: 'center',
+    minWidth: 50 
+  },
+  { 
     id: 'name', 
-    label: 'ФИО', 
+    label: 'ФИО сотрудника', 
     align: 'center',
     minWidth: 170 
   },
@@ -31,8 +38,14 @@ const columns = [
     minWidth: 170 
   },
   { 
+    id: 'chiefId', 
+    label: 'Страница начальника', 
+    align: 'center',
+    minWidth: 50 
+  },
+  { 
     id: 'chiefName', 
-    label: 'Начальник ', 
+    label: 'ФИО начальника', 
     align: 'center',
     minWidth: 170 
   },
@@ -50,20 +63,20 @@ function rowToCells(columns, row) {
           return (
             <TableCell key={column.id} align={column.align}>
               {
-                column.id == 'name' && employee_id 
+                column.id == 'id' && employee_id 
                 ?
                 <Link href={"/employee/"+employee_id} passHref>
-                  <Button style={{fontSize: 14, height: '8vh', width: '10vw'}}>
-                    {employee_col_data}
-                  </Button>
+                  <IconButton disableRipple style={{color: "#ffffff"}}>
+                    <InsertDriveFileOutlinedIcon/>
+                  </IconButton>
                 </Link> 
                 :
-                column.id == 'chiefName' && chief_id 
+                column.id == 'chiefId' && chief_id 
                 ?
                 <Link href={"/employee/"+chief_id} passHref>
-                  <Button style={{fontSize: 14, height: '8vh', width: '10vw'}}>
-                    {employee_col_data}
-                  </Button>
+                  <IconButton disableRipple style={{color: "#ffffff"}}>
+                    <InsertDriveFileOutlinedIcon/>
+                  </IconButton>
                 </Link> 
                 :
                 <Typography>

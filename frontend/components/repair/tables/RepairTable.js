@@ -2,21 +2,16 @@ import * as React from 'react';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Link from 'next/link';
-import { Button, Typography } from '@mui/material';
+import { IconButton, Typography } from '@mui/material';
 import TableTemplate from '../../../templates/TableTemplate';
+import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 
 const columns = [
   { 
     id: 'id', 
-    label: 'ID ремонта', 
+    label: 'Страница ремонта', 
     align: 'center',
-    minWidth: 170 
-  },
-  { 
-    id: 'garageLocation', 
-    label: 'Место проведения', 
-    align: 'center',
-    minWidth: 170 
+    minWidth: 50 
   },
   { 
     id: 'assembly', 
@@ -41,6 +36,24 @@ const columns = [
     label: 'Время окончания', 
     align: 'center',
     minWidth: 170 
+  },
+  { 
+    id: 'garageId', 
+    label: 'Страница гаража', 
+    align: 'center',
+    minWidth: 50 
+  },
+  { 
+    id: 'garageLocation', 
+    label: 'Гараж', 
+    align: 'center',
+    minWidth: 170 
+  },
+  { 
+    id: 'transportId', 
+    label: 'Страница транспорта', 
+    align: 'center',
+    minWidth: 50 
   },
   { 
     id: 'transportNumber', 
@@ -90,25 +103,25 @@ function rowToCells(columns, row) {
                 column.id == 'id' && repair_id 
                 ?
                 <Link href={"/repair/"+repair_id} passHref>
-                  <Button style={{fontSize: 14, height: '4vh', width: '4vw'}}>
-                    {cell_data ? cell_data : '-'}
-                  </Button>
+                  <IconButton disableRipple style={{color: "#ffffff"}}>
+                    <InsertDriveFileOutlinedIcon/>
+                  </IconButton>
                 </Link> 
                 :
-                column.id == 'transportNumber' && transport_id 
+                column.id == 'transportId' && transport_id 
                 ?
                 <Link href={"/transport/"+transport_id} passHref>
-                  <Button style={{fontSize: 14, height: '6vh', width: '6vw'}}>
-                    {cell_data ? cell_data : '-'}
-                  </Button>
+                  <IconButton disableRipple style={{color: "#ffffff"}}>
+                    <InsertDriveFileOutlinedIcon/>
+                  </IconButton>
                 </Link> 
                 :
-                column.id == 'garageLocation' && garage_id 
+                column.id == 'garageId' && garage_id 
                 ?
                 <Link href={"/garage/"+garage_id} passHref>
-                  <Button style={{fontSize: 14, height: '8vh', width: '10vw'}}>
-                    {cell_data ? cell_data : '-'}
-                  </Button>
+                  <IconButton disableRipple style={{color: "#ffffff"}}>
+                    <InsertDriveFileOutlinedIcon/>
+                  </IconButton>
                 </Link> 
                 :
                 <Typography>

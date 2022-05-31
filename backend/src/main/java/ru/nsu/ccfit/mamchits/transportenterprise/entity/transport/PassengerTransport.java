@@ -35,6 +35,6 @@ public class PassengerTransport {
     @PrimaryKeyJoinColumn
     private RouteTransport routeTransport;
 
-    @OneToMany(mappedBy="passengerTransport", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="passengerTransport", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<PassengerTransportUsage> passengerTransportUsageSet;
 }

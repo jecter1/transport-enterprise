@@ -5,22 +5,13 @@ import getData from "../../util/getData";
 import { useEffect } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import { Button } from "@mui/material";
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { IconButton } from "@mui/material";
 import deleteRequest from "../../util/deleteRequest";
-import { Tooltip } from "@mui/material";
-import { Dialog } from "@mui/material";
-import { DialogActions } from "@mui/material";
-import { DialogContent } from "@mui/material";
-import { DialogContentText } from "@mui/material";
-import { CircularProgress } from "@mui/material";
+import RouteCard from "../../components/profile/RouteCard";
 
 
 export default function RouteProfile() {
   const [route, setRoute] = React.useState();
   const [transportList, setTransportList] = React.useState([]);
-  const [openDelete, setOpenDelete] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
 
   const router = useRouter();
@@ -30,7 +21,7 @@ export default function RouteProfile() {
       if (router.isReady) {
         const { id } = router.query;
         await getData(('/route/' + id), setRoute);
-        await getData(('/route/' + id + "/transport"), setTransportList);
+        await getData(('/transport'), setTransportList, {routeId: id});
       }
     }
     fetchData();
@@ -70,48 +61,7 @@ export default function RouteProfile() {
   const MainPanel = () => {
     return (
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '50%', height: '100%'}}>
-        <Grid container justifyContent="space-around" alignItems="center" style={{width: '100%', height: '5%', backgroundColor: "#222533"}}>
-          <Tooltip title="Редактировать">
-            <IconButton color="white" disableRipple>
-              <EditOutlinedIcon/>
-            </IconButton>
-          </Tooltip>
-          <Typography fontSize={18}>
-            {"Маршрут №" + route["number"]}
-          </Typography>
-          <Tooltip title="Удалить">
-            <IconButton color="white" disableRipple onClick={(e) => {setOpenDelete(true)}}>
-              <DeleteOutlinedIcon/>
-            </IconButton>
-          </Tooltip>
-          <Dialog
-            open={openDelete}
-            onClose={(e) => {setOpenDelete(false)}}
-          >
-            <DialogContent style={{background: '#222533'}}>
-              <DialogContentText style={{fontSize: 16, color: '#ffffff'}}>
-                Вы уверены что хотите удалить данные о маршруте?
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions style={{background: '#222533'}}>
-              <Button onClick={(e) => {setOpenDelete(false)}}>Нет</Button>
-              <Button onClick={(e) => {onDeleteClick()}}>Да</Button>
-            </DialogActions>
-          </Dialog>
-        </Grid>
-        <Grid container style={{height: '0.5%'}}>
-        </Grid>
-        <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '100%', height: '15%', backgroundColor: "#222533"}}>
-          { 
-            route
-            ?
-            <Typography fontSize={16}>
-              {route["startPoint"] + " → " + route["finishPoint"]}
-            </Typography>
-              :
-            <></>
-          }
-        </Grid>
+        <RouteCard route={route} isMain={true} onDeleteClick={onDeleteClick}/>
       </Grid>
     );
   }

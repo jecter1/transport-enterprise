@@ -23,6 +23,6 @@ public class FreightTransport {
     @JoinColumn(name = "id", nullable = false)
     private Transport transport;
 
-    @OneToMany(mappedBy="freightTransport", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="freightTransport", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<FreightTransportUsage> freightTransportUsageSet;
 }

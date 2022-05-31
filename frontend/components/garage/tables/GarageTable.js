@@ -2,10 +2,17 @@ import * as React from 'react';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Link from 'next/link';
-import { Button, Typography } from '@mui/material';
+import { IconButton, Typography } from '@mui/material';
 import TableTemplate from '../../../templates/TableTemplate';
+import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 
 const columns = [
+  { 
+    id: 'id', 
+    label: 'Страница гаража', 
+    align: 'center',
+    minWidth: 50 
+  },
   { 
     id: 'location', 
     label: 'Местоположение', 
@@ -31,12 +38,12 @@ function rowToCells(columns, row) {
           return (
             <TableCell key={column.id} align={column.align}>
               {
-                column.id == 'location' && garage_id 
+                column.id == 'id' && garage_id 
                 ?
                 <Link href={"/garage/"+garage_id} passHref>
-                  <Button style={{fontSize: 14, height: '8vh', width: '12vw'}}>
-                    {cell_data ? cell_data : '-'}
-                  </Button>
+                  <IconButton disableRipple style={{color: "#ffffff"}}>
+                    <InsertDriveFileOutlinedIcon/>
+                  </IconButton>
                 </Link> 
                 :
                 <Typography>

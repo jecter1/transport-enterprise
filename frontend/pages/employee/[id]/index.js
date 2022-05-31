@@ -4,24 +4,16 @@ import React from "react";
 import getData from "../../../util/getData";
 import { useEffect } from "react";
 import { Button } from "@mui/material";
-import DriverInfo from "../../../components/employee/DriverInfo";
-import ServiceStaffInfo from "../../../components/employee/ServiceStaffInfo";
 import PageTemplate from "../../../templates/PageTemplate";
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { IconButton } from "@mui/material";
 import deleteRequest from "../../../util/deleteRequest";
-import { Tooltip } from "@mui/material";
-import { Dialog } from "@mui/material";
-import { DialogActions } from "@mui/material";
-import { DialogContent } from "@mui/material";
-import { DialogContentText } from "@mui/material";
+import EmployeeCard from "../../../components/profile/EmployeeCard";
+import TransportCard from "../../../components/profile/TransportCard";
 
 export default function EmployeeProfile() {
-  const [data, setData] = React.useState();
+  const [employee, setEmployee] = React.useState();
+  const [transport, setTransport] = React.useState();
   const [subordinates, setSubordinates] = React.useState([]);
   const [superiors, setSuperiors] = React.useState([]);
-  const [openDelete, setOpenDelete] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
 
   const router = useRouter();
@@ -30,9 +22,10 @@ export default function EmployeeProfile() {
     const fetchData = async () => {
       if (router.isReady) {
         const { id } = router.query;
-        await getData(('employee/' + id), setData);
-        await getData(('employee/' + id + "/subordinates"), setSubordinates);
-        await getData(('employee/' + id + "/superiors"), setSuperiors);
+        await getData(('/employee/' + id), setEmployee);
+        await getData(('/transport'), setTransport, {driverId: id});
+        await getData(('/employee/' + id + "/subordinates"), setSubordinates);
+        await getData(('/employee/' + id + "/superiors"), setSuperiors);
       }
     }
     fetchData();
@@ -40,7 +33,7 @@ export default function EmployeeProfile() {
   }, [router.isReady]);
 
   const onDeleteClick = () => {
-    deleteRequest("/employee/" + data["id"]);
+    deleteRequest("/employee/" + employee["id"]);
     location.href = "/employee/";
   }
 
@@ -93,74 +86,14 @@ export default function EmployeeProfile() {
   const MainPanel = () => {
     return (
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '50%', height: '100%'}}>
-        <Grid container justifyContent="space-around" alignItems="center" style={{width: '100%', height: '5%', backgroundColor: "#222533"}}>
-          <Tooltip title="Редактировать">
-            <IconButton color="white" disableRipple>
-              <EditOutlinedIcon/>
-            </IconButton>
-          </Tooltip>
-          <Typography fontSize={18}>
-            {data["name"]}
-          </Typography>
-          <Tooltip title="Удалить">
-            <IconButton color="white" disableRipple onClick={(e) => {setOpenDelete(true)}}>
-              <DeleteOutlinedIcon/>
-            </IconButton>
-          </Tooltip>
-          <Dialog
-            open={openDelete}
-            onClose={(e) => {setOpenDelete(false)}}
-          >
-            <DialogContent style={{background: '#222533'}}>
-              <DialogContentText style={{fontSize: 16, color: '#ffffff'}}>
-                Вы уверены что хотите удалить данные о сотруднике?
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions style={{background: '#222533'}}>
-              <Button onClick={(e) => {setOpenDelete(false)}}>Нет</Button>
-              <Button onClick={(e) => {onDeleteClick()}}>Да</Button>
-            </DialogActions>
-          </Dialog>
-        </Grid>
-        <Grid container style={{height: '0.5%'}}>
-        </Grid>
-        <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '100%', height: '20%', backgroundColor: "#222533"}}>
-          { 
-            data["type"] ?
-            <Typography fontSize={16}>
-              Специализация: {data["type"]}
-            </Typography>
-            :
-            <></>
-          }
-          { 
-            data["position"] ?
-            <Typography fontSize={16}>
-              Должность: {data["position"]}
-            </Typography>
-            :
-            <></>
-          }
-          { 
-            data["birthDate"] ?
-            <Typography fontSize={16}>
-              Дата рождения: {data["birthDate"]}
-            </Typography>
-            :
-            <></>
-          }
-          { 
-            (data["type"] && data["type"] != "Водитель") 
-            ?
-            <ServiceStaffInfo/> 
-            :
-            <></>
-          }
-        </Grid>
-        { 
-          data["type"] == "Водитель" 
+        <EmployeeCard employee={employee} isMain={true} onDeleteClick={onDeleteClick}/>
+        {
+          employee["type"] == "Водитель"
           ?
-          <DriverInfo />
+          <>
+            <Grid container style={{height: '3%'}}/>
+            <TransportCard transport={transport}/>
+          </>
           :
           <></>
         }
@@ -173,9 +106,9 @@ export default function EmployeeProfile() {
       ?
       <PageTemplate hasSidePanels={false} pageTitle={"Загрузка..."}/>
       :
-      data 
+      employee 
       ? 
-      <PageTemplate pageTitle={data["name"]}
+      <PageTemplate pageTitle={employee["name"]}
                     mainPanel={MainPanel()}
                     leftPanel={LeftPanel()}
                     leftPanelTitle={"Начальники (" + superiors.length + ")"}

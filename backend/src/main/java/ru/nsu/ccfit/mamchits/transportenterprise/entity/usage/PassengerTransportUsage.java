@@ -21,7 +21,7 @@ public class PassengerTransportUsage {
     @JoinColumn(name="transport_id", nullable = false)
     private PassengerTransport passengerTransport;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "id", nullable = false)
     private TransportUsage transportUsage;
