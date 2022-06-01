@@ -17,6 +17,11 @@ public class RepairController {
     @Autowired
     private RepairService repairService;
 
+    @GetMapping(path = "/assembly")
+    public @ResponseBody Iterable<String> getAllAssembly() {
+        return repairService.findAllAssembly();
+    }
+
     @DeleteMapping(path = "/{id}")
     public @ResponseBody boolean deleteById(@PathVariable String id) {
         return repairService.deleteById(Long.parseLong(id));
@@ -51,9 +56,10 @@ public class RepairController {
             @RequestParam(required = false) Long transportId,
             @RequestParam(required = false) String transportType,
             @RequestParam(required = false) String transportBrand,
+            @RequestParam(required = false) String assembly,
             @RequestParam(required = false) String dateFrom,
             @RequestParam(required = false) String dateTo) {
         TransportType type = TransportType.decode(transportType);
-        return repairService.findAllCountCost(transportId, type, transportBrand, dateFrom, dateTo);
+        return repairService.findAllCountCost(transportId, type, transportBrand, assembly, dateFrom, dateTo);
     }
 }

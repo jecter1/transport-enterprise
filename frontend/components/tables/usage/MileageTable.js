@@ -58,6 +58,10 @@ function rowToCells(columns, row) {
   const transport_id = "id";
   const mileage = "mileage";
 
+  if (row[mileage] == 0 && columns.length != common_columns.length) {
+    return (<></>);
+  }
+
   return (
     <TableRow hover role="checkbox" tabIndex={-1} key={row["id"]}>
       { 

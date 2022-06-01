@@ -28,6 +28,9 @@ export default function All() {
 
   const [dateFromValue, setDateFromValue] = React.useState(null);
   const [dateToValue, setDateToValue] = React.useState(null);
+  
+  const [assemblySelected, setAssemblySelected] = React.useState(0);
+  const [assemblyList, setAssemblyList] = React.useState([]);
 
   const [transportBrandSelected, setTransportBrandSelected] = React.useState("Любой");
   const [transportBrands, setTransportBrands] = React.useState([]);
@@ -35,15 +38,16 @@ export default function All() {
   const [transportTypeSelected, setTransportTypeSelected] = React.useState("Любой");
   const [transportTypes, setTransportTypes] = React.useState([]);
   
-  const [transportIdSelected, setTransportIdSelected] = React.useState(0);
+  const [transportIdSelected, setTransportIdSelected] = React.useState("Любой");
   const [transportList, setTransportList] = React.useState([]);
   
   useEffect(() => { 
     const fetchData = async () => {
       if (router.isReady) {
-        const { transportId, transportBrand, transportType, dateFrom, dateTo } = router.query;
+        const { transportId, transportBrand, transportType, assembly, dateFrom, dateTo } = router.query;
         setTransportBrandSelected(transportBrand ? transportBrand : "Любой");
         setTransportTypeSelected(transportType ? transportType : "Любой");
+        setAssemblySelected(assembly ? assembly : "Любой");
         setTransportIdSelected(transportId ? transportId : 0);
         if (!isNaN(stringToDate(dateFrom))) {
           setDateFromValue(stringToDate(dateFrom));
@@ -52,6 +56,7 @@ export default function All() {
           setDateToValue(stringToDate(dateTo));
         }
         await getRequest('/repair/repairs-count-cost', setRows, router.query);
+        await getRequest('/repair/assembly', setAssemblyList);
         await getRequest('/transport/brands', setTransportBrands);
         await getRequest('/transport/types', setTransportTypes);
         await getRequest('/transport/all', setTransportList);
@@ -72,6 +77,9 @@ export default function All() {
     } 
     if (transportBrandSelected && transportBrandSelected != "Любой") {
       query.transportBrand = transportBrandSelected
+    } 
+    if (assemblySelected && assemblySelected != "Любой") {
+      query.assembly = assemblySelected
     } 
     if (!isNaN(dateFromValue) && dateFromValue) {
       query.dateFrom = dateToString(dateFromValue);
@@ -121,6 +129,39 @@ export default function All() {
           },
         }}
       >
+        <FormControl fullWidth style={{width: '80%', paddingBottom: '5%'}} sx={{svg: {color: "#ffffff"}, input: {color: "#ffffff"}, label: {color: "#ffffff"}}}>
+          <InputLabel>узел</InputLabel>
+          <Select value={assemblySelected}
+                  label="узел"
+                  onChange={(event) => {setAssemblySelected(event.target.value)}}
+                  style={{color: "#ffffff"}}
+                  MenuProps={{
+                    PaperProps: {
+                      style: {
+                        maxHeight: '30%',
+                        width: '10%',
+                      },
+                    },
+                  }}
+          >
+            <MenuItem value={"Любой"} style={{width: "100%"}}>
+              Любой
+            </MenuItem>
+            {
+              assemblyList
+              ?
+              assemblyList.map((assembly) => {
+                return (
+                  <MenuItem value={assembly} style={{width: "100%"}}>
+                    {assembly}
+                  </MenuItem>
+                );
+              })
+              :
+              <></>
+            }
+          </Select>
+        </FormControl>
         <FormControl fullWidth style={{width: '80%', paddingBottom: '5%'}} sx={{svg: {color: "#ffffff"}, input: {color: "#ffffff"}, label: {color: "#ffffff"}}}>
           <InputLabel>марка транспорта</InputLabel>
           <Select value={transportBrandSelected}

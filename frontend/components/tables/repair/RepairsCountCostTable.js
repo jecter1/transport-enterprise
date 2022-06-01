@@ -65,6 +65,10 @@ function rowToCells(columns, row) {
   const count = "count";
   const cost = "cost";
 
+  if (row[count] == 0 && columns.length != common_columns.length) {
+    return (<></>);
+  }
+
   return (
     <TableRow hover role="checkbox" tabIndex={-1} key={row["id"]}>
       { 

@@ -31,6 +31,10 @@ public class RepairService {
     @Autowired
     private ModelMapper modelMapper;
 
+    public List<String> findAllAssembly() {
+        return repairRepository.findAll().stream().map(Repair::getAssembly).collect(Collectors.toSet()).stream().toList();
+    }
+
     public boolean deleteById(Long id) {
         Repair repair = repairRepository.findById(id).orElse(null);
         if (repair == null) {
@@ -43,6 +47,7 @@ public class RepairService {
     public List<RepairCountCostDto> findAllCountCost(Long transportId,
                                                      TransportType transportType,
                                                      String transportBrand,
+                                                     String assembly,
                                                      String dateFrom,
                                                      String dateTo) {
         return transportRepository
@@ -52,7 +57,7 @@ public class RepairService {
                         (transportId == null || transport.getId().equals(transportId)) &&
                         (transportType == null || transport.getType().getParentTypes().contains(transportType)) &&
                         (transportBrand == null || transport.getBrand().equals(transportBrand)))
-                .map(transport -> convertToCountCostDto(transport, dateFrom, dateTo))
+                .map(transport -> convertToCountCostDto(transport, dateFrom, dateTo, assembly))
                 .sorted((dto1, dto2) -> dto2.getCount().compareTo(dto1.getCount()))
                 .collect(Collectors.toList());
     }
@@ -112,12 +117,13 @@ public class RepairService {
                 (from == null || dateTo.compareTo(from) >= 0);
     }
 
-    private RepairCountCostDto convertToCountCostDto(Transport transport, String from, String to) {
+    private RepairCountCostDto convertToCountCostDto(Transport transport, String from, String to, String assembly) {
         RepairCountCostDto repairCountCostDto = modelMapper.map(transport, RepairCountCostDto.class);
         repairCountCostDto.setCost(0f);
         repairCountCostDto.setCount(0);
         for (var repair : transport.getRepairSet()) {
-            if (dateBetween(repair.getStartDatetime(), repair.getEndDatetime(), from, to)) {
+            if (dateBetween(repair.getStartDatetime(), repair.getEndDatetime(), from, to) &&
+                    (assembly == null || Objects.equals(repair.getAssembly(), assembly))) {
                 repairCountCostDto.setCount(repairCountCostDto.getCount() + 1);
                 repairCountCostDto.setCost(repairCountCostDto.getCost() + repair.getCost());
             }

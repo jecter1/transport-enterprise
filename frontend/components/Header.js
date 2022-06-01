@@ -135,7 +135,7 @@ export default function Header() {
                 <MenuItem onClick={handleCloseRepair}><SearchOutlinedIcon/>Список (14)</MenuItem>
               </Link>
               <Link href="/repair/repairs-count-cost">
-                <MenuItem onClick={handleCloseRepair}><SearchOutlinedIcon/>Число и стоимость (6)</MenuItem>
+                <MenuItem onClick={handleCloseRepair}><SearchOutlinedIcon/>Число и стоимость (6, 11)</MenuItem>
               </Link>
               <MenuItem onClick={handleCloseRepair}><AddOutlinedIcon/>TODO: Добавить запись о ремонте</MenuItem>
             </Menu> 
