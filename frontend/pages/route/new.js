@@ -8,11 +8,15 @@ import postRequest from "../../util/postRequest";
 export default function AddRoute() {
   const [id, setId] = React.useState(-1);
   const [number, setNumber] = React.useState(null);
-  const [startPoint, setStartPoint] = React.useState(null);
-  const [finishPoint, setFinishPoint] = React.useState(null);
+  const [startPoint, setStartPoint] = React.useState("");
+  const [finishPoint, setFinishPoint] = React.useState("");
 
   const handleClick = async (e) => {
-    await postRequest("/route", {"number": number, "startPoint": startPoint, "finishPoint": finishPoint}, setId);
+    if (startPoint != "" && finishPoint != "" && number && /^\d+$/.test(number)) {
+      await postRequest("/route", {"number": number, "startPoint": startPoint, "finishPoint": finishPoint}, setId);
+    } else {
+      setId(0);
+    }
   }
 
   const classes = makeStyles((theme) => ({
@@ -97,7 +101,7 @@ export default function AddRoute() {
             FormHelperTextProps={id == 0 ? {className: classes.textfieldError} : {className: classes.textfield}}
           />
           <TextField 
-            onChange={(e) => {setStartPoint(e.target.value)}}
+            onChange={(e) => {setStartPoint(e.target.value.trim())}}
             label="Начальная точка*" 
             style={{margin: "2%"}} 
             helperText="до 50 символов" 
@@ -105,7 +109,7 @@ export default function AddRoute() {
             FormHelperTextProps={id == 0 ? {className: classes.textfieldError} : {className: classes.textfield}}
           />
           <TextField 
-            onChange={(e) => {setFinishPoint(e.target.value)}}
+            onChange={(e) => {setFinishPoint(e.target.value.trim())}}
             label="Конечная точка*" 
             style={{margin: "2%"}} 
             helperText="до 50 символов" 
