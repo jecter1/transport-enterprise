@@ -24,6 +24,9 @@ public class TransportUsageListInfoDto {
     private String transportNumber;
     private TransportType transportType;
 
+    private Integer passengers;
+    private Integer freightVolume;
+
     public void setStartDatetime(Calendar calendar) {
         this.startDatetime = (calendar != null) ? dateFormat.format(calendar.getTime()) : null;
     }

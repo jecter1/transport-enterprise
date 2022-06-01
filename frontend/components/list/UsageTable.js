@@ -6,7 +6,7 @@ import { IconButton, Typography } from '@mui/material';
 import TableTemplate from '../../templates/TableTemplate';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 
-const columns = [
+const common_columns = [
   { 
     id: 'id', 
     label: 'Страница поездки', 
@@ -31,6 +31,27 @@ const columns = [
     align: 'center',
     minWidth: 160 
   },
+];
+
+const freight_specific_columns = [
+  {
+    id: 'freightVolume',
+    label: "Масса груза, кг", 
+    align: 'center',
+    minWidth: 160 
+  }
+]
+
+const passenger_specific_columns = [
+  {
+    id: 'passengers',
+    label: "Число пассажиров", 
+    align: 'center',
+    minWidth: 160 
+  }
+]
+
+const transport_columns = [
   { 
     id: 'transportId', 
     label: 'Страница транспорта', 
@@ -117,6 +138,28 @@ function rowToCells(columns, row) {
 }
 
 export default function TransportTable(props) {
+  console.log(props);
+  const columns = 
+    props.params.transportSelected 
+    ? 
+    (
+      props.params.transportType == "Грузовой" 
+      ?
+      common_columns.concat(freight_specific_columns) 
+      : 
+      props.params.transportType == "Пассажирский" ||  
+      props.params.transportType == "Маршрутный" ||
+      props.params.transportType == "Такси" ||
+      props.params.transportType == "Легковой" ||
+      props.params.transportType == "Автобус" ||
+      props.params.transportType == "Маршрутное такси"
+      ?
+      common_columns.concat(passenger_specific_columns)
+      :
+      common_columns
+    ) 
+    : 
+    common_columns.concat(transport_columns);
   return (
     <TableTemplate columns={columns} rows={props.rows} rowToCells={rowToCells}/>
   );

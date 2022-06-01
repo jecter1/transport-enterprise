@@ -12,8 +12,12 @@ import ru.nsu.ccfit.mamchits.transportenterprise.entity.usage.FreightTransportUs
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.usage.PassengerTransportUsage;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.usage.TransportUsage;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.usage.TransportUsageRepository;
+import ru.nsu.ccfit.mamchits.transportenterprise.type.TransportType;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -34,12 +38,34 @@ public class TransportUsageService {
         return transportUsageRepository.findById(id).isEmpty();
     }
 
-    public List<TransportUsageListInfoDto> findAll() {
-        return transportUsageRepository.findAll().stream().map(this::convertToListInfoDto).collect(Collectors.toList());
+    public List<TransportUsageListInfoDto> findAll(Long transportId, TransportType transportType, String dateFrom, String dateTo) {
+        return transportUsageRepository
+                .findAll()
+                .stream()
+                .filter(transportUsage ->
+                        dateBetween(transportUsage.getStartDatetime(), transportUsage.getEndDatetime(), dateFrom, dateTo))
+                .map(this::convertToListInfoDto)
+                .filter(dto ->
+                        (transportId == null || Objects.equals(dto.getTransportId(), transportId)) &&
+                        (transportType == null || dto.getTransportType().getParentTypes().contains(transportType)))
+                .collect(Collectors.toList());
     }
 
     public Optional<TransportUsagePageDto> findById(Long id) {
         return transportUsageRepository.findById(id).map(this::convertToPageDto);
+    }
+
+    private boolean dateBetween(Calendar calendarFrom, Calendar calendarTo, String from, String to) {
+        if (calendarFrom == null && calendarTo == null && from == null && to == null) {
+            return true;
+        } else if (calendarFrom == null || calendarTo == null) {
+            return false;
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        String dateFrom = simpleDateFormat.format(calendarFrom.getTime());
+        String dateTo = simpleDateFormat.format(calendarTo.getTime());
+        return (to == null || dateFrom.compareTo(to) <= 0) &&
+                (from == null || dateTo.compareTo(from) >= 0);
     }
 
     private TransportUsageListInfoDto convertToListInfoDto(TransportUsage transportUsage) {
@@ -54,8 +80,10 @@ public class TransportUsageService {
             transport = auxiliaryTransportUsage.getAuxiliaryTransport().getTransport();
         } else if (freightTransportUsage != null) {
             transport = freightTransportUsage.getFreightTransport().getTransport();
+            transportUsageListInfoDto.setFreightVolume(freightTransportUsage.getFreightVolume());
         } else if (passengerTransportUsage != null) {
             transport = passengerTransportUsage.getPassengerTransport().getTransport();
+            transportUsageListInfoDto.setPassengers(passengerTransportUsage.getPassengers());
         } else {
             return transportUsageListInfoDto;
         }

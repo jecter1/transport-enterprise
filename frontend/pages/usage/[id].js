@@ -41,7 +41,7 @@ export default function UsageProfile() {
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{width: '50%', height: '100%'}}>
         <UsageCard usage={usage} isMain={true} onDeleteClick={onDeleteClick}/>
         <Grid container style={{height: '3%'}}/>
-        <TransportCard transport={transport}/>
+        <TransportCard transport={transport} disableUnbind={true}/>
       </Grid>
     );
   }

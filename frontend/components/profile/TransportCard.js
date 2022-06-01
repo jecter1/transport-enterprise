@@ -17,7 +17,7 @@ export default function TransportCard(props) {
 
   const deleteWarning = "ВНИМАНИЕ: УДАЛЕНИЕ ТРАНСПОРТА ВЛЕЧЕТ ЗА СОБОЙ УДАЛЕНИЕ ВСЕХ ЕГО РЕМОНТОВ И ВСЕХ ПОЕЗДОК НА НЕМ. Вы точно хотите удалить данные о транспорте?";
   const unbindWarning = "Вы точно хотите отвязать транспорт?";
-  const headerName = props.isMain && transport ? transport["model"] + " " + transport["brand"] + " " + (transport["number"] ? "(" + transport["number"] + ")": "(без номера)") : "Транспорт";
+  const headerName = props.isMain && transport ? transport["brand"] + " " + transport["model"] + " " + (transport["number"] ? "(" + transport["number"] + ")": "(без номера)") : "Транспорт";
 
   const cardHeight = !props.isMain && !transport ? '10%' : '25%';
 
@@ -139,7 +139,7 @@ export default function TransportCard(props) {
             <Typography fontSize={16}>
               Число поездок: {transport["usageCount"]}
             </Typography>
-            <Link passHref href={{ pathname: "/usage", query: { transportId: transport["id"] }}}> 
+            <Link passHref href={{ pathname: "/usage", query: { transportId: transport["id"], transportType: transport["type"] }}}> 
               <Button style={{fontSize: 14, marginTop: '2%'}}>
                 К поездкам
               </Button>

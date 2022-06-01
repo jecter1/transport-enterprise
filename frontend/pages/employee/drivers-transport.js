@@ -25,7 +25,7 @@ export default function DriversTransport() {
     const fetchData = async () => {
       if (router.isReady) {
         const { transportId } = router.query;
-        setTransportIdSelected(transportId);
+        setTransportIdSelected(transportId ? transportId : 0);
         await getRequest('/employee/drivers-transport', setRows, transportId == 0 ? {} : {transportId: transportId});
         await getRequest('/transport/all', setTransportList);
       }
@@ -133,7 +133,7 @@ export default function DriversTransport() {
     :
     <PageTemplate 
       pageTitle={pageTitle}
-      mainPanel={TableMainPanel(pageTitle, DriversTransportTable, rows)}
+      mainPanel={TableMainPanel(pageTitle, DriversTransportTable, rows, { transportSelected: router.query.transportId != null })}
       leftPanel={LeftPanel()}
     />
   );

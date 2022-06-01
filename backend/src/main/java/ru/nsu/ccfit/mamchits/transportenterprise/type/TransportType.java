@@ -45,4 +45,17 @@ public enum TransportType {
             case MINIBUS -> List.of(MINIBUS);
         };
     }
+
+    public List<TransportType> getParentTypes() {
+        return switch (this) {
+            case AUXILIARY -> List.of(AUXILIARY);
+            case FREIGHT -> List.of(FREIGHT);
+            case PASSENGER -> List.of(PASSENGER);
+            case CAR -> List.of(CAR, PASSENGER);
+            case TAXI -> List.of(TAXI, PASSENGER);
+            case ROUTE -> List.of(ROUTE, PASSENGER);
+            case BUS -> List.of(BUS, ROUTE, PASSENGER);
+            case MINIBUS -> List.of(MINIBUS, ROUTE, PASSENGER);
+        };
+    }
 }

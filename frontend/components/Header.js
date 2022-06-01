@@ -132,7 +132,7 @@ export default function Header() {
               onClose={handleCloseRepair}
             >
               <Link href="/repair" passHref>
-                <MenuItem onClick={handleCloseRepair}><SearchOutlinedIcon/>Список</MenuItem>
+                <MenuItem onClick={handleCloseRepair}><SearchOutlinedIcon/>Список (14)</MenuItem>
               </Link>
               <MenuItem onClick={handleCloseRepair}><AddOutlinedIcon/>TODO: Добавить запись о ремонте</MenuItem>
             </Menu> 
@@ -176,7 +176,7 @@ export default function Header() {
               onClose={handleCloseUsage}
             >
               <Link href="/usage/" passHref>
-                <MenuItem onClick={handleCloseUsage}><SearchOutlinedIcon/>Список</MenuItem>
+                <MenuItem onClick={handleCloseUsage}><SearchOutlinedIcon/>Список (10)</MenuItem>
               </Link>
               <MenuItem onClick={handleCloseUsage}><AddOutlinedIcon/>TODO: Добавить поездку</MenuItem>
             </Menu>

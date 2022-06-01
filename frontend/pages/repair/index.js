@@ -38,8 +38,8 @@ export default function All() {
     const fetchData = async () => {
       if (router.isReady) {
         const { dateFrom, dateTo, transportId, staffId } = router.query;
-        setTransportIdSelected(transportId);
-        setStaffIdSelected(staffId);
+        setTransportIdSelected(transportId ? transportId : 0);
+        setStaffIdSelected(staffId ? staffId : 0);
         if (!isNaN(stringToDate(dateFrom))) {
           setDateFromValue(stringToDate(dateFrom));
         }
@@ -220,7 +220,7 @@ export default function All() {
     :
     <PageTemplate 
       pageTitle={pageTitle} 
-      mainPanel={TableMainPanel(pageTitle, RepairTable, rows)}
+      mainPanel={TableMainPanel(pageTitle, RepairTable, rows, { transportSelected: router.query.transportId != null })}
       leftPanel={LeftPanel()}
     />
   );

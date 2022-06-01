@@ -59,10 +59,6 @@ public class EmployeeService {
         return driverList.stream().map(this::convertToDriverTransportDto).collect(Collectors.toList());
     }
 
-    public List<DriverTransportDto> findAllDriversTransport() {
-        return driverRepository.findAll().stream().map(this::convertToDriverTransportDto).collect(Collectors.toList());
-    }
-
     public boolean deleteById(Long id) {
         Employee employee = employeeRepository.findById(id).orElse(null);
         if (employee == null) {

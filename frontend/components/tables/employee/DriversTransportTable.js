@@ -6,7 +6,7 @@ import { IconButton, Typography } from '@mui/material';
 import TableTemplate from '../../../templates/TableTemplate';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 
-const columns = [
+const common_columns = [
   { 
     id: 'id', 
     label: 'Страница водителя', 
@@ -31,6 +31,9 @@ const columns = [
     align: 'center',
     minWidth: 170 
   },
+];
+
+const transport_columns = [
   { 
     id: 'transportId', 
     label: 'Страница транспорта', 
@@ -67,7 +70,7 @@ const columns = [
     align: 'center',
     minWidth: 170 
   },
-];
+]
 
 function rowToCells(columns, row) {
   const employee_id = "id";
@@ -110,6 +113,7 @@ function rowToCells(columns, row) {
 }
 
 export default function DriversTransportTable(props) {
+  const columns = props.params.transportSelected ? common_columns : common_columns.concat(transport_columns);
   return (
     <TableTemplate columns={columns} rows={props.rows} rowToCells={rowToCells}/>
   );

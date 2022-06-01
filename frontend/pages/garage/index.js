@@ -15,7 +15,7 @@ export default function All() {
   
   const [rows, setRows] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
-  const [transportType, setTransportType] = React.useState(null);
+  const [transportType, setTransportType] = React.useState("Любой");
   const [transportTypes, setTransportTypes] = React.useState([]);
   
   useEffect(() => { 
@@ -27,13 +27,16 @@ export default function All() {
     }
     fetchData();
     setLoading(false);
+    if (router.query.transportType) {
+      setTransportType(router.query.transportType);
+    }
   }, [router.isReady]);
 
   const handleClick = async () => {
     setLoading(true);
     var query = {};
-    if (transportType >= 0) {
-      query.transportType = transportTypes[transportType];
+    if (transportType != "Любой") {
+      query.transportType = transportType;
     }
     await router.push({ 
       pathname: '/garage', 
@@ -78,9 +81,9 @@ export default function All() {
         }}
       >
         <FormControl fullWidth style={{width: '80%', paddingBottom: '5%'}} sx={{svg: {color: "#ffffff"}, input: {color: "#ffffff"}, label: {color: "#ffffff"}}}>
-          <InputLabel>категория</InputLabel>
+          <InputLabel>тип транспорта</InputLabel>
           <Select value={transportType}
-                  label="категория"
+                  label="тип транспорта"
                   onChange={(event) => {
                     setTransportType(event.target.value)
                   }}
@@ -95,16 +98,16 @@ export default function All() {
                   }}
           >
             
-            <MenuItem key={-1} value={-1} style={{width: "100%"}}>
+            <MenuItem value={"Любой"} style={{width: "100%"}}>
               Любой
             </MenuItem>
             {
               transportTypes
               ?
-              transportTypes.map((transportType, index) => {
+              transportTypes.map((type, index) => {
                 return (
-                  <MenuItem key={index} value={index} style={{width: "100%"}}>
-                    {transportType}
+                  <MenuItem value={type} style={{width: "100%"}}>
+                    {type}
                   </MenuItem>
                 );
               })

@@ -73,7 +73,7 @@ export default function RepairProfile() {
         <GarageCard garage={garage}/>
 
         <Grid container style={{height: '3%'}}/>
-        <TransportCard transport={transport}/>
+        <TransportCard transport={transport} disableUnbind={true}/>
       </Grid>
     );
   }
