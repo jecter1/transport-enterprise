@@ -2,6 +2,7 @@ package ru.nsu.ccfit.mamchits.transportenterprise.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.usage.TransportMileageDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.usage.TransportUsageListInfoDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.usage.TransportUsagePageDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.service.TransportUsageService;
@@ -28,6 +29,16 @@ public class TransportUsageController {
             @RequestParam(required = false) String dateTo) {
         TransportType type = TransportType.decode(transportType);
         return transportUsageService.findAll(transportId, type, dateFrom, dateTo);
+    }
+
+    @GetMapping(path = "/mileage")
+    public @ResponseBody Iterable<TransportMileageDto> getAllMileage(
+            @RequestParam(required = false) Long transportId,
+            @RequestParam(required = false) String transportType,
+            @RequestParam(required = false) String date,
+            @RequestParam(required = false) String dateType) {
+        TransportType type = TransportType.decode(transportType);
+        return transportUsageService.findAllMileage(transportId, type, date, dateType);
     }
 
     @GetMapping(path = "/{id}")

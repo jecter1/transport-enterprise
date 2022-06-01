@@ -93,13 +93,13 @@ export default function Header() {
               open={openTransport}
               onClose={handleCloseTransport}
             >
-              <Link href="/transport/" passHref>
+              <Link href="/transport/">
                 <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Список (1, 12)</MenuItem>
               </Link>
-              <Link href="/transport/transport-drivers" passHref>
+              <Link href="/transport/transport-drivers">
                 <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Распределение водителей (3)</MenuItem>
               </Link>
-              <Link href="/transport/route-transport-routes" passHref>
+              <Link href="/transport/route-transport-routes">
                 <MenuItem onClick={handleCloseTransport}><SearchOutlinedIcon/>Распределение по маршрутам (4)</MenuItem>
               </Link>
               <MenuItem onClick={handleCloseTransport}><AddOutlinedIcon/>TODO: Добавить транспорт</MenuItem>
@@ -112,13 +112,13 @@ export default function Header() {
               open={openEmployee}
               onClose={handleCloseEmployee}
             >
-              <Link href="/employee/" passHref>
+              <Link href="/employee/">
                 <MenuItem onClick={handleCloseEmployee}><SearchOutlinedIcon/>Список</MenuItem>
               </Link>
-              <Link href="/employee/drivers-transport" passHref>
+              <Link href="/employee/drivers-transport">
                 <MenuItem onClick={handleCloseEmployee}><SearchOutlinedIcon/>Распределение транспорта (2)</MenuItem>
               </Link>
-              <Link href="/employee/employee-hierarchy" passHref>
+              <Link href="/employee/employee-hierarchy">
                 <MenuItem onClick={handleCloseEmployee}><SearchOutlinedIcon/>Подчиненность (7)</MenuItem>
               </Link>
               <MenuItem onClick={handleCloseEmployee}><AddOutlinedIcon/>TODO: Добавить сотрудника</MenuItem>
@@ -131,7 +131,7 @@ export default function Header() {
               open={openRepair}
               onClose={handleCloseRepair}
             >
-              <Link href="/repair" passHref>
+              <Link href="/repair">
                 <MenuItem onClick={handleCloseRepair}><SearchOutlinedIcon/>Список (14)</MenuItem>
               </Link>
               <MenuItem onClick={handleCloseRepair}><AddOutlinedIcon/>TODO: Добавить запись о ремонте</MenuItem>
@@ -144,10 +144,10 @@ export default function Header() {
               open={openGarage}
               onClose={handleCloseGarage}
             >
-              <Link href="/garage" passHref>
+              <Link href="/garage">
                 <MenuItem onClick={handleCloseGarage}><SearchOutlinedIcon/>Список (8)</MenuItem>
               </Link>
-              <Link href="/garage/garages-transport" passHref>
+              <Link href="/garage/garages-transport">
                 <MenuItem onClick={handleCloseGarage}><SearchOutlinedIcon/>Распределение транспорта (9)</MenuItem>
               </Link>
               <MenuItem onClick={handleCloseGarage}><AddOutlinedIcon/>TODO: Добавить гараж</MenuItem>
@@ -160,10 +160,10 @@ export default function Header() {
               open={openRoute}
               onClose={handleCloseRoute}
             >
-              <Link href="/route/" passHref>
+              <Link href="/route/">
                 <MenuItem onClick={handleCloseRoute}><SearchOutlinedIcon/>Список</MenuItem>
               </Link>
-              <Link href="/route/new" passHref>
+              <Link href="/route/new">
                 <MenuItem onClick={handleCloseRoute}><AddOutlinedIcon/>Добавить маршрут</MenuItem>
               </Link>
             </Menu>
@@ -175,8 +175,11 @@ export default function Header() {
               open={openUsage}
               onClose={handleCloseUsage}
             >
-              <Link href="/usage/" passHref>
+              <Link href="/usage/">
                 <MenuItem onClick={handleCloseUsage}><SearchOutlinedIcon/>Список (10)</MenuItem>
+              </Link>
+              <Link href="/usage/mileage">
+                <MenuItem onClick={handleCloseUsage}><SearchOutlinedIcon/>Пробег (11)</MenuItem>
               </Link>
               <MenuItem onClick={handleCloseUsage}><AddOutlinedIcon/>TODO: Добавить поездку</MenuItem>
             </Menu>
