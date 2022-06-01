@@ -19,6 +19,7 @@ import ru.nsu.ccfit.mamchits.transportenterprise.repository.repair.RepairReposit
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.transport.RouteTransportRepository;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.transport.TransportRepository;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.usage.TransportUsageRepository;
+import ru.nsu.ccfit.mamchits.transportenterprise.type.TransportType;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -35,6 +36,10 @@ public class TransportService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    public List<TransportType> findAllTypes() {
+        return Arrays.stream(TransportType.values()).collect(Collectors.toList());
+    }
 
     public List<RouteTransportRouteDto> findAllRouteTransportRoutes() {
         return routeTransportRepository.findAll().stream().map(this::convertToRouteTransportRouteDto).collect(Collectors.toList());

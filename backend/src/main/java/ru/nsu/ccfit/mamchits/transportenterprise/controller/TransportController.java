@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.transport.*;
 import ru.nsu.ccfit.mamchits.transportenterprise.service.TransportService;
+import ru.nsu.ccfit.mamchits.transportenterprise.type.TransportType;
 
 import java.util.Optional;
 
@@ -12,6 +13,11 @@ import java.util.Optional;
 public class TransportController {
     @Autowired
     private TransportService transportService;
+
+    @GetMapping(path = "/types")
+    public Iterable<TransportType> getAllTypes() {
+        return transportService.findAllTypes();
+    }
 
     @GetMapping(path = "/route-transport-routes")
     public Iterable<RouteTransportRouteDto> getAllRouteTransportRoutes() {

@@ -13,11 +13,9 @@ import ru.nsu.ccfit.mamchits.transportenterprise.entity.transport.Transport;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.garage.GarageRepository;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.repair.RepairRepository;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.transport.TransportRepository;
+import ru.nsu.ccfit.mamchits.transportenterprise.type.TransportType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,8 +55,21 @@ public class GarageService {
         return garageRepository.findById(id).map(this::convertToPageDto);
     }
 
-    public List<GarageListInfoDto> findAll() {
-        return garageRepository.findAll().stream().map(this::convertToListInfoDto).collect(Collectors.toList());
+    public List<GarageListInfoDto> findAll(TransportType transportType) {
+        if (transportType == null) {
+            return garageRepository.findAll().stream().map(this::convertToListInfoDto).collect(Collectors.toList());
+        }
+        Set<Garage> garageSet = new HashSet<>();
+        for (var childType : transportType.getChildTypes()) {
+            garageSet.addAll(
+                    transportRepository
+                    .findAllByType(childType)
+                    .stream().map(Transport::getGarage)
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toSet())
+            );
+        }
+        return garageSet.stream().map(this::convertToListInfoDto).collect(Collectors.toList());
     }
 
     private List<GarageTransportDto> convertToGarageTransportDto(Garage garage) {

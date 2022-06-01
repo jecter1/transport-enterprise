@@ -6,6 +6,7 @@ import ru.nsu.ccfit.mamchits.transportenterprise.dto.garage.GarageListInfoDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.garage.GaragePageDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.garage.GarageTransportDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.service.GarageService;
+import ru.nsu.ccfit.mamchits.transportenterprise.type.TransportType;
 
 import java.util.Optional;
 
@@ -41,7 +42,7 @@ public class GarageController {
     }
 
     @GetMapping(path = "/all")
-    public @ResponseBody Iterable<GarageListInfoDto> getAll() {
-        return garageService.findAll();
+    public @ResponseBody Iterable<GarageListInfoDto> getAll(@RequestParam(required = false) String transportType) {
+        return garageService.findAll(TransportType.decode(transportType));
     }
 }
