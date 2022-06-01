@@ -2,10 +2,12 @@ package ru.nsu.ccfit.mamchits.transportenterprise.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.repair.RepairCountCostDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.repair.RepairListInfoDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.repair.RepairPageDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.repair.RepairSidePanelDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.service.RepairService;
+import ru.nsu.ccfit.mamchits.transportenterprise.type.TransportType;
 
 import java.util.Optional;
 
@@ -42,5 +44,16 @@ public class RepairController {
             @RequestParam(required = false) String dateFrom,
             @RequestParam(required = false) String dateTo) {
         return repairService.findAll(transportId, staffId, dateFrom,dateTo);
+    }
+
+    @GetMapping(path = "/repairs-count-cost")
+    public @ResponseBody Iterable<RepairCountCostDto> getAllCountCost(
+            @RequestParam(required = false) Long transportId,
+            @RequestParam(required = false) String transportType,
+            @RequestParam(required = false) String transportBrand,
+            @RequestParam(required = false) String dateFrom,
+            @RequestParam(required = false) String dateTo) {
+        TransportType type = TransportType.decode(transportType);
+        return repairService.findAllCountCost(transportId, type, transportBrand, dateFrom, dateTo);
     }
 }

@@ -37,6 +37,10 @@ public class TransportService {
     @Autowired
     private ModelMapper modelMapper;
 
+    public List<String> findAllBrands() {
+        return transportRepository.findAll().stream().map(Transport::getBrand).collect(Collectors.toSet()).stream().toList();
+    }
+
     public List<TransportType> findAllTypes() {
         return Arrays.stream(TransportType.values()).collect(Collectors.toList());
     }

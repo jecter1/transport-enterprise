@@ -14,48 +14,47 @@ import { useRouter } from "next/router";
 import { InputLabel } from "@mui/material";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import MileageTable from "../../components/tables/usage/MileageTable";
-
-const dateParams = {
-  "day": ["year", "month", "day"],
-  "month": ["year", "month"],
-  "year": ["year"],
-  "all": []
-}
+import RepairsCountCostTable from "../../components/tables/repair/RepairsCountCostTable";
 
 export default function All() {
   const router = useRouter();
   
-  const pageTitle = "Пробег транспорта";
+  const pageTitle = "Число ремонтов и их стоимость";
+
+  const [loading, setLoading] = React.useState(true);
   
   const [rows, setRows] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
 
-  const [dateValue, setDateValue] = React.useState(null);
-  const [dateTypeSelected, setDateTypeSelected] = React.useState();
+  const [dateFromValue, setDateFromValue] = React.useState(null);
+  const [dateToValue, setDateToValue] = React.useState(null);
 
-  const [transportList, setTransportList] = React.useState([]);
-  const [transportIdSelected, setTransportIdSelected] = React.useState(0);
+  const [transportBrandSelected, setTransportBrandSelected] = React.useState("Любой");
+  const [transportBrands, setTransportBrands] = React.useState([]);
+
   const [transportTypeSelected, setTransportTypeSelected] = React.useState("Любой");
   const [transportTypes, setTransportTypes] = React.useState([]);
+  
+  const [transportIdSelected, setTransportIdSelected] = React.useState(0);
+  const [transportList, setTransportList] = React.useState([]);
   
   useEffect(() => { 
     const fetchData = async () => {
       if (router.isReady) {
-        const { transportId, transportType, date, dateType } = router.query;
-        setTransportIdSelected(transportId ? transportId : 0);
+        const { transportId, transportBrand, transportType, dateFrom, dateTo } = router.query;
+        setTransportBrandSelected(transportBrand ? transportBrand : "Любой");
         setTransportTypeSelected(transportType ? transportType : "Любой");
-        setDateTypeSelected(dateType ? dateType : "all")
-        if (!isNaN(stringToDate(date))) {
-          setDateValue(stringToDate(date));
+        setTransportIdSelected(transportId ? transportId : 0);
+        if (!isNaN(stringToDate(dateFrom))) {
+          setDateFromValue(stringToDate(dateFrom));
         }
-        await getRequest('/usage/mileage', setRows, router.query);
-        await getRequest('/transport/all', setTransportList);
+        if (!isNaN(stringToDate(dateTo))) {
+          setDateToValue(stringToDate(dateTo));
+        }
+        await getRequest('/repair/repairs-count-cost', setRows, router.query);
+        await getRequest('/transport/brands', setTransportBrands);
         await getRequest('/transport/types', setTransportTypes);
+        await getRequest('/transport/all', setTransportList);
       }
     }
     fetchData();
@@ -71,12 +70,17 @@ export default function All() {
     if (transportTypeSelected && transportTypeSelected != "Любой") {
       query.transportType = transportTypeSelected
     } 
-    if (dateTypeSelected && dateTypeSelected != "all" && !isNaN(dateValue) && dateValue) {
-      query.date = dateToString(dateValue);
-      query.dateType = dateTypeSelected
+    if (transportBrandSelected && transportBrandSelected != "Любой") {
+      query.transportBrand = transportBrandSelected
+    } 
+    if (!isNaN(dateFromValue) && dateFromValue) {
+      query.dateFrom = dateToString(dateFromValue);
+    } 
+    if (!isNaN(dateToValue) && dateToValue) {
+      query.dateTo = dateToString(dateToValue);
     } 
     await router.push({ 
-      pathname: '/usage/mileage', 
+      pathname: '/repair/repairs-count-cost', 
       query: query, 
     }); 
     router.reload();
@@ -117,6 +121,45 @@ export default function All() {
           },
         }}
       >
+        <FormControl fullWidth style={{width: '80%', paddingBottom: '5%'}} sx={{svg: {color: "#ffffff"}, input: {color: "#ffffff"}, label: {color: "#ffffff"}}}>
+          <InputLabel>марка транспорта</InputLabel>
+          <Select value={transportBrandSelected}
+                  label="марка транспорта"
+                  onChange={(event) => {
+                    if (event.target.value != transportBrandSelected) {
+                      setTransportBrandSelected(event.target.value)
+                      setTransportIdSelected(0)
+                    }
+                  }}
+                  style={{color: "#ffffff"}}
+                  MenuProps={{
+                    PaperProps: {
+                      style: {
+                        maxHeight: '30%',
+                        width: '10%',
+                      },
+                    },
+                  }}
+          >
+            
+            <MenuItem value={"Любой"} style={{width: "100%"}}>
+              Любой
+            </MenuItem>
+            {
+              transportBrands
+              ?
+              transportBrands.map((brand) => {
+                return (
+                  <MenuItem value={brand} style={{width: "100%"}}>
+                    {brand}
+                  </MenuItem>
+                );
+              })
+              :
+              <></>
+            }
+          </Select>
+        </FormControl>
         <FormControl fullWidth style={{width: '80%', paddingBottom: '5%'}} sx={{svg: {color: "#ffffff"}, input: {color: "#ffffff"}, label: {color: "#ffffff"}}}>
           <InputLabel>тип транспорта</InputLabel>
           <Select value={transportTypeSelected}
@@ -180,7 +223,12 @@ export default function All() {
               ?
               transportList.map((transport) => {
                 return (
-                  <MenuItem value={transport["id"]} style={{width: "100%"}} onClick={(e) => setTransportTypeSelected(transport["type"])}>
+                  <MenuItem value={transport["id"]} style={{width: "100%"}} 
+                    onClick={(e) => {
+                      setTransportTypeSelected(transport["type"]);
+                      setTransportBrandSelected(transport["brand"]);
+                    }}
+                  >
                     {transport["brand"] + " " + transport["model"] + " " + transport["color"] + " (" + (transport["number"] ? transport["number"] : "без номера") + ")"}
                   </MenuItem>
                 );
@@ -190,26 +238,27 @@ export default function All() {
             }
           </Select>
         </FormControl>
-        <Typography fontSize={16} margin="5%">Интервал</Typography>
-        <FormControl>
-          <RadioGroup row onChange={(e) => {setDateTypeSelected(e.target.value)}}>
-            <FormControlLabel checked={dateTypeSelected === 'day'} labelPlacement="top" value="day" control={<Radio disableRipple size="small" />} label="день" />
-            <FormControlLabel checked={dateTypeSelected === 'month'} labelPlacement="top" value="month" control={<Radio disableRipple size="small" />} label="месяц" />
-            <FormControlLabel checked={dateTypeSelected === 'year'} labelPlacement="top" value="year" control={<Radio disableRipple size="small" />} label="год" />
-            <FormControlLabel checked={dateTypeSelected === 'all'} labelPlacement="top" value="all" control={<Radio disableRipple size="small" />} label="все время" />
-          </RadioGroup>
-        </FormControl>
+        <Typography fontSize={16} margin="5%">Дата ремонта</Typography>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>
           <DatePicker label="с"
-                      disabled={dateTypeSelected == "all"}
-                      views={dateParams[dateTypeSelected]}
                       inputProps={{autoComplete: "off"}}
-                      value={dateValue}
+                      value={dateFromValue}
                       onChange={(newValue) => {
-                        setDateValue(newValue);
+                        setDateFromValue(newValue);
                       }}
                       renderInput={(params) => 
-                        <TextField {...params} style={{width: '80%', margin: '5%'}} sx={{svg: {color: "#ffffff"}, input: {color: "#ffffff"}, label: {color: "#ffffff"}}} />
+                        <TextField {...params} style={{width: '80%', paddingBottom: '5%'}} sx={{svg: {color: "#ffffff"}, input: {color: "#ffffff"}, label: {color: "#ffffff"}}} />
+                      }/>
+        </LocalizationProvider>
+        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>
+          <DatePicker label="по"
+                      inputProps={{autoComplete: "off"}}
+                      value={dateToValue}
+                      onChange={(newValue) => {
+                        setDateToValue(newValue);
+                      }}
+                      renderInput={(params) => 
+                        <TextField {...params} style={{width: '80%', paddingBottom: '5%'}} sx={{svg: {color: "#ffffff"}, input: {color: "#ffffff"}, label: {color: "#ffffff"}}} />
                       }/>
         </LocalizationProvider>
         <Button fontSize={16} onClick={handleClick}>
@@ -229,7 +278,7 @@ export default function All() {
     :
     <PageTemplate 
       pageTitle={pageTitle} 
-      mainPanel={TableMainPanel(pageTitle, MileageTable, rows, 
+      mainPanel={TableMainPanel(pageTitle, RepairsCountCostTable, rows, 
         { 
           transportSelected: router.query.transportId != null
         })}

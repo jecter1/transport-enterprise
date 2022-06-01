@@ -134,6 +134,9 @@ export default function Header() {
               <Link href="/repair">
                 <MenuItem onClick={handleCloseRepair}><SearchOutlinedIcon/>Список (14)</MenuItem>
               </Link>
+              <Link href="/repair/repairs-count-cost">
+                <MenuItem onClick={handleCloseRepair}><SearchOutlinedIcon/>Число и стоимость (6)</MenuItem>
+              </Link>
               <MenuItem onClick={handleCloseRepair}><AddOutlinedIcon/>TODO: Добавить запись о ремонте</MenuItem>
             </Menu> 
             <Button style={{fontSize: 18}} onClick={handleClickGarage}>
@@ -179,7 +182,7 @@ export default function Header() {
                 <MenuItem onClick={handleCloseUsage}><SearchOutlinedIcon/>Список (10)</MenuItem>
               </Link>
               <Link href="/usage/mileage">
-                <MenuItem onClick={handleCloseUsage}><SearchOutlinedIcon/>Пробег (11)</MenuItem>
+                <MenuItem onClick={handleCloseUsage}><SearchOutlinedIcon/>Пробег (5)</MenuItem>
               </Link>
               <MenuItem onClick={handleCloseUsage}><AddOutlinedIcon/>TODO: Добавить поездку</MenuItem>
             </Menu>

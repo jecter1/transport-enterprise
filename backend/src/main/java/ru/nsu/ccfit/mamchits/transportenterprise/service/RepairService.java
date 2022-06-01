@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.nsu.ccfit.mamchits.transportenterprise.dto.repair.RepairCountCostDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.repair.RepairListInfoDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.repair.RepairPageDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.repair.RepairSidePanelDto;
@@ -14,6 +15,7 @@ import ru.nsu.ccfit.mamchits.transportenterprise.entity.transport.Transport;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.garage.GarageRepository;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.repair.RepairRepository;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.transport.TransportRepository;
+import ru.nsu.ccfit.mamchits.transportenterprise.type.TransportType;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -36,6 +38,23 @@ public class RepairService {
         }
         repairRepository.deleteById(id);
         return repairRepository.findById(id).isEmpty();
+    }
+
+    public List<RepairCountCostDto> findAllCountCost(Long transportId,
+                                                     TransportType transportType,
+                                                     String transportBrand,
+                                                     String dateFrom,
+                                                     String dateTo) {
+        return transportRepository
+                .findAll()
+                .stream()
+                .filter(transport ->
+                        (transportId == null || transport.getId().equals(transportId)) &&
+                        (transportType == null || transport.getType().getParentTypes().contains(transportType)) &&
+                        (transportBrand == null || transport.getBrand().equals(transportBrand)))
+                .map(transport -> convertToCountCostDto(transport, dateFrom, dateTo))
+                .sorted((dto1, dto2) -> dto2.getCount().compareTo(dto1.getCount()))
+                .collect(Collectors.toList());
     }
 
     public List<RepairSidePanelDto> findAllByTransportId(Long transportId) {
@@ -91,6 +110,19 @@ public class RepairService {
         String dateTo = simpleDateFormat.format(calendarTo.getTime());
         return (to == null || dateFrom.compareTo(to) <= 0) &&
                 (from == null || dateTo.compareTo(from) >= 0);
+    }
+
+    private RepairCountCostDto convertToCountCostDto(Transport transport, String from, String to) {
+        RepairCountCostDto repairCountCostDto = modelMapper.map(transport, RepairCountCostDto.class);
+        repairCountCostDto.setCost(0f);
+        repairCountCostDto.setCount(0);
+        for (var repair : transport.getRepairSet()) {
+            if (dateBetween(repair.getStartDatetime(), repair.getEndDatetime(), from, to)) {
+                repairCountCostDto.setCount(repairCountCostDto.getCount() + 1);
+                repairCountCostDto.setCost(repairCountCostDto.getCost() + repair.getCost());
+            }
+        }
+        return repairCountCostDto;
     }
 
     private RepairListInfoDto convertToListInfoDto(Repair repair) {

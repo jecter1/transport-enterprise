@@ -14,6 +14,11 @@ public class TransportController {
     @Autowired
     private TransportService transportService;
 
+    @GetMapping(path = "/brands")
+    public Iterable<String> getAllBrands() {
+        return transportService.findAllBrands();
+    }
+
     @GetMapping(path = "/types")
     public Iterable<TransportType> getAllTypes() {
         return transportService.findAllTypes();
