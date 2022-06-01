@@ -36,9 +36,13 @@ export default function DriversTransport() {
 
   const handleClick = async (e) => {
     setLoading(true);
+    var query = {}
+    if (transportIdSelected && transportIdSelected != 0) {
+      query.transportId = transportIdSelected
+    } 
     await router.push({ 
       pathname: '/employee/drivers-transport', 
-      query: { transportId: transportIdSelected }, 
+      query: query, 
     }); 
     router.reload();
   } 
@@ -90,7 +94,7 @@ export default function DriversTransport() {
                     PaperProps: {
                       style: {
                         maxHeight: '30%',
-                        width: '20%',
+                        width: '25%',
                       },
                     },
                   }}>
@@ -103,7 +107,7 @@ export default function DriversTransport() {
               transportList.map((transport) => {
                 return (
                   <MenuItem value={transport["id"]} style={{width: "100%"}}>
-                    {transport["brand"] + " " + transport["model"] + " " + transport["color"] + " " + (transport["number"] ? transport["number"] : " ")}
+                    {transport["brand"] + " " + transport["model"] + " " + transport["color"] + " (" + (transport["number"] ? transport["number"] : "без номера") + ")"}
                   </MenuItem>
                 );
               })
@@ -112,9 +116,9 @@ export default function DriversTransport() {
             }
           </Select>
         </FormControl>
-            <Button fontSize={16} onClick={handleClick}>
-              Применить
-            </Button>
+        <Button fontSize={16} onClick={handleClick}>
+          Применить
+        </Button>
       </Grid>
     );
   }

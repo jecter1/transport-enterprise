@@ -12,6 +12,7 @@ import ru.nsu.ccfit.mamchits.transportenterprise.entity.repair.Repair;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.transport.Transport;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.employee.DriverRepository;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.employee.EmployeeRepository;
+import ru.nsu.ccfit.mamchits.transportenterprise.repository.employee.ServiceStaffRepository;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.repair.RepairRepository;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.transport.TransportRepository;
 import ru.nsu.ccfit.mamchits.transportenterprise.type.EmployeePosition;
@@ -26,9 +27,19 @@ public class EmployeeService {
     private final RepairRepository repairRepository;
     private final TransportRepository transportRepository;
     private final DriverRepository driverRepository;
+    private final ServiceStaffRepository serviceStaffRepository;
 
     @Autowired
     private ModelMapper modelMapper;
+
+    public List<EmployeeListInfoDto> findAllStaff() {
+        return serviceStaffRepository
+                .findAll()
+                .stream()
+                .map(ServiceStaff::getEmployee)
+                .map(this::convertToListInfoDto)
+                .collect(Collectors.toList());
+    }
 
     public List<EmployeeHierarchyDto> findAllEmployeeHierarchy() {
         return employeeRepository
@@ -39,7 +50,13 @@ public class EmployeeService {
     }
 
     public List<DriverTransportDto> findAllDriversTransportByTransportId(Long transportId) {
-        return driverRepository.findByTransportId(transportId).stream().map(this::convertToDriverTransportDto).collect(Collectors.toList());
+        List<Driver> driverList;
+        if (transportId != null) {
+            driverList = driverRepository.findByTransportId(transportId);
+        } else {
+            driverList = driverRepository.findAll();
+        }
+        return driverList.stream().map(this::convertToDriverTransportDto).collect(Collectors.toList());
     }
 
     public List<DriverTransportDto> findAllDriversTransport() {

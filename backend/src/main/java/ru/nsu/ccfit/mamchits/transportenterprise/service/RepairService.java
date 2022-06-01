@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.repair.RepairListInfoDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.repair.RepairPageDto;
 import ru.nsu.ccfit.mamchits.transportenterprise.dto.repair.RepairSidePanelDto;
+import ru.nsu.ccfit.mamchits.transportenterprise.entity.employee.ServiceStaff;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.garage.Garage;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.repair.Repair;
 import ru.nsu.ccfit.mamchits.transportenterprise.entity.transport.Transport;
@@ -14,10 +15,8 @@ import ru.nsu.ccfit.mamchits.transportenterprise.repository.garage.GarageReposit
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.repair.RepairRepository;
 import ru.nsu.ccfit.mamchits.transportenterprise.repository.transport.TransportRepository;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,7 +38,7 @@ public class RepairService {
         return repairRepository.findById(id).isEmpty();
     }
 
-    public List<RepairSidePanelDto> findByTransportId(Long transportId) {
+    public List<RepairSidePanelDto> findAllByTransportId(Long transportId) {
         return transportRepository
                 .findById(transportId)
                 .map(Transport::getRepairSet)
@@ -50,7 +49,7 @@ public class RepairService {
                                 .collect(Collectors.toList())).orElse(new ArrayList<>());
     }
 
-    public List<RepairSidePanelDto> findByGarageId(Long garageId) {
+    public List<RepairSidePanelDto> findAllByGarageId(Long garageId) {
         return garageRepository
                 .findById(garageId)
                 .map(Garage::getRepairSet)
@@ -65,17 +64,34 @@ public class RepairService {
         return repairRepository.findById(id).map(this::convertToPageDto);
     }
 
-    public List<RepairListInfoDto> findAll() {
-        return repairRepository.findAll().stream().map(this::convertToListInfoDto).collect(Collectors.toList());
+    public List<RepairListInfoDto> findAll(Long transportId, Long staffId, String dateFrom, String dateTo) {
+        if (dateFrom != null && dateTo != null && dateFrom.compareTo(dateTo) > 0) {
+            return new ArrayList<>();
+        }
+        return repairRepository
+                .findAll()
+                .stream()
+                .filter(repair ->
+                        (transportId == null || Objects.equals(repair.getTransport().getId(), transportId)) &&
+                        (staffId == null || (repair.getServiceStaffSet().stream().map(ServiceStaff::getId).toList().contains(staffId))) &&
+                        (dateBetween(repair.getStartDatetime(), repair.getEndDatetime(), dateFrom, dateTo))
+                )
+                .map(this::convertToListInfoDto)
+                .collect(Collectors.toList());
     }
 
-//    public List<RepairListInfoDto> findAllByTransportId(Long transportId) {
-//        return repairRepository.findAll()
-//                .stream()
-//                .filter(repair -> Objects.equals(repair.getTransport().getId(), transportId))
-//                .map(this::convertToRepairListInfoDto)
-//                .collect(Collectors.toList());
-//    }
+    private boolean dateBetween(Calendar calendarFrom, Calendar calendarTo, String from, String to) {
+        if (calendarFrom == null && calendarTo == null && from == null && to == null) {
+            return true;
+        } else if (calendarFrom == null || calendarTo == null) {
+            return false;
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        String dateFrom = simpleDateFormat.format(calendarFrom.getTime());
+        String dateTo = simpleDateFormat.format(calendarTo.getTime());
+        return (to == null || dateFrom.compareTo(to) <= 0) &&
+                (from == null || dateTo.compareTo(from) >= 0);
+    }
 
     private RepairListInfoDto convertToListInfoDto(Repair repair) {
         RepairListInfoDto repairDto = modelMapper.map(repair, RepairListInfoDto.class);

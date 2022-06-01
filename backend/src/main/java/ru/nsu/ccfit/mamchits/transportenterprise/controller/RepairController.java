@@ -21,13 +21,13 @@ public class RepairController {
     }
 
     @GetMapping(params = "transportId")
-    public @ResponseBody Iterable<RepairSidePanelDto> getByTransportId(@RequestParam String transportId) {
-        return repairService.findByTransportId(Long.parseLong(transportId));
+    public @ResponseBody Iterable<RepairSidePanelDto> getAllByTransportId(@RequestParam String transportId) {
+        return repairService.findAllByTransportId(Long.parseLong(transportId));
     }
 
     @GetMapping(params = "garageId")
     public @ResponseBody Iterable<RepairSidePanelDto> getByGarageId(@RequestParam String garageId) {
-        return repairService.findByGarageId(Long.parseLong(garageId));
+        return repairService.findAllByGarageId(Long.parseLong(garageId));
     }
 
     @GetMapping(path = "/{id}")
@@ -36,12 +36,11 @@ public class RepairController {
     }
 
     @GetMapping(path = "/all")
-    public @ResponseBody Iterable<RepairListInfoDto>  getAll() {
-        return repairService.findAll();
+    public @ResponseBody Iterable<RepairListInfoDto>  getAll(
+            @RequestParam(required = false) Long transportId,
+            @RequestParam(required = false) Long staffId,
+            @RequestParam(required = false) String dateFrom,
+            @RequestParam(required = false) String dateTo) {
+        return repairService.findAll(transportId, staffId, dateFrom,dateTo);
     }
-
-//    @GetMapping
-//    public @ResponseBody Iterable<RepairListInfoDto> getAllByTransportId(@RequestParam String transportId) {
-//        return repairService.findAllByTransportId(Long.parseLong(transportId));
-//    }
 }

@@ -124,6 +124,12 @@ function rowToCells(columns, row) {
                   </IconButton>
                 </Link> 
                 :
+                column.id == 'cost' && row['cost'] 
+                ?
+                <Typography>
+                  {cell_data ? parseFloat(row['cost']).toFixed(2) : "-"}
+                </Typography>
+                :
                 <Typography>
                   {cell_data ? cell_data : "-"}
                 </Typography>

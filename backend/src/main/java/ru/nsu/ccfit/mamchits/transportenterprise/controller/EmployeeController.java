@@ -13,19 +13,19 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    @GetMapping(path = "/staff/all")
+    public @ResponseBody Iterable<EmployeeListInfoDto> getAllStaff() {
+        return employeeService.findAllStaff();
+    }
+
     @GetMapping(path = "/employee-hierarchy")
     public @ResponseBody Iterable<EmployeeHierarchyDto> getAllEmployeeHierarchy() {
         return employeeService.findAllEmployeeHierarchy();
     }
 
-    @GetMapping(path = "/drivers-transport", params = "transportId")
-    public @ResponseBody Iterable<DriverTransportDto> getAllDriversTransportByTransportId(@RequestParam String transportId) {
-        return employeeService.findAllDriversTransportByTransportId(Long.parseLong(transportId));
-    }
-
     @GetMapping(path = "/drivers-transport")
-    public @ResponseBody Iterable<DriverTransportDto> getAllDriversTransport() {
-        return employeeService.findAllDriversTransport();
+    public @ResponseBody Iterable<DriverTransportDto> getAllDriversTransportByTransportId(@RequestParam(required = false) Long transportId) {
+        return employeeService.findAllDriversTransportByTransportId(transportId);
     }
 
     @DeleteMapping(path = "/{id}")

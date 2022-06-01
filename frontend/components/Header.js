@@ -145,7 +145,7 @@ export default function Header() {
               onClose={handleCloseGarage}
             >
               <Link href="/garage" passHref>
-                <MenuItem onClick={handleCloseGarage}><SearchOutlinedIcon/>Список</MenuItem>
+                <MenuItem onClick={handleCloseGarage}><SearchOutlinedIcon/>Список (8)</MenuItem>
               </Link>
               <Link href="/garage/garages-transport" passHref>
                 <MenuItem onClick={handleCloseGarage}><SearchOutlinedIcon/>Распределение транспорта (9)</MenuItem>

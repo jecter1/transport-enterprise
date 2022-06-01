@@ -100,7 +100,7 @@ export default function EmployeeCard(props) {
             <Typography fontSize={16}>
               Ремонтов: {employee["repairsCount"]}
             </Typography>
-            <Link passHref href={{ pathname: "/repair", query: { employeeId: employee["id"] }}}>
+            <Link passHref href={{ pathname: "/repair", query: { staffId: employee["id"] }}}>
               <Button style={{fontSize: 14, marginTop: '2%'}}>
                 К ремонтам
               </Button>

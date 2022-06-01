@@ -72,6 +72,7 @@ const columns = [
 function rowToCells(columns, row) {
   const usage_id = "id";
   const transport_id = "transportId";
+  const mileage = "mileage";
 
   return (
     <TableRow hover role="checkbox" tabIndex={-1} key={row["id"]}>
@@ -96,6 +97,12 @@ function rowToCells(columns, row) {
                     <InsertDriveFileOutlinedIcon/>
                   </IconButton>
                 </Link> 
+                :
+                column.id == mileage && row[mileage] 
+                ?
+                <Typography>
+                  {cell_data ? parseFloat(cell_data).toFixed(2) : "-"}
+                </Typography>
                 :
                 <Typography>
                   {cell_data ? cell_data : "-"}

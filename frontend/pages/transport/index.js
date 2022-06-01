@@ -13,7 +13,6 @@ import dateToString from '../../util/dateToString';
 import stringToDate from '../../util/stringToDate';
 import { useRouter } from "next/router";
 
-
 export default function All() {
   const router = useRouter();
   
@@ -130,22 +129,18 @@ export default function All() {
                         <TextField {...params} style={{width: '80%', paddingBottom: '5%'}} sx={{svg: {color: "#ffffff"}, input: {color: "#ffffff"}, label: {color: "#ffffff"}}} />
                       }/>
         </LocalizationProvider>
-        <Grid container direction="row" justifyContent="center" alignItems="center">
-          <Typography fontSize={16} margin="5%">Списан</Typography>
-        </Grid>
-        <Grid container direction="row" justifyContent="center" alignItems="center">
-          <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>
-            <DatePicker label="с"
-                        inputProps={{autoComplete: "off"}}
-                        value={decommissioningFromValue}
-                        onChange={(newValue) => {
-                          setDecommissioningFromValue(newValue);
-                        }}
-                        renderInput={(params) => 
-                          <TextField {...params} style={{width: '80%', paddingBottom: '5%'}} sx={{svg: {color: "#ffffff"}, input: {color: "#ffffff"}, label: {color: "#ffffff"}}} />
-                        }/>
-          </LocalizationProvider>
-        </Grid>
+        <Typography fontSize={16} margin="5%">Списан</Typography>
+        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>
+          <DatePicker label="с"
+                      inputProps={{autoComplete: "off"}}
+                      value={decommissioningFromValue}
+                      onChange={(newValue) => {
+                        setDecommissioningFromValue(newValue);
+                      }}
+                      renderInput={(params) => 
+                        <TextField {...params} style={{width: '80%', paddingBottom: '5%'}} sx={{svg: {color: "#ffffff"}, input: {color: "#ffffff"}, label: {color: "#ffffff"}}} />
+                      }/>
+        </LocalizationProvider>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>
           <DatePicker label="по"
                       inputProps={{autoComplete: "off"}}
